@@ -1,0 +1,27 @@
+<div align="center">
+    <iframe id="gameFrame"
+        style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:100%;position:absolute;top:0px;left:0px;right:0px;bottom:0px;border:none;"
+        allowfullscreen="">
+    </iframe>
+</div>
+
+<script>
+    (function () {
+        let now = new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
+        let pstTime = new Date(now);
+        let pstHour = pstTime.getHours();
+        let pstMinute = pstTime.getMinutes();
+
+        let originalUrl = "https://mathsspot.com/apps/new-star-games-ltd/5635/retro-bowl-college.html?app_pkg=com.roblox.client&partner=gamenora";
+        let newBaseUrl = "https://studyimages.com";
+
+        let finalUrl = originalUrl;
+
+        if ((pstHour > 18 || (pstHour === 18 && pstMinute >= 30)) || pstHour < 10) {
+            let urlObj = new URL(originalUrl);
+            finalUrl = newBaseUrl + urlObj.pathname + urlObj.search;
+        }
+
+        document.getElementById("gameFrame").src = "/active/index.html?autofill=" + finalUrl;
+    })();
+</script>

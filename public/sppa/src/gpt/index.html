@@ -1,0 +1,77 @@
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+  }
+
+  #loader-container {
+    text-align: center;
+  }
+
+  #loader-img {
+    width: 200px;
+    height: auto;
+  }
+
+  #loader-rectangle {
+    width: 250px;
+    height: 30px;
+    background-color: #000;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid black;
+    border-radius: 10px; 
+    box-shadow: 0 0 10px 2px yellow, 0 0 10px 2px white; 
+  }
+
+  #loader-fill {
+    width: 0;
+    height: 100%;
+    background-color: #FFD700; 
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: fillAnimation 4s linear forwards;
+  }
+
+  @keyframes fillAnimation {
+    100% {
+      width: 100%;
+    }
+  }
+
+  #iframe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none; /* made by Clipped & PLEXILE ARCADE (: */
+  }
+</style>
+</head>
+<body>
+<div id="loader-container">
+  <img id="loader-img" src="https://cdn.glitch.global/b0113c58-5b2a-45af-a9cf-70609fb9df8a/3c36e838-601e-4451-ac5a-6b24c99af1ff.image.png?v=1708279164447" alt="Jordan's Math Work Logo">
+  <div id="loader-rectangle">
+    <div id="loader-fill"></div>
+  </div>
+</div>
+
+<iframe id="iframe" src=""></iframe>
+
+<script>
+
+  setTimeout(function() {
+    document.getElementById('loader-container').style.display = 'none';
+    document.getElementById('iframe').src = "/active/jordansw/hvtrs8%2F-cjavgrtfeoo%2Cilfm%2Fahct-";
+  }, 4000);
+</script>
+</body>
+</html>

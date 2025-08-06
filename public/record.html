@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jordan's Math Work - Refrence</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ8CVXYBF9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', 'G-TQ8CVXYBF9');
+    </script>
+      <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <div align="center">
+        <h1>Recorder</h1>
+        <button id="recordButton">Start Recording</button>
+        <p id="statusMessage"></p>
+        <script>
+          let mediaRecorder;
+          let recordedChunks = [];
+      
+          async function checkBrowserSupport() {
+            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            const supportsMediaRecorder = 'MediaRecorder' in window;
+            const supportsDisplayMedia = 'getDisplayMedia' in navigator.mediaDevices;
+      
+            if (isSafari && (!supportsMediaRecorder || !supportsDisplayMedia)) {
+              document.getElementById('statusMessage').textContent = 'This feature does not work on mobile.';
+              document.getElementById('recordButton').textContent = 'Screen Recording Unavailable';
+              document.getElementById('recordButton').disabled = true;
+              return false;
+            }
+      
+            return true;
+          }
+      
+          document.getElementById('recordButton').addEventListener('click', async function () {
+            const supported = await checkBrowserSupport();
+            if (!supported) return;
+      
+            if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+              try {
+                const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                mediaRecorder = new MediaRecorder(stream);
+      
+                mediaRecorder.ondataavailable = function (event) {
+                  if (event.data.size > 0) {
+                    recordedChunks.push(event.data);
+                  }
+                };
+      
+                mediaRecorder.onstop = function () {
+                  const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  const currentDate = new Date();
+                  const dateTime = currentDate.toISOString().replace(/:/g, '-').split('.')[0];
+                  a.href = url;
+                  a.download = `jmw_${dateTime}.mp4`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                  recordedChunks = [];
+                };
+      
+                mediaRecorder.start();
+                this.textContent = 'Stop Recording';
+              } catch (error) {
+                document.getElementById('statusMessage').textContent = 'Error starting recording: ' + error.message;
+              }
+            } else if (mediaRecorder.state === 'recording') {
+              mediaRecorder.stop();
+              this.textContent = 'Start Recording';
+            }
+          });
+      
+          checkBrowserSupport();
+        </script>
+    </div>
+</body>
+<script src="/assets/scripts/index.js"></script>
+<script src="/assets/scripts/panic.js"></script>
+</html>

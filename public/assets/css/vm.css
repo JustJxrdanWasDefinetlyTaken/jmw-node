@@ -1,0 +1,123 @@
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body,
+    html {
+      height: 100%;
+      width: 100%;
+      background-color: var(--bgcolor);
+      color: var(--txtcolor);
+    }
+
+    .center-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      justify-self: center;
+      align-self: center;
+      height: 500px;
+      width: 500px;
+      text-align: center;
+      border-radius: 10px;
+      box-shadow: rgba(255, 255, 255, 0.1);
+      border: 3px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .launch-btn {
+      background-color: var(--btn);
+      color: white;
+      padding: 20px 40px;
+      border: none;
+      border-radius: 10px;
+      font-size: 22px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      height: 65px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+
+    .launch-btn:hover {
+      background-color: var(--btnhvr);
+    }
+
+    .vm-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      display: none;
+      z-index: 1;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: black;
+    }
+
+    .bottom-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .end-session-btn {
+      background-color: var(--btn);
+      color: var(--txtcolor);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .end-session-btn:hover {
+      background-color: var(--btnhvr);
+    }
+
+    .timer {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--txtcolor);
+    }
+
+    .status {
+      margin-top: 20px;
+      font-size: 16px;
+      color: red;
+    }
+
+    .fc {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      padding: 10px 16px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      display: none;
+      z-index: 2;
+    }
+
+    .fc:hover {
+      background: rgba(0, 0, 0, 0.6);
+    }

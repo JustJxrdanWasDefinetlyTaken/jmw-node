@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jordan's Math Work</title>
+    <link rel="icon" href="/assets/images/jmw.png" />
+    <link rel="shortcut icon" href="/assets/images/jmw.png" />
+    <link rel="manifest" href="/manifest.json"/>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/search.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+</head>
+<body theme="classic">
+  <div class="buttonrow">
+    <div class="left-buttons">
+        <a href="#" onclick="goBack();" id="back"><i class='bx bx-chevron-left'></i></a>
+        <a href="#" onclick="home();" id="home"><i class='bx bx-home'></i></a>
+        <a href="#" onclick="goForward();" id="forward"><i class='bx bx-chevron-right'></i></a>
+    </div>
+    <div class="right-buttons">
+        <a href="#" onclick="inspect();" id="inspect"><i class='bx bx-code-alt'></i></a>
+        <a href="#" onclick="toggleFullscreen();" id="fullscreen"><i class='bx bx-fullscreen'></i></a>
+        <a href="#" onclick="reload();" id="reload"><i class='bx bx-refresh'></i></a>
+    </div>
+</div>
+    <div id="searchContainer">
+    <iframe id="searchFrame" src="/active/"></iframe>
+    </div>
+</body>
+<script src="/assets/scripts/index.js"></script>
+<script>
+    function reload() {
+     var web = document.getElementById("searchFrame");
+     web.contentWindow.location.reload();
+   }
+   function toggleFullscreen() {
+     let elem = document.querySelector('#searchFrame');
+
+     if (!document.fullscreenElement) {
+       elem.requestFullscreen().catch((err) => {
+         alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
+       });
+     } else {
+       document.exitFullscreen();
+     }
+   }
+   function goBack() {
+       var iframe = document.getElementById('searchFrame');
+       iframe.contentWindow.history.back();
+   }
+
+   function goForward() {
+       var iframe = document.getElementById('searchFrame');
+       iframe.contentWindow.history.forward();
+   }
+   function home() {
+       document.getElementById('searchFrame').src = '/active/';
+   }
+</script>
+      <script>
+        function inspect() {
+            const proccy = document.getElementById("searchFrame");
+            if (!proccy) return;
+      
+            const proccyWindow = proccy.contentWindow;
+            const proccyDocument = proccy.contentDocument;
+      
+            if (!proccyWindow || !proccyDocument) return;
+      
+            if (proccyWindow.eruda?._isInit) {
+              proccyWindow.eruda.destroy();
+            } else {
+              let script = proccyDocument.createElement("script");
+              script.src = "https://cdn.jsdelivr.net/npm/eruda";
+              script.onload = function () {
+                if (!proccyWindow) return;
+                proccyWindow.eruda.init();
+                proccyWindow.eruda.show();
+              };
+              proccyDocument.head.appendChild(script);
+            }
+          }
+</script>
+</html>

@@ -1,0 +1,109 @@
+a.link:hover {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--secondary);
+  background: var(--secondary);
+  transform: scale(1.04);
+  color: var(--txtcolor);
+  padding: 1px 1px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 13px;
+  text-wrap: wrap;
+}
+
+.box img {
+  border-radius: 13px;
+  width: 190px;
+  height: 190px;
+  margin: 15px;
+}
+
+.button {
+  margin: 10px;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--secondary);
+  background: var(--secondary);
+  border: none;
+  color: var(--txtcolor);
+  padding: 1px 1px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: 0.7s;
+  display: inline-block;
+}
+
+input {
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  font-size: 16px;
+  width: 100%;
+  max-width: 400px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  margin: 15px;
+  display: block;
+  outline: none;
+  transition: all ease-in-out 0.3s;
+}
+
+input:focus {
+  width: 100%;
+  max-width: 430px;
+}
+
+.search {
+  background: var(--surface);
+  height: 150px;
+  width: 500px;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.btn {
+  border-radius: 5px;
+  padding: 5px 5px;
+  background: var(--navbar);
+  backdrop-filter: blur(10px);
+  border: none;
+  color: var(--txtcolor);
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease;
+  height: 50px;
+}
+
+.suggest-container {
+  border-radius: 5px;
+  width: 200px;
+  padding: 20px;
+  background-color: var(--navbar);
+  color: var(--txtcolor);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+  transition: 1s;
+  top: 15px;
+  right: 15px;
+  position: fixed;
+  z-index: 9999;
+}
+
+.suggest-container:hover {
+  transform: translateY(-1.1rem);
+}
+
+.suggest-container.fade-out {
+  opacity: 0;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eaglercraft</title>
+  <link href="/assets/css/main.css" rel="stylesheet" type="text/css" />
+  <style>
+    img {
+      width:100px;
+      height:100px;
+      border-radius:5px;
+    }
+  </style>
+</head>
+<body theme="classic">
+  <div align="center">
+      <br>
+       <img src="/assets/images/game/1122.webp" class="gameimg" alt="Blox">
+     <p>Eaglercraft 1.12.2</p>
+      <button onclick="ab()" class="btn">Open.</button>
+  </div>
+    <script>
+      function ab() {
+    var urlObj = new window.URL(window.location.href);
+      win = window.open();
+      win.document.body.style.margin = "0";
+      win.document.body.style.height = "100vh";
+      var iframe = document.createElement("iframe");
+      iframe.style.border = "none";
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.margin = "0";
+      iframe.referrerpolicy = "no-referrer";
+      iframe.allow = "fullscreen";
+      iframe.src = "https://cdn.canvaslms.site/electrical-development/Electrical-Proxy/main/Games/mc-1.12.2/index.html";
+      win.document.body.appendChild(iframe);
+}
+    </script>
+</body>
+</html>

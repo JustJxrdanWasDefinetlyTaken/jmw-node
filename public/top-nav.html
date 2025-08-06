@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jordan's Math Work - V7</title>
+  <link rel="icon" href="/assets/images/jmw.png" />
+  <link rel="shortcut icon" href="/assets/images/jmw.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <meta name="Jordan's Math Work">
+  <meta content="Jordan's Math Work" property="og:title">
+  <meta
+    content="Jordan's Math Work is the ultimate spot where numbers meet creativity, making even the toughest equations feel like a breeze. From algebraic adventures to geometric genius, this site turns everyday math into something seriously epic."
+    property="og:description">
+
+  <style>
+    .navbar {
+      position: fixed;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: auto;
+      max-width: 1000px;
+      height: 45px;
+      background: var(--surface);
+      color: var(--txtcolor);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      transition: top 0.4s ease;
+      z-index: 999999999999;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .navbar.visible {
+      top: 0;
+    }
+
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .navbar-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      gap: 15px;
+    }
+
+    .navbar-links li {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      color: var(--txtcolor);
+    }
+
+    .navbar-links li:hover,
+    .navbar-links li.active {
+      background: rgba(255, 255, 255, 0.15);
+      font-weight: bold;
+    }
+
+    .navbar.visible {
+      top: 0;
+    }
+
+    #navbar-hover-zone {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 63px;
+      z-index: 9999999999999;
+    }
+
+
+    iframe#main-frame {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      z-index: 99999999;
+    }
+
+    #settings-panel {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 72px;
+      width: calc(100vw - 72px);
+      height: 100vh;
+      background: var(--bgcolor);
+      padding: 32px;
+      overflow-y: auto;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sidebar:hover~#settings-panel {
+      left: 240px;
+      width: calc(100vw - 240px);
+    }
+
+    #settings-panel::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #settings-panel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #settings-panel::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    #settings-panel h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+      font-weight: 300;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .settings-wrapper {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      justify-content: center;
+      max-width: 1200px;
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      position: relative;
+      top: 40px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+
+    .settings-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+      padding-top: 12px;
+      padding-left: 100px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .settings-buttons button {
+      width: 200px;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+    }
+
+    .settings-buttons button:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(0px);
+      box-shadow: none;
+    }
+
+    .settings-content {
+      flex-grow: 1;
+      width: 100%;
+    }
+
+    .setting-section {
+      display: none;
+    }
+
+    .setting-section.active {
+      display: block;
+    }
+
+    .settings-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 900px;
+      height: 400px;
+      margin: 0 auto;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .setting-card {
+      background: rgba(30, 30, 46, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .setting-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(137, 180, 250, 0.15);
+      border-color: var(--primary);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    .setting-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--txtcolor);
+      font-weight: 400;
+    }
+
+    .setting-section {
+      display: none;
+    }
+
+    .setting-section.active {
+      display: block;
+    }
+
+    .setting-card h1 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--txtcolor);
+      font-weight: 400;
+    }
+
+    .navbar .navbar-links li i {
+      font-size: 25px;
+    }
+
+    #themepicker {
+      z-index: 99999;
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      transition: background 0.3s ease;
+      width: auto;
+      min-width: 150px;
+    }
+
+    #themepicker:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    #themepicker:focus {
+      outline: none;
+      border: 2px solid #fff;
+    }
+
+    #themepicker option {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 10px;
+      border: none;
+      font-size: 1rem;
+      transition: background 0.2s ease;
+    }
+
+    #themepicker option:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    select {
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      transition: background 0.3s ease;
+      width: auto;
+      min-width: 150px;
+    }
+
+    select:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    select:focus {
+      outline: none;
+      border: 2px solid #fff;
+    }
+
+    select option {
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 10px;
+      border: none;
+      font-size: 1rem;
+      transition: background 0.2s ease;
+    }
+
+    option:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    input {
+      padding: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      font-size: 16px;
+      width: 100%;
+      max-width: 200px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+      display: block;
+      outline: none;
+      transition: all ease-in-out 0.3s;
+      margin: 10px;
+    }
+
+    hr {
+      margin: 0 10px 0;
+      outline: none;
+      background: black;
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0;
+      max-width: 200px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--surface);
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: var(--glow);
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .desc {
+      font-size: 15px;
+      color: gray;
+    }
+  </style>
+</head>
+
+<body theme="classic">
+
+  <div id="debugOverlay">
+    <div id="debugText">FPS: 0 | Ping: 0ms | CPU: 0%</div>
+    <canvas id="fpsGraph" width="200" height="40"></canvas>
+    <button id="minBtn">Minimize</button>
+  </div>
+  <div id="navbar-hover-zone"></div>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <div class="logo" data-url="/main.html"><img src="/assets/images/jmw.png" data-url="/main.html"></div>
+      <ul class="navbar-links">
+        <li data-url="/yalp/"><i class='bx bx-joystick'></i><span>Gልmes</span></li>
+        <li data-url="/sppa/"><i class='bx bx-grid-alt'></i><span>Apps</span></li>
+        <li data-url="/yxorp/"><i class='bx bx-search-alt'></i><span>Search</span></li>
+        <li data-url="/AI/"><i class='bx bx-bot'></i><span>AI</span></li>
+        <li data-url="/media/"><i class='bx bx-camera-movie'></i><span>Media</span></li>
+        <li data-url="/xtra.html"><i class='bx bx-plus-circle'></i><span>Extras</span></li>
+        <li data-url="/tahc/"><i class='bx bx-chat'></i><span>Chat</span></li>
+        <li data-url="/ezimotsuc/"><i class='bx bx-cog'></i><span>Settings</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <iframe id="main-frame" src="main.html"></iframe>
+  <div class="settings-wrapper">
+    <div class="settings-buttons">
+      <button data-section="cloaking" class="active"><i class='bx bx-ghost'></i> Cloaking</button>
+      <button data-section="customization" class="active"><i class='bx bx-edit'></i> Modification</button>
+      <button data-section="misc"><i class='bx bx-info-circle'></i>
+        Miscellaneous</button>
+    </div>
+
+    <div class="settings-content">
+      <div id="misc" class="setting-section">
+        <div class="settings-grid">
+          <div class="setting-card">
+            <h1>Debug Options</h1>
+            <p class="desc">Shows your FPS, Ping and CPU Usage on this website (is NOT logged)</p>
+            <button id="enableBtn">Enable Debug</button>
+            <button id="disableBtn" class="btn">Disable Debug</button>
+          </div>
+
+          <div class="setting-card">
+            <h1>Ads</h1>
+            <p class="desc">Enable or disable ads (on by default).</p>
+            <button id="enableAds" class="btn">Enable Ads</button>
+            <button id="disableAds">Disable Ads</button>
+          </div>
+
+          <div class="setting-card">
+            <h1>Music</h1>
+            <p class="desc">Choose a background music preset or upload your own.</p>
+            <select id="musicSelect">
+              <option value="none">None</option>
+              <option value="solidground">On Solid Ground? - Jefe (lay down remix)</option>
+              <option value="pearto">My Name is Teto Pear</option>
+              <option value="truelove">True Love - Kanye West ft. XXXTENTACION</option>
+              <option value="olympian">OLYMPIAN - Playboi Carti</option>
+              <option value="cancun">Cancun - Playbert Carti 👅</option>
+              <option value="cknose">C0CAINE NOSE - Playboi Carti</option>
+              <option value="eviljrdn">Evil Jordan - Playboi Carti</option>
+              <option value="fomdj">FOMDJ/GWAGON - Playboi Carti</option>
+              <option value="2024">2024 - Playboi Carti</option>
+              <option value="diffday">Different Day/Criteria - Playboi Carti</option>
+              <option value="backrooms">BACKR00MS - Playboi Carti and Travis Scott</option>
+              <option value="24songs">24Songs - Playboi Carti</option>
+              <option value="dgmn">DRVGS GOT ME NUMB - Playboi Carti</option>
+              <option value="custom">Custom Upload</option>
+            </select>
+            <input type="file" id="musicUpload" accept="audio/*" style="display: none;">
+            <button id="playBtn" class="btn">Play Music</button>
+            <button id="stopBtn" class="btn">Stop Music</button>
+            <input type="range" id="volumeControl" min="0" max="100" value="50">
+          </div>
+
+          <div class="setting-card">
+            <h1>About</h1>
+            <p><strong>Version:</strong> 7.0.0</p>
+            <p class="rtabtxt">This is the 7th version of Jordan's Math Work, which is a complete rewrite of the
+              previous versions.</p>
+            <p class="rtabtxt">This version is built with a focus on performance, stability, fun, and user experience.
+            </p>
+            <p class="rtabtxt">If you have any issues or suggestions, please feel free to open an issue on the GitHub
+              repository.</p>
+            <p><strong>GitHub:</strong> <a href="//github.com/galacticnetwork/jordansmathwork-v7"
+                target="_blank">Repository</a></p>
+          </div>
+        </div>
+      </div>
+      <div id="cloaking" class="setting-section active">
+        <div class="settings-grid">
+          <div class="setting-card">
+            <h1>Tab Cloaking</h1>
+            <p class="desc">Makes your tab appear to teachers that you're on an educational site.</p>
+            <select id="presetSelect">
+              <option value="">Select</option>
+              <option value="google">Google</option>
+              <option value="classroom">Google Classroom</option>
+              <option value="bing">Bing</option>
+              <option value="nearpod">Nearpod</option>
+              <option value="powerschool">PowerSchool</option>
+              <option value="chrome">Chrome</option>
+              <option value="edge">Microsoft Edge</option>
+              <option value="lausd">LAUSD Homepage</option>
+            </select>
+            <input type="text" id="customTitle" placeholder="Custom title">
+            <input type="text" id="customFavicon" placeholder="Favicon URL">
+            <button style="width:100%;" id="applyBtn">Apply</button>
+            <button style="width:100%;" id="resetBtn" class="btn">Reset</button>
+          </div>
+          <div class="setting-card">
+            <h1>Panic Key Settings</h1>
+            <p class="desc">Makes it easier and quicker to swap to an educational site.</p>
+            <p class="SBT">Choose a key to redirect yourself.</p>
+            <input type="text" id="hotkey-input" placeholder="Press any key..." maxlength="1">
+            <button style="width:100%;" id="change-hotkey-btn">Set Hotkey</button>
+
+            <p class="SBT">Redirect URL</p>
+            <input type="text" id="redirect-url-input" placeholder="Enter URL...">
+            <button style="width:100%;" id="change-URL-btn">Update URL</button>
+          </div>
+
+          <div class="setting-card">
+            <h1>About:Blank</h1>
+            <p class="desc">Makes your history disappear when clicked.</p>
+            <label class="switch">
+              <input type="checkbox" id="aboutBlankToggle">
+              <span class="slider"></span>
+            </label>
+            <br>
+            <br>
+          </div>
+
+          <div class="setting-card">
+            <h1>Anti-Tab Close</h1>
+            <p class="desc">Makes your immune to being closed by teachers, useful for goguardian.</p>
+            <label class="switch">
+              <input type="checkbox" id="toggleLeavePopup">
+              <span class="slider"></span>
+            </label>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
+      <div id="customization" class="setting-section">
+        <div class="settings-grid">
+          <div class="setting-card">
+            <h1>Themes</h1>
+            <p class="desc">Customize the page how you like it.</p>
+            <select id="themepicker">
+              <option value="select">Select Theme</option>
+              <option value="classic">Classic</option>
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+              <option value="rogue">Rogue Red</option>
+              <option value="dsc">Old Discord Theme</option>
+              <option value="legacyv6">Legacy V6</option>
+              <option value="evil-teto">Teto PMO</option>
+              <option value="pearto">Pearto</option>
+              <option value="incog">Incognito</option>
+            </select>
+          </div>
+          <div class="setting-card">
+            <h1>Navigation Position</h1>
+            <p class="desc">Customize navbar positioning.</p>
+            <select id="navbar-select">
+              <option value="side" selected>Side Navigation</option>
+              <option value="top">Top Navigation</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="/assets/scripts/index.js"></script>
+<script src="/assets/scripts/themes.js"></script>
+<script src="/assets/scripts/settings.js"></script>
+<script src="/assets/scripts/debug.js"></script>
+<script src="/assets/scripts/navbar.js"></script>
+<script src="/assets/scripts/navbar-selection.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll('.navbar-links li');
+    const iframe = document.getElementById("main-frame");
+    const settingsPanel = document.getElementById("settings-panel");
+    const navbar = document.querySelector('.navbar');
+    const hoverZone = document.getElementById('navbar-hover-zone');
+    let hideTimeout;
+
+    applyNavbarPosition('top');
+
+    function applyNavbarPosition(pos) {
+      navbar.classList.remove('top');
+      navbar.classList.add(pos);
+
+      hoverZone.style.top = '';
+      hoverZone.style.left = '';
+      hoverZone.style.height = '';
+      hoverZone.style.width = '';
+
+      if (pos === 'top') {
+        hoverZone.style.top = '0';
+        hoverZone.style.height = '63px';
+        hoverZone.style.width = '100vw';
+      }
+    }
+
+    hoverZone.addEventListener('mouseenter', () => {
+      clearTimeout(hideTimeout);
+      navbar.classList.add('visible');
+    });
+
+    hoverZone.addEventListener('mouseleave', () => {
+      hideTimeout = setTimeout(() => {
+        navbar.classList.remove('visible');
+      }, 100);
+    });
+
+    navbar.addEventListener('mouseenter', () => {
+      clearTimeout(hideTimeout);
+    });
+
+    navbar.addEventListener('mouseleave', () => {
+      hideTimeout = setTimeout(() => {
+        navbar.classList.remove('visible');
+      }, 100);
+    });
+
+    links.forEach(link => {
+      link.style.cursor = 'pointer';
+      link.addEventListener('click', () => {
+        const url = link.getAttribute('data-url');
+
+        document.querySelectorAll('.navbar-links li').forEach(el => el.classList.remove('active'));
+        link.classList.add('active');
+
+        if (url === "/ezimotsuc/") {
+          iframe.style.display = "none";
+          settingsPanel.style.display = "flex";
+        } else {
+          iframe.src = url;
+          iframe.style.display = "block";
+          settingsPanel.style.display = "none";
+        }
+      });
+    });
+
+    navbar.classList.add('visible');
+    setTimeout(() => navbar.classList.remove('visible'), 0);
+  });
+</script>
+<script>
+  const buttons = document.querySelectorAll('.settings-buttons button');
+  const sections = document.querySelectorAll('.setting-section');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.section).classList.add('active');
+    });
+  });
+</script>
+<script>
+  const musicSelect = document.getElementById('musicSelect');
+  const musicUpload = document.getElementById('musicUpload');
+  const volumeControl = document.getElementById('volumeControl');
+  const playBtn = document.getElementById('playBtn');
+  const stopBtn = document.getElementById('stopBtn');
+
+  let audio = new Audio();
+  audio.loop = true;
+  audio.volume = 0.4;
+  let isStopped = false;
+
+  function loadMusic(source) {
+    audio.pause();
+    audio.src = source;
+    audio.currentTime = 0;
+    if (!isStopped) {
+      audio.play().catch(err => console.error('Error playing music:', err));
+    }
+  }
+
+  musicSelect.addEventListener('change', function () {
+    const selected = this.value;
+    localStorage.setItem('selectedMusic', selected);
+
+    if (selected === 'custom') {
+      musicUpload.style.display = 'block';
+      const customData = localStorage.getItem('customMusic');
+      if (customData) {
+        loadMusic(customData);
+      }
+      return;
+    }
+
+    musicUpload.style.display = 'none';
+
+    if (selected === 'none') {
+      audio.pause();
+      audio.src = '';
+      return;
+    }
+
+    if (selected === 'solidground') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/solidground.mp3');
+    }
+    else if (selected === 'pearto') {
+      loadMusic('/assets/audio/pearto.mp3');
+    }
+    else if (selected === 'truelove') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/true-love.mp3');
+    }
+    else if (selected === 'olympian') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/olympian.mp3');
+    }
+    else if (selected === 'cancun') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/cancun.mp3');
+    }
+    else if (selected === 'cknose') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/cocainenose.mp3');
+    }
+    else if (selected === 'eviljrdn') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/eviljordan.mp3');
+    }
+    else if (selected === 'fomdj') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/FOMDJ.mp3');
+    }
+    else if (selected === '2024') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/2024.mp3');
+    }
+    else if (selected === 'diffday') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/different-day.mp3');
+    }
+    else if (selected === 'backrooms') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/backrooms.mp3');
+    }
+    else if (selected === '24songs') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/24songs.mp3');
+    }
+    else if (selected === 'dgmn') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/dgmn.mp3');
+    }
+    else {
+      loadMusic(`/assets/audio/${selected}.mp3`);
+    }
+  });
+
+  musicUpload.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const base64Data = e.target.result;
+        localStorage.setItem('customMusic', base64Data);
+        musicSelect.value = 'custom';
+        localStorage.setItem('selectedMusic', 'custom');
+        loadMusic(base64Data);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  volumeControl.addEventListener('input', function () {
+    audio.volume = this.value / 100;
+  });
+
+  playBtn.addEventListener('click', () => {
+    isStopped = false;
+    audio.play();
+  });
+
+  stopBtn.addEventListener('click', () => {
+    isStopped = true;
+    audio.pause();
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('selectedMusic');
+    if (saved) {
+      musicSelect.value = saved;
+      musicSelect.dispatchEvent(new Event('change'));
+    }
+  });
+</script>
+<script src="/assets/scripts/antict.js"></script>
+
+</html>

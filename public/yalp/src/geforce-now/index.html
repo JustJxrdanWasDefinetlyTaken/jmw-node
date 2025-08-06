@@ -1,0 +1,10 @@
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+              if (!localStorage.getItem('alertShown')) {
+                  alert("READ, THIS WILL ONLY POP UP ONCE. You will need an exisiting account for this! When you're done, scroll down to the text 'geforce now' and press play now.");
+  
+                  localStorage.setItem('alertShown', 'true');
+              }
+          })
+  </script>
+<iframe src="/active/index.html?autofill=https://www.nvidia.com/en-us/account/edit-profile/" style="position:fixed;top:0;bottom:0;left:0;right:0;width:100%;height:100%;border:none;margin:0;padding:0;z-index:999999;">Your browser does not support iframes</iframe>

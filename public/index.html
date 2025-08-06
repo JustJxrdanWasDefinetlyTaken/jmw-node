@@ -1,1 +1,905 @@
-dih proxy (if u see this it's working)
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jordan's Math Work - V7</title>
+  <link rel="icon" href="/assets/images/jmw.png" />
+  <link rel="shortcut icon" href="/assets/images/jmw.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <meta name="Jordan's Math Work">
+  <meta content="Jordan's Math Work" property="og:title">
+  <meta
+    content="Jordan's Math Work is the ultimate spot where numbers meet creativity, making even the toughest equations feel like a breeze. From algebraic adventures to geometric genius, this site turns everyday math into something seriously epic."
+    property="og:description">
+
+  <style>
+    @import url('/assets/css/themes.css');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bgcolor);
+      color: var(--txtcolor);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 78px;
+      height: 100vh;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border-right: 1px solid var(--border);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar:hover {
+      width: 240px;
+      box-shadow: 4px 0 24px rgba(137, 180, 250, 0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .logo:hover {
+      background: var(--surface);
+    }
+
+    .logo img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      filter: drop-shadow(0 0 8px var(--glow));
+    }
+
+    .sidebar-links {
+      list-style: none;
+      padding: 12px;
+      flex: 1;
+    }
+
+    .sidebar-links li {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 16px;
+      margin: 4px 0;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-links li:hover {
+      background: var(--surface-hover);
+      transform: translateX(2px);
+    }
+
+    .sidebar-links li.active {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--bgcolor);
+      font-weight: 500;
+      box-shadow: 0 4px 12px rgba(137, 180, 250, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      transform: none;
+      padding: 14px 16px;
+    }
+
+    .sidebar-links li i {
+      font-size: 22px;
+      min-width: 22px;
+      color: var(--primary);
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-links li.active i {
+      color: var(--bgcolor);
+    }
+
+    .sidebar-links li span {
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+      font-weight: 400;
+    }
+
+    .sidebar:hover .sidebar-links li span {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .sidebar hr {
+      border: none;
+      height: 1px;
+      background: var(--border);
+      margin: 12px 16px;
+      opacity: 0.5;
+    }
+
+    iframe#main-frame {
+      position: fixed;
+      top: 0;
+      left: 72px;
+      width: calc(100vw - 72px);
+      height: 100vh;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: var(--bgcolor);
+      z-index: 9999;
+    }
+
+    .sidebar:hover~iframe#main-frame {
+      left: 240px;
+      width: calc(100vw - 240px);
+    }
+
+    #settings-panel {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 72px;
+      width: calc(100vw - 72px);
+      height: 100vh;
+      background: var(--bgcolor);
+      padding: 32px;
+      overflow-y: auto;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sidebar:hover~#settings-panel {
+      left: 240px;
+      width: calc(100vw - 240px);
+    }
+
+    #settings-panel::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #settings-panel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #settings-panel::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    #settings-panel h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+      font-weight: 300;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .settings-wrapper {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      justify-content: center;
+      max-width: 1200px;
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      position: relative;
+      top: 70px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+
+    .settings-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
+      padding-top: 12px;
+      padding-left: 210px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .settings-buttons button {
+      width: 200px;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+    }
+
+    .settings-buttons button:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(0px);
+      box-shadow: none;
+    }
+
+    .settings-content {
+      flex-grow: 1;
+      width: 100%;
+    }
+
+    .setting-section {
+      display: none;
+    }
+
+    .setting-section.active {
+      display: block;
+    }
+
+    .settings-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 780px;
+      height: 400px;
+      margin: 0 auto;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .setting-card {
+      background: rgba(30, 30, 46, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .setting-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(137, 180, 250, 0.15);
+      border-color: var(--primary);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+
+    .setting-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--txtcolor);
+      font-weight: 400;
+    }
+
+    .setting-section {
+      display: none;
+    }
+
+    .setting-section.active {
+      display: block;
+    }
+
+    .setting-card h1 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: var(--txtcolor);
+      font-weight: 400;
+    }
+
+    select,
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(30, 30, 46, 0.8);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--txtcolor);
+      font-size: 14px;
+      transition: all 0.2s ease;
+      margin-bottom: 12px;
+    }
+
+    select:focus,
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(137, 180, 250, 0.1);
+    }
+
+    select option {
+      background: var(--bg-color);
+      color: var(--txtcolor);
+      padding: 8px;
+    }
+
+    button {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--txtcolor);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin: 6px 4px;
+      font-size: 15px;
+      min-width: 120px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(137, 180, 250, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .btn {
+      background: rgba(137, 180, 250, 0.1);
+      color: var(--txtcolor);
+      border: 1px solid var(--border);
+    }
+
+    .btn:hover {
+      background: var(--surface-hover);
+      border-color: var(--primary);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 16px 0;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 48px;
+      height: 26px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(137, 180, 250, 0.2);
+      border-radius: 26px;
+      transition: all 0.3s ease;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      top: 3px;
+      background: var(--txtcolor);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .toggle-switch input:checked+.slider {
+      background: var(--primary);
+    }
+
+    .toggle-switch input:checked+.slider:before {
+      transform: translateX(22px);
+      background: var(--bg-color);
+    }
+
+    #debugOverlay {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: rgba(30, 30, 46, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      color: var(--txtcolor);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      z-index: 1000;
+      min-width: 200px;
+    }
+
+    #debugText {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    #fpsGraph {
+      border-radius: 4px;
+      background: rgba(137, 180, 250, 0.1);
+    }
+
+    #minBtn {
+      margin-top: 8px;
+      padding: 6px 12px;
+      font-size: 10px;
+      min-width: auto;
+    }
+
+    p {
+      margin-bottom: 12px;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--secondary);
+    }
+
+    .rtabtxt {
+      font-size: 13px;
+      opacity: 0.7;
+      margin-bottom: 16px;
+    }
+
+    .SBT {
+      font-weight: 500;
+      margin: 20px 0 8px;
+    }
+
+    @media (max-width: 768px) {
+      .settings-grid {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
+      }
+
+      #settings-panel {
+        padding: 20px 16px;
+      }
+
+      .setting-card {
+        padding: 20px;
+      }
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--surface);
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: var(--glow);
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    .desc {
+      font-size: 15px;
+      color: gray;
+    }
+  </style>
+</head>
+
+<body theme="classic">
+  <div id="debugOverlay" style="display: none;">
+    <div id="debugText">FPS: 0 | Ping: 0ms | CPU: 0%</div>
+    <canvas id="fpsGraph" width="200" height="40"></canvas>
+    <button id="minBtn">Minimize</button>
+  </div>
+
+  <div class="sidebar">
+    <div class="logo" data-url="/main.html">
+      <img src="/assets/images/jmw.png" alt="JMW">
+    </div>
+    <ul class="sidebar-links">
+      <li class="active" data-url="/main.html">
+        <i class='bx bx-home'></i>
+        <span>Home</span>
+      </li>
+      <li data-url="/yalp/">
+        <i class='bx bx-joystick'></i>
+        <span>Games</span>
+      </li>
+      <li data-url="/sppa/">
+        <i class='bx bx-grid-alt'></i>
+        <span>Apps</span>
+      </li>
+      <li data-url="/yxorp/">
+        <i class='bx bx-search-alt'></i>
+        <span>Search</span>
+      </li>
+      <li data-url="/AI/">
+        <i class='bx bx-bot'></i>
+        <span>AI</span>
+      </li>
+      <li data-url="/media/">
+        <i class='bx bx-camera-movie'></i>
+        <span>Media</span>
+      </li>
+      <hr>
+      <li data-url="/xtra.html">
+        <i class='bx bx-plus-circle'></i>
+        <span>Extras</span>
+      </li>
+      <li data-url="/tahc/">
+        <i class='bx bx-chat'></i>
+        <span>Chat</span>
+      </li>
+      <li data-url="/ezimotsuc/">
+        <i class='bx bx-cog'></i>
+        <span>Settings</span>
+      </li>
+    </ul>
+  </div>
+
+  <iframe id="main-frame" src="main.html"></iframe>
+
+  <div class="settings-wrapper">
+    <div class="settings-buttons">
+      <button data-section="cloaking" class="active"><i class='bx bx-ghost'></i> Cloaking</button>
+      <button data-section="customization" class="active"><i class='bx bx-edit'></i> Modification</button>
+      <button data-section="misc"><i class='bx bx-info-circle'></i>
+        Miscellaneous</button>
+    </div>
+
+    <div class="settings-content">
+      <div id="misc" class="setting-section">
+        <div class="settings-grid">
+          <div class="setting-card">
+            <h1>Debug Options</h1>
+            <p class="desc">Shows your FPS, Ping and CPU Usage on this website (is NOT logged)</p>
+            <button id="enableBtn">Enable Debug</button>
+            <button id="disableBtn" class="btn">Disable Debug</button>
+          </div>
+
+          <div class="setting-card">
+            <h1>Ads</h1>
+            <p class="desc">Enable or disable ads (on by default).</p>
+            <button id="enableAds" class="btn">Enable Ads</button>
+            <button id="disableAds">Disable Ads</button>
+          </div>
+
+          <div class="setting-card">
+            <h1>Music</h1>
+            <p class="desc">Choose a background music preset or upload your own.</p>
+            <select id="musicSelect">
+              <option value="none">None</option>
+              <option value="solidground">On Solid Ground? - Jefe (lay down remix)</option>
+              <option value="pearto">My Name is Teto Pear</option>
+              <option value="truelove">True Love - Kanye West ft. XXXTENTACION</option>
+              <option value="olympian">OLYMPIAN - Playboi Carti</option>
+              <option value="cancun">Cancun - Playbert Carti 👅</option>
+              <option value="cknose">C0CAINE NOSE - Playboi Carti</option>
+              <option value="eviljrdn">Evil Jordan - Playboi Carti</option>
+              <option value="fomdj">FOMDJ/GWAGON - Playboi Carti</option>
+              <option value="2024">2024 - Playboi Carti</option>
+              <option value="diffday">Different Day/Criteria - Playboi Carti</option>
+              <option value="backrooms">BACKR00MS - Playboi Carti and Travis Scott</option>
+              <option value="24songs">24Songs - Playboi Carti</option>
+              <option value="dgmn">DRVGS GOT ME NUMB - Playboi Carti</option>
+              <option value="custom">Custom Upload</option>
+            </select>
+            <input type="file" id="musicUpload" accept="audio/*" style="display: none;">
+            <button id="playBtn" class="btn">Play Music</button>
+            <button id="stopBtn" class="btn">Stop Music</button>
+            <input type="range" id="volumeControl" min="0" max="100" value="50">
+          </div>
+
+          <div class="setting-card">
+            <h1>About</h1>
+            <p><strong>Version:</strong> 7.0.0</p>
+            <p class="rtabtxt">This is the 7th version of Jordan's Math Work, which is a complete rewrite of the
+              previous versions.</p>
+            <p class="rtabtxt">This version is built with a focus on performance, stability, fun, and user experience.
+            </p>
+            <p class="rtabtxt">If you have any issues or suggestions, please feel free to open an issue on the GitHub
+              repository.</p>
+            <p><strong>GitHub:</strong> <a href="//github.com/galacticnetwork/jordansmathwork-v7"
+                target="_blank">Repository</a></p>
+          </div>
+        </div>
+      </div>
+      <div id="cloaking" class="setting-section active">
+        <div class="settings-grid">
+          <div class="setting-card">
+            <h1>Tab Cloaking</h1>
+            <p class="desc">Makes your tab appear to teachers that you're on an educational site.</p>
+            <select id="presetSelect">
+              <option value="">Select</option>
+              <option value="google">Google</option>
+              <option value="classroom">Google Classroom</option>
+              <option value="bing">Bing</option>
+              <option value="nearpod">Nearpod</option>
+              <option value="powerschool">PowerSchool</option>
+              <option value="chrome">Chrome</option>
+              <option value="edge">Microsoft Edge</option>
+              <option value="lausd">LAUSD Homepage</option>
+            </select>
+            <input type="text" id="customTitle" placeholder="Custom title">
+            <input type="text" id="customFavicon" placeholder="Favicon URL">
+            <button style="width:100%;" id="applyBtn">Apply</button>
+            <button style="width:100%;" id="resetBtn" class="btn">Reset</button>
+          </div>
+          <div class="setting-card">
+            <h1>Panic Key Settings</h1>
+            <p class="desc">Makes it easier and quicker to swap to an educational site.</p>
+            <p class="SBT">Choose a key to redirect yourself.</p>
+            <input type="text" id="hotkey-input" placeholder="Press any key..." maxlength="1">
+            <button style="width:100%;" id="change-hotkey-btn">Set Hotkey</button>
+
+            <p class="SBT">Redirect URL</p>
+            <input type="text" id="redirect-url-input" placeholder="Enter URL...">
+            <button style="width:100%;" id="change-URL-btn">Update URL</button>
+          </div>
+
+          <div class="setting-card">
+            <h1>About:Blank</h1>
+            <p class="desc">Makes your history disappear when clicked.</p>
+            <label class="switch">
+              <input type="checkbox" id="aboutBlankToggle">
+              <span class="slider"></span>
+            </label>
+            <br>
+            <br>
+          </div>
+          <div class="setting-card">
+            <h1>Anti-Tab Close</h1>
+            <p class="desc">Makes your immune to being closed by teachers, useful for goguardian.</p>
+            <label class="switch">
+              <input type="checkbox" id="toggleLeavePopup">
+              <span class="slider"></span>
+            </label>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
+      <div id="customization" class="setting-section">
+        <div class="settings-grid">
+          <div class="setting-card">
+            <h1>Themes</h1>
+            <p class="desc">Customize the page how you like it.</p>
+            <select id="themepicker">
+              <option value="select">Select Theme</option>
+              <option value="classic">Classic</option>
+              <option value="dark">Dark</option>
+              <option value="light">Light</option>
+              <option value="rogue">Rogue Red</option>
+              <option value="dsc">Old Discord Theme</option>
+              <option value="legacyv6">Legacy V6</option>
+              <option value="evil-teto">Teto PMO</option>
+              <option value="pearto">Pearto</option>
+              <option value="incog">Incognito</option>
+            </select>
+          </div>
+          <div class="setting-card">
+            <h1>Navigation Position</h1>
+            <p class="desc">Customize navbar positioning.</p>
+            <select id="navbar-select">
+              <option value="side" selected>Side Navigation</option>
+              <option value="top">Top Navigation</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/assets/scripts/index.js"></script>
+  <script src="/assets/scripts/themes.js"></script>
+  <script src="/assets/scripts/settings.js"></script>
+  <script src="/assets/scripts/debug.js"></script>
+  <script src="/assets/scripts/navbar.js"></script>
+  <script src="/assets/scripts/navbar-selection.js"></script>
+  <script>
+    const buttons = document.querySelectorAll('.settings-buttons button');
+    const sections = document.querySelectorAll('.setting-section');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        buttons.forEach(b => b.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.section).classList.add('active');
+      });
+    });
+  </script>
+</body>
+<script>
+  const musicSelect = document.getElementById('musicSelect');
+  const musicUpload = document.getElementById('musicUpload');
+  const volumeControl = document.getElementById('volumeControl');
+  const playBtn = document.getElementById('playBtn');
+  const stopBtn = document.getElementById('stopBtn');
+
+  let audio = new Audio();
+  audio.loop = true;
+  audio.volume = 0.4;
+  let isStopped = false;
+
+  function loadMusic(source) {
+    audio.pause();
+    audio.src = source;
+    audio.currentTime = 0;
+    if (!isStopped) {
+      audio.play().catch(err => console.error('Error playing music:', err));
+    }
+  }
+
+  musicSelect.addEventListener('change', function () {
+    const selected = this.value;
+    localStorage.setItem('selectedMusic', selected);
+
+    if (selected === 'custom') {
+      musicUpload.style.display = 'block';
+      const customData = localStorage.getItem('customMusic');
+      if (customData) {
+        loadMusic(customData);
+      }
+      return;
+    }
+
+    musicUpload.style.display = 'none';
+
+    if (selected === 'none') {
+      audio.pause();
+      audio.src = '';
+      return;
+    }
+
+    if (selected === 'solidground') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/solidground.mp3');
+    }
+    else if (selected === 'pearto') {
+      loadMusic('/assets/audio/pearto.mp3');
+    }
+    else if (selected === 'truelove') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/true-love.mp3');
+    }
+    else if (selected === 'olympian') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/olympian.mp3');
+    }
+    else if (selected === 'cancun') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/cancun.mp3');
+    }
+    else if (selected === 'cknose') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/cocainenose.mp3');
+    }
+    else if (selected === 'eviljrdn') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/eviljordan.mp3');
+    }
+    else if (selected === 'fomdj') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/FOMDJ.mp3');
+    }
+    else if (selected === '2024') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/2024.mp3');
+    }
+    else if (selected === 'diffday') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/different-day.mp3');
+    }
+    else if (selected === 'backrooms') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/backrooms.mp3');
+    }
+    else if (selected === '24songs') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/24songs.mp3');
+    }
+    else if (selected === 'dgmn') {
+      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/dgmn.mp3');
+    }
+    else {
+      loadMusic(`/assets/audio/${selected}.mp3`);
+    }
+  });
+
+  musicUpload.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const base64Data = e.target.result;
+        localStorage.setItem('customMusic', base64Data);
+        musicSelect.value = 'custom';
+        localStorage.setItem('selectedMusic', 'custom');
+        loadMusic(base64Data);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  volumeControl.addEventListener('input', function () {
+    audio.volume = this.value / 100;
+  });
+
+  playBtn.addEventListener('click', () => {
+    isStopped = false;
+    audio.play();
+  });
+
+  stopBtn.addEventListener('click', () => {
+    isStopped = true;
+    audio.pause();
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('selectedMusic');
+    if (saved) {
+      musicSelect.value = saved;
+      musicSelect.dispatchEvent(new Event('change'));
+    }
+  });
+</script>
+<script src="/assets/scripts/antict.js"></script>
+
+</html>

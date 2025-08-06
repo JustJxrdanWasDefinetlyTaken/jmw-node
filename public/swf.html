@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fullscreen SWF Player</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: black;
+    }
+    #upload-container {
+      position: relative;
+      top: 300px;
+      width: 250px;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 5px;
+      font-family: sans-serif;
+    }
+    #player-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
+    ruffle-player {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+    #drop-zone {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 32px;
+      z-index: 5;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <center>
+    <div align="center">
+      <div align="center" id="upload-container">
+        <input type="file" id="file-input" accept=".swf">
+        <p>Upload your .swf file or drag it.</p>
+      </div>
+    </div>
+  </center>
+  <div id="drop-zone">Drop your .swf file here</div>
+  <div id="player-container"></div>
+
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+  <script>
+    const ruffle = window.RufflePlayer.newest();
+    const player = ruffle.createPlayer();
+    const container = document.getElementById("player-container");
+    const uploadUI = document.getElementById("upload-container");
+    const dropZone = document.getElementById("drop-zone");
+    container.appendChild(player);
+
+    function enterFullscreen() {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) elem.requestFullscreen();
+      else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+      else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+    }
+
+    function loadSWFfromURL(url) {
+      player.load(url);
+      uploadUI.style.display = "none";
+      enterFullscreen();
+    }
+
+    function loadSWF(file) {
+      if (!file || !file.name.endsWith(".swf")) {
+        alert("Please use a valid .swf file.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const blob = new Blob([e.target.result], { type: "application/x-shockwave-flash" });
+        const url = URL.createObjectURL(blob);
+        loadSWFfromURL(url);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    document.getElementById("file-input").addEventListener("change", (e) => {
+      loadSWF(e.target.files[0]);
+    });
+
+    document.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.style.display = "flex";
+    });
+    document.addEventListener("dragleave", (e) => {
+      e.preventDefault();
+      dropZone.style.display = "none";
+    });
+    document.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.style.display = "none";
+      loadSWF(e.dataTransfer.files[0]);
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const swfParam = params.get("swf");
+    if (swfParam && swfParam.endsWith(".swf")) {
+      const swfURL = `/assets/storage/gs/${swfParam}`;
+      loadSWFfromURL(swfURL);
+    }
+  </script>
+</body>
+</html>

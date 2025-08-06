@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JMW AI</title>
+  <link rel="icon" href="/assets/images/jmw.png" />
+  <link rel="shortcut icon" href="/assets/images/jmw.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <link rel="stylesheet" href="/assets/css/ai.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });">
+</script>
+</head>
+<body>
+  <select id="model-select">
+    <option value="llama3-8B-8192">LLaMA 3 8B – <br> Best for Everyday Tasks</option>
+    <option value="llama3-70B-8192">LLaMA 3 70B – <br> Best for Complex Tasks</option>
+    <option value="gemma2-9b-it">Gemma 2 9B – <br><br> Best for coding</option>
+  </select>
+  <button id="new-chat-button" class="new-chat-button">New Chat</button>
+  <div class="chat-container" id="chat-container"></div>
+  <div class="message-box">
+    <br>
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button id="send-button">↑</button>
+  </div>
+    <center>
+    <p style="font-size: 12px; color: #888;">JMW AI is not always right. Check your information.</p>
+    </center>
+<script>
+  const chatContainer = document.getElementById('chat-container');
+  const userInput = document.getElementById('user-input');
+  const sendButton = document.getElementById('send-button');
+  const newChatButton = document.getElementById('new-chat-button');
+  const modelSelect = document.getElementById('model-select');
+
+  const apiKey = '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';
+
+  const systemRoles = {
+    'llama3-8B-8192': "You are JMW AI, a bot for daily tasks and fast answers. Don't mention that you're a bot or that you can do homework. Just say, 'How can I assist you?'",
+    'llama3-70B-8192': "You are JMW AI, optimized for handling complex tasks and providing detailed explanations. Avoid mentioning your capabilities; instead, ask, 'How can I assist you today?'",
+    'gemma2-9b-it': "You are JMW AI, designed for coding. Keep responses friendly and engaging."
+  };
+
+  let currentModel = localStorage.getItem('selectedModel') || 'llama3-8B-8192';
+  modelSelect.value = currentModel;
+
+  let conversationHistory = loadHistory(currentModel);
+
+  function loadHistory(model) {
+    return JSON.parse(localStorage.getItem(`chatHistory-${model}`)) || [];
+  }
+
+  function storeChat(model, history) {
+    localStorage.setItem(`chatHistory-${model}`, JSON.stringify(history));
+  }
+
+  function updateChat() {
+    chatContainer.innerHTML = '';
+    conversationHistory.forEach(({ text, author }) => {
+      appendChatMessage(text, author);
+    });
+  }
+
+  async function getAIResponse(message) {
+    const apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
+    const requestData = {
+      model: currentModel,
+      messages: [
+        { role: "system", content: systemRoles[currentModel] || "" },
+        { role: "user", content: message }
+      ],
+      temperature: 0.8,
+      max_tokens: 1024
+    };
+
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestData)
+    });
+
+    if (!response.ok) {
+      const errText = await response.text();
+      throw new Error(`Error ${response.status}: ${errText}`);
+    }
+
+    return await response.json();
+  }
+
+  async function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+
+    appendChatMessage(message, 'user');
+    userInput.value = '';
+    conversationHistory.push({ text: message, author: 'user' });
+    storeChat(currentModel, conversationHistory);
+
+    try {
+      const apiResponse = await getAIResponse(message);
+      const aiMessage = apiResponse.choices[0].message.content;
+      appendChatMessage(aiMessage, 'ai', true);
+      conversationHistory.push({ text: aiMessage, author: 'ai' });
+      storeChat(currentModel, conversationHistory);
+    } catch (error) {
+      appendChatMessage(`Error: ${error.message}`, 'ai');
+    }
+  }
+
+  sendButton.addEventListener('click', sendMessage);
+  userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+
+  newChatButton.addEventListener('click', () => {
+    conversationHistory = [];
+    storeChat(currentModel, conversationHistory);
+    updateChat();
+  });
+
+  modelSelect.addEventListener('change', () => {
+    currentModel = modelSelect.value;
+    localStorage.setItem('selectedModel', currentModel);
+    conversationHistory = loadHistory(currentModel);
+    updateChat();
+  });
+
+  function escapeHTML(str) {
+    return str.replace(/[&<>\"]/g, tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;'
+    }[tag] || tag));
+  }
+
+  function formatMessageContent(message) {
+    return message
+      .replace(/\*\*\*(.*?)\*\*\*/g, (_, text) => `<em>${escapeHTML(text)}</em>`)
+      .replace(/\*\*(.*?)\*\*/g, (_, text) => `<strong>${escapeHTML(text)}</strong>`)
+      .replace(/(^|\n)\*(?!\*)([^*\n]+)/g, (_, br, item) => `${br}<ul><li>${escapeHTML(item.trim())}</li></ul>`)
+      .replace(/```(\w+)?\n([\s\S]+?)```/g, (match, lang, code) => {
+        return `
+        <div class="code-wrapper">
+          <div class="code-title">
+            <button class="copy-btn"><i class="fa-regular fa-clone"></i></button>
+          </div>
+          <pre><code class="${lang || 'plaintext'}">${escapeHTML(code)}</code></pre>
+        </div>`;
+      })
+      .replace(/`([^`]+)`/g, (_, inlineCode) => `<code>${escapeHTML(inlineCode)}</code>`);
+  }
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.copy-btn')) {
+      const codeElement = e.target.closest('.code-wrapper').querySelector('pre code');
+      copyToClipboard(codeElement.textContent);
+    }
+  });
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => alert('Copied!'));
+  }
+
+  function appendChatMessage(content, author, animate = false) {
+    const messageBlock = document.createElement('div');
+    messageBlock.className = `chat-entry ${author}`;
+
+    const labelDiv = document.createElement('div');
+    labelDiv.className = 'chat-label';
+    labelDiv.textContent = author === 'user' ? 'You:' : 'AI:';
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = author === 'user' ? 'chat-bubble' : 'chat-standard';
+
+    if (animate && author === 'ai') {
+      let i = 0;
+      const formatted = formatMessageContent(content);
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = formatted;
+      const plainText = tempDiv.textContent;
+
+      const interval = setInterval(() => {
+        contentDiv.textContent = plainText.substring(0, i) + (i % 2 === 0 ? '|' : '');
+        i++;
+        if (i > plainText.length) {
+          clearInterval(interval);
+          contentDiv.innerHTML = formatted;
+          if (typeof renderMathInElement === 'function') {
+            renderMathInElement(contentDiv, {
+              delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false }
+              ]
+            });
+          }
+        }
+      }, 10);
+    } else {
+      contentDiv.innerHTML = formatMessageContent(content);
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(contentDiv, {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false }
+          ]
+        });
+      }
+    }
+
+    messageBlock.appendChild(labelDiv);
+    messageBlock.appendChild(contentDiv);
+    chatContainer.appendChild(messageBlock);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }
+
+  updateChat();
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const exampleButtons = document.querySelectorAll('.prompt-btn');
+  const userInput = document.getElementById('user-input');
+  const promptsContainer = document.querySelector('.prompts');
+  const newChatButton = document.getElementById('new-chat-button');
+
+  exampleButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      userInput.value = btn.textContent.trim();
+      userInput.focus();
+      promptsContainer.style.display = 'none';
+    });
+  });
+
+  if (newChatButton && promptsContainer) {
+    newChatButton.addEventListener('click', () => {
+      promptsContainer.style.display = 'flex';
+    });
+  }
+});
+</script>    
+<script src="/assets/scripts/index.js"></script>
+</body>
+</html>

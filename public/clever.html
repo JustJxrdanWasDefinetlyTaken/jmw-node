@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clever Log in</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-image: url('https://assets.clever.com/oauth/19012509306e2e0ef0b42a97ab31e82c22d45035/947f16fc26ec64d3e22a80dd092a5854.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .overlay {
+      background-color: rgba(255, 255, 255, 0.9);
+      display: flex;
+      padding: 40px;
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .left {
+      flex: 2;
+      padding-right: 10px;
+    }
+
+    .right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-left: 1px solid #ddd;
+      padding-left: 10px;
+    }
+
+    h1 {
+      color: #3064f3;
+      font-size: 48px;
+      font-weight: 1000;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 10px;
+      color: #555;
+    }
+
+    input[type="text"] {
+      width: 350px;
+      padding: 12px;
+      font-size: 16px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .clever-badge {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .clever-badge img {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    .login-btn {
+      display: block;
+      width: 100%;
+      background-color: #3064f3;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 10px;
+    }
+
+    .admin-login {
+      margin-top: 10px;
+      color: #3064f3;
+      font-size: 14px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: white;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: underline;
+      display: block;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="left">
+      <h1>Log in</h1>
+      <h2>Search for your school</h2>
+      <label for="school">School name</label>
+      <br>
+      <input type="text" id="school" placeholder="Type school name here..." />
+    </div>
+    <div class="right">
+      <div class="clever-badge">
+        <h2 style="color:#3064f3; font-weight: 700;">Clever</h2>
+        <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzZweCIgaGVpZ2h0PSIzNnB4IiB2aWV3Qm94PSIwIDAgMzYgMzYiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDUwLjIgKDU1MDQ3KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5iYWRnZV9xcjwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJQYWdlLTEiIHN0cm9rZT0ibm9uZSIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxnIGlkPSJiYWRnZV9xciI+CiAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUtMTA2IiBzdHJva2U9IiNFM0U2RUIiIHN0cm9rZS13aWR0aD0iMC42NjU1IiBmaWxsPSIjRkFGQUZDIiB4PSIwLjMzMjc1IiB5PSIwLjMzMjc1IiB3aWR0aD0iMzUuMzM0NSIgaGVpZ2h0PSIzNS4zMzQ1Ij48L3JlY3Q+CiAgICAgICAgICAgIDxnIGlkPSJHcm91cC0xMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMy4wMDAwMDAsIDMuNTAwMDAwKSI+CiAgICAgICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlLTEwNyIgc3Ryb2tlPSIjNDI3NEY2IiBzdHJva2Utd2lkdGg9IjIuNSIgeD0iMS4yNSIgeT0iMS4yNSIgd2lkdGg9IjExLjIzMjU4NTgiIGhlaWdodD0iMTAuOTk1MTUxMiI+PC9yZWN0PgogICAgICAgICAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZS0xMDciIGZpbGw9IiM0Mjc0RjYiIHg9IjQuNTc3NTI4NTkiIHk9IjQuNDk4MzgzNzQiIHdpZHRoPSI0LjU3NzUyODU5IiBoZWlnaHQ9IjQuNDk4MzgzNzQiPjwvcmVjdD4KICAgICAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUtMTA3IiBzdHJva2U9IiM0Mjc0RjYiIHN0cm9rZS13aWR0aD0iMiIgeD0iMTcuMDIxMzUwMSIgeT0iMSIgd2lkdGg9IjExLjczMjU4NTgiIGhlaWdodD0iMTEuNDk1MTUxMiI+PC9yZWN0PgogICAgICAgICAgICAgICAgPHJlY3QgaWQ9IlJlY3RhbmdsZS0xMDciIGZpbGw9IiM0Mjc0RjYiIHg9IjIwLjU5ODg3ODYiIHk9IjQuNDk4MzgzNzQiIHdpZHRoPSI0LjU3NzUyODU5IiBoZWlnaHQ9IjQuNDk4MzgzNzQiPjwvcmVjdD4KICAgICAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUtMTA3IiBzdHJva2U9IiM0Mjc0RjYiIHN0cm9rZS13aWR0aD0iMi43NSIgeD0iMS4zNzUiIHk9IjE3LjExOTM0MzEiIHdpZHRoPSIxMC45ODI1ODU4IiBoZWlnaHQ9IjEwLjc0NTE1MTIiPjwvcmVjdD4KICAgICAgICAgICAgICAgIDxnIGlkPSJHcm91cC0xMCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTYuMDIxMzUwLCAxNC45OTQ2MTIpIiBmaWxsPSIjNDI3NEY2Ij4KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNNS4zNDA0NTAwMiw2Ljc0NzU3NTYxIEwzLjA1MTY4NTcyLDYuNzQ3NTc1NjEgTDMuMDUxNjg1NzIsMTQuMjQ0ODgxOCBMMCwxNC4yNDQ4ODE4IEwwLC00LjU0N2UtMTMgTDMuMDUxNjg1NzIsLTQuNTQ3ZS0xMyBMOC4zOTIxMzU3NCwtNC4zOTYwMDk2N2UtMTMgTDguMzkyMTM1NzQsMi45OTg5MjI0OSBMMTAuNjgwOSwyLjk5ODkyMjQ5IEwxMC42ODA5LC00LjQ3MTUwNDgzZS0xMyBMMTMuNzMyNTg1OCwtNC40NzE1MDQ4M2UtMTMgTDEzLjczMjU4NTgsNi43NDc1NzU2MSBMMTMuNzMyNTg1OCw4Ljk5Njc2NzQ4IEw1LjM0MDQ1MDAyLDguOTk2NzY3NDggTDUuMzQwNDUwMDIsNi43NDc1NzU2MSBaIiBpZD0iQ29tYmluZWQtU2hhcGUiPjwvcGF0aD4KICAgICAgICAgICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlLTExMyIgeD0iMTAuNjgwOSIgeT0iMTEuMjQ1OTU5MyIgd2lkdGg9IjMuMDUxNjg1NzIiIGhlaWdodD0iMi45OTg5MjI0OSI+PC9yZWN0PgogICAgICAgICAgICAgICAgICAgIDxyZWN0IGlkPSJSZWN0YW5nbGUtMTEzIiB4PSI1LjM0MDQ1MDAyIiB5PSIxMS4yNDU5NTkzIiB3aWR0aD0iMy4wNTE2ODU3MiIgaGVpZ2h0PSIyLjk5ODkyMjQ5Ij48L3JlY3Q+CiAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlLTEwNyIgZmlsbD0iIzQyNzRGNiIgeD0iNC41Nzc1Mjg1OSIgeT0iMjAuMjQyNzI2OCIgd2lkdGg9IjQuNTc3NTI4NTkiIGhlaWdodD0iNC40OTgzODM3NCI+PC9yZWN0PgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4=" alt="QR Code" />
+        <a class="login-btn" href="#">Clever Badge log in</a>
+        <a class="admin-login" href="#">District admin log in</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <strong>Clever © 2025</strong><br />
+    <a href="https://clever.com/trust/privacy/policy">https://clever.com/trust/privacy/policy</a>
+    <a href="https://clever.com/about/terms">https://clever.com/about/terms</a>
+  </div>
+</body>
+</html>

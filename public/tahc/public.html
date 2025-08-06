@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JMW Chat - Public Rooms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.scaledrone.com/scaledrone.min.js"></script>
+  <link rel="icon" href="/assets/images/jmw.png" />
+  <link rel="shortcut icon" href="/assets/images/jmw.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
+  <style>
+    @import url('/assets/css/themes.css');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bgcolor);
+      color: var(--txtcolor);
+    }
+
+    input {
+      color: var(--txtcolor);
+    }
+
+    input::placeholder {
+      color: var(--txtcolor);
+    }
+
+    .centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 95vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .modal {
+      background: var(--bgcolor);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .modal input,
+    .modal button {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .modal input {
+      height: 40px;
+    }
+
+    .modal button {
+      background-color: var(--surface-hover);
+      color: var(--txtcolor);
+      border: none;
+      cursor: pointer;
+    }
+
+    #chatUI {
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .header {
+      background: var(--surface-hover);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      font-weight: 600;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header button {
+      background: #dc3545;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: var(--bgcolor);
+    }
+
+    .message {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 1rem;
+      background: black;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      max-width: 70%;
+      word-break: break-word;
+    }
+
+    .self {
+      align-self: flex-end;
+      background: var(--surface);
+      color: var(--txtcolor);
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--surface-hover);
+      color: var(--txtcolor);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+      font-weight: bold;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 5px;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+      padding: 1rem;
+      background: var(--surface);
+      border-top: 1px solid #ddd;
+    }
+
+    .input-area input[type="text"] {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid var(--surface-hover);
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .input-area button {
+      padding: 0.8rem 1.2rem;
+      background: var(--surface);
+      color: var(--txtcolor);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .mic-btn {
+      background: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--txtcolor);
+      border: none;
+      padding: 0;
+    }
+
+    #emojiList {
+      display: none;
+      flex-wrap: wrap;
+      flex-direction: row;
+      width: 600px;
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      background: var(--txtcolor);
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      gap: 5px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+
+<body theme="classic">
+  <div class="centered" id="joinScreen">
+    <div class="modal">
+      <h2>JMW Public Rooms</h2>
+      <center>
+        <h2>What are the JMW Public rooms?</h2>
+        <p>The JMW Public Rooms is a new and improved version of the Widgetbot, whether you want to talk to someone local in public, or talk with other JMW Site users, this is the place to be! <br><br> This is in beta, so report any bugs!</p>
+        <button style="width:400px;" onclick="window.location.href='/tahc/private.html'">Wanna talk to people privately? Click
+          here!</button>
+        <input style="background:var(--surface);" type="text" id="nameInput" placeholder="Enter your name" maxlength="50"
+          autocomplete="off" />
+        <button onclick="joinChat()">Join General</button>
+      </center>
+      <br>
+      <p id="errorText" style="color:red; font-size: 0.9rem;border-radius:15px;"></p>
+    </div>
+  </div>
+
+  <div id="chatUI">
+    <div class="header">
+      <div>JMW Chat - <span id="displayName"></span> in General</div>
+      <div><span id="userCount">0</span> online <button onclick="leaveChat()" title="Leave chat">Leave Chat</button></div>
+    </div>
+    <div class="chat-area" id="chatArea"></div>
+    <div class="input-area">
+      <input style="background:var(--surface);box-shadow:0px 0px 5px 5px white;" type="text" id="chatInput"
+        placeholder="Type a message..." maxlength="500" autocomplete="off" />
+      <button onclick="toggleEmojiList()" title="Show emojis"><i class='bx bx-smile'></i></button>
+      <button onclick="sendChat()">Send</button>
+    </div>
+    <div id="emojiList"></div>
+  </div>
+
+  <script>
+    const OWNER_CODE_ENCRYPTED = 'Z2FsYWN0aWNhZG1pbg==';
+
+    function decryptOwnerCode(encoded) {
+      try {
+        return atob(encoded);
+      } catch {
+        return null;
+      }
+    }
+
+    const CLIENT_ID = 'z9SMEqZFTsJHNtEs';
+    const PUBLIC_ROOM = 'observable-public-room';
+
+    const blacklist = [
+      'crap', 'whigga', 'piss', 'cock', 'faggot', 'rape',
+      'cunt', 'nunu', 'whore', 'slut', 'nigger', 'kike', 'chigga', 'chink', 'gook',
+      'beaner', 'retard', 'dyke', 'fag', 'bastard', 'bollocks', 'bugger', 'bloody', 'arsehole', 'wanker'
+    ];
+    const usernameBlacklist = ['admin', 'moderator', 'mod', 'support', 'owner', 'system'];
+
+    const addressPattern = /(\d{1,5}\s\w+\s(street|st|road|rd|avenue|ave|lane|ln|drive|dr|court|ct|boulevard|blvd|place|pl|square|sq|trail|trl|parkway|pkwy|circle|cir))|(\b\d{1,3}(\.\d{1,3}){3}\b)/i;
+
+    const emojiMap = {
+      smile: '😄', heart: '❤️', broken_heart: '💔', wilted_rose: '🥀', thumbsup: '👍', clap: '👏', fire: '🔥',
+      grin: '😁', cry: '😢', angry: '😠', wink: '😉', star: '⭐',
+      poop: '💩', ok: '👌', joy: '😂', sob: '😭', kiss: '😘',
+      thinking: '🤔', hug: '🤗', pray: '🙏', cool: '😎', sleepy: '😴',
+      shocked: '😲', scream: '😱', nerd: '🤓', blush: '😊', yum: '😋',
+      devil: '😈', robot: '🤖', skull: '💀', alien: '👽', sun: '🌞',
+      moon: '🌝', cat: '🐱', dog: '🐶', cake: '🎂', balloon: '🎈'
+    };
+
+    let drone, room, username = '', recognition, isRecording = false;
+    let currentMembers = [];
+
+    function joinChat() {
+      const nameInput = document.getElementById('nameInput');
+      const errorText = document.getElementById('errorText');
+      errorText.textContent = '';
+      const nameRaw = nameInput.value.trim();
+      const name = DOMPurify.sanitize(nameRaw, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+
+      if (!name) {
+        errorText.textContent = 'Please enter your name.';
+        return;
+      }
+      if (name.length > 50) {
+        errorText.textContent = 'Name must be 50 characters or less.';
+        return;
+      }
+      if (usernameBlacklist.includes(name.toLowerCase())) {
+        errorText.textContent = 'This username is reserved. Please choose another.';
+        return;
+      }
+
+      const OWNER_CODE = decryptOwnerCode(OWNER_CODE_ENCRYPTED);
+      if (name === OWNER_CODE) {
+        username = '👑 ' + name;
+      } else {
+        username = name;
+      }
+
+      document.getElementById('displayName').textContent = username;
+      document.getElementById('joinScreen').style.display = 'none';
+      document.getElementById('chatUI').style.display = 'flex';
+
+      drone = new ScaleDrone(CLIENT_ID, { data: { name: username } });
+
+      drone.on('open', error => {
+        if (error) return console.error(error);
+        room = drone.subscribe(PUBLIC_ROOM);
+        room.on('open', err => err && console.error(err));
+
+        room.on('members', m => {
+          currentMembers = m;
+          updateMemberCount();
+        });
+
+        room.on('member_join', member => {
+          currentMembers.push(member);
+          updateMemberCount();
+        });
+
+        room.on('member_leave', ({ id }) => {
+          currentMembers = currentMembers.filter(m => m.id !== id);
+          updateMemberCount();
+        });
+
+        room.on('data', (data, member) => {
+          if (member) addMessage(data, member);
+        });
+      });
+    }
+
+    function leaveChat() {
+      if (drone) drone.close();
+      location.reload();
+    }
+
+    function updateMemberCount() {
+      document.getElementById('userCount').textContent = currentMembers.length;
+    }
+
+    function sendChat() {
+      const input = document.getElementById('chatInput');
+      let messageRaw = input.value.trim();
+      let message = DOMPurify.sanitize(messageRaw, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+
+      if (!message) return;
+
+      if (blacklist.some(word => message.toLowerCase().includes(word))) {
+        alert("That message contains banned words.");
+        return;
+      }
+
+      if (addressPattern.test(message)) {
+        alert("Addresses and IPs are not allowed.");
+        return;
+      }
+
+      const OWNER_CODE = decryptOwnerCode(OWNER_CODE_ENCRYPTED);
+      if (message === OWNER_CODE) message = 'an admin is here.';
+      message = message.replace(/:\((\w+)\):/g, (_, name) => emojiMap[name] || `:(${name}):`);
+
+      drone.publish({ room: PUBLIC_ROOM, message: { name: username, text: message, time: Date.now() } });
+      input.value = '';
+    }
+
+    function addMessage(data, member) {
+      const chatArea = document.getElementById('chatArea');
+      const el = document.createElement('div');
+      el.className = 'message' + ((member.clientData.name === username && member.id === drone.clientId) ? ' self' : '');
+      const timeStr = new Date(data.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const safeName = DOMPurify.sanitize(member.clientData.name, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+      const safeText = DOMPurify.sanitize(data.text, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+
+      el.innerHTML = `
+        <div class="avatar">${safeName[0].toUpperCase()}</div>
+        <div>
+          <div class="meta">${safeName} • ${timeStr}</div>
+          <div>${safeText}</div>
+        </div>
+      `;
+
+      chatArea.appendChild(el);
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      if (member.clientData.name !== username && Notification.permission === 'granted') {
+        new Notification(`${safeName}`, { body: safeText });
+      }
+    }
+
+    document.getElementById('chatInput').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendChat();
+      }
+    });
+
+    if ('Notification' in window && Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+
+    function toggleEmojiList() {
+      const emojiList = document.getElementById('emojiList');
+      if (emojiList.style.display === 'none') {
+        renderEmojiList();
+        emojiList.style.display = 'flex';
+      } else {
+        emojiList.style.display = 'none';
+      }
+    }
+
+    function renderEmojiList() {
+      const emojiList = document.getElementById('emojiList');
+      emojiList.innerHTML = '';
+      for (const [name, emoji] of Object.entries(emojiMap)) {
+        const button = document.createElement('button');
+        button.style.margin = '4px';
+        button.style.padding = '1px';
+        button.style.fontSize = '20px';
+        button.style.borderRadius = '0px';
+        button.style.height = '30px';
+        button.textContent = emoji;
+        button.title = name;
+        button.onclick = () => {
+          const input = document.getElementById('chatInput');
+          input.value += `:(${name}):`;
+          input.focus();
+        };
+        emojiList.appendChild(button);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedName = localStorage.getItem('savedUsername');
+      const nameInput = document.getElementById('nameInput');
+
+      if (savedName) {
+        const clean = DOMPurify.sanitize(savedName, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+        const cont = confirm(`Would you like to continue as "${clean}"?`);
+        if (cont) {
+          nameInput.value = clean;
+          joinChat();
+        }
+      }
+
+      const originalJoinChat = joinChat;
+      joinChat = function () {
+        const name = DOMPurify.sanitize(document.getElementById('nameInput').value.trim(), { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+        if (name) {
+          localStorage.setItem('savedUsername', name);
+        }
+        originalJoinChat();
+      };
+    });
+
+    const STORAGE_KEY = 'chatMessages';
+
+    function saveMessages() {
+      const messages = Array.from(document.querySelectorAll('#chatArea .message'))
+        .map(msg => msg.outerHTML);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    }
+
+    function loadMessages() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+      const chatArea = document.getElementById('chatArea');
+      const messages = JSON.parse(saved);
+      messages.forEach(msgHTML => {
+        const temp = document.createElement('div');
+        temp.innerHTML = msgHTML;
+        chatArea.appendChild(temp.firstElementChild);
+      });
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    window.addEventListener('DOMContentLoaded', loadMessages);
+
+    const observer = new MutationObserver(saveMessages);
+    observer.observe(document.getElementById('chatArea'), { childList: true });
+  </script>
+
+  <script src="/assets/scripts/index.js"></script>
+</body>
+
+</html>

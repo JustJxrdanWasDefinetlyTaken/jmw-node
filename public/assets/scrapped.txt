@@ -1,0 +1,39 @@
+scrapped shit
+
+- vm
+- voice recordings
+- live voice chat
+- logins (xss issues)
+- prompts
+<div class="prompts">
+  <button class="prompt-btn">
+    <br>
+    Help me with my homework
+    <br>
+    <i class='bx bx-book-open icon'></i>
+  </button>
+  <button class="prompt-btn">
+    <br>
+    Make a computer program using Python 
+    <br>
+    <i class='bx bx-code-alt icon'></i>
+  </button>
+  <button class="prompt-btn">
+    <br>
+    Write an essay on climate change
+    <br>
+    <i class='bx bx-edit icon'></i>
+  </button>
+  <button class="prompt-btn">
+    <br>
+    Summarize World War II
+    <br>
+    <i class='bx bx-news icon'></i>
+  </button>
+  <button class="prompt-btn giant">
+    <br>
+    Give me a recipe for chocolate cake
+    <br>
+    <i class='bx bx-cake icon'></i>
+  </button>
+</div>

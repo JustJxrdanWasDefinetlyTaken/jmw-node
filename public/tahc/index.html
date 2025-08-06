@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="icon" href="/assets/images/jmw.png" />
+    <link rel="shortcut icon" href="/assets/images/jmw.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <style>
+        .image-wrapper {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          flex-wrap: wrap;
+          margin-top: 20px;
+          color:black;
+        }
+    
+        .image-container {
+          width: 175px;
+          height: 300px;
+          padding: 12px;
+          border-radius: 8px;
+          text-align: center;
+          font-family: 'Inter', sans-serif;
+          background: white;
+          color:black;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          cursor: pointer;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .image-container:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+    
+        .image-container img {
+          max-width: 100%;
+          border-radius: 6px;
+        }
+        
+        .title {
+          margin: 12px 0 6px;
+          font-size: 1.3rem;
+          color: black;
+        }
+        
+        .description {
+          font-size: 1rem;
+          color: black;
+        }
+      </style>  
+</head>
+<body theme="classic">
+    <div align="center">
+        <h1>Choose one</h1>
+        <div class="image-wrapper">
+          <div class="image-container" onclick="window.location.href='/tahc/public.html'">
+            <img src="/assets/storage/xtramg/chat.png" alt="Sample Image" />
+            <h2 class="title">Public Chat</h2>
+            <p class="description">Chat publicly with "strangers"</p>
+          </div>
+          <div class="image-container" onclick="window.location.href='/tahc/private.html'">
+            <img src="/assets/storage/xtramg/openmail.png" alt="Sample Image" />
+            <h2 class="title">Private Chat</h2>
+            <p class="description">Chat privately and invite your friends to your chat using the invite code!</p>
+          </div>
+          <div class="image-container" onclick="window.location.href='/tahc/widgetbot.html'">
+            <img src="/assets/storage/xtramg/dc.jpg" alt="Sample Image" />
+            <h2 class="title">Discord Chat</h2>
+            <p class="description">Chat publicly with people on discord. (absolute mayhem)</p>
+          </div>
+        </div>
+      </div>      
+</body>
+<script src="/assets/scripts/index.js"></script>
+</html>

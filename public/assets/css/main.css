@@ -1,0 +1,205 @@
+@import url('/assets/css/themes.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
+::-webkit-scrollbar {
+  width: 7px;
+  background-color: black;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #101010;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background: var(--txtcolor);
+}
+
+body {
+  background:var(--bgcolor);
+  color:var(--txtcolor);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  padding-top: 70px;
+  font-family: 'Inter', sans-serif;
+}
+
+.sidebar {
+position: fixed;
+top: 0;
+left: 0;
+width: 70px;
+height: 100vh;
+background: var(--navbar);
+color:var(--txtcolor);
+border-right: 1px solid rgba(255, 255, 255, 0.192);
+backdrop-filter: blur(10px);
+transition: width 0.3s ease;
+z-index: 2;
+display: flex;
+flex-direction: column;
+align-items: center;
+overflow-x: hidden;
+}
+
+.sidebar:hover {
+width: 220px;
+align-items: flex-start;
+}
+
+.logo {
+font-size: 32px;
+margin: 30px auto;
+width: 50px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+  max-width: 50px;
+}
+
+.sidebar-links {
+list-style: none;
+padding: 0;
+margin: 0;
+width: 100%;
+color:var(--txtcolor);
+}
+
+.sidebar-links li {
+display: flex;
+align-items: center;
+gap: 20px;
+padding: 15px 20px;
+cursor: pointer;
+color: var(--txtcolor);
+white-space: nowrap;
+transition: background 0.2s ease;
+}
+
+.sidebar-links li.active {
+  background: var(--bgcolor);
+  font-weight: bold;
+  border-radius:15px;
+}
+
+.sidebar-links li:hover {
+background: rgba(255, 255, 255, 0.15);
+font-weight: bold;
+}
+
+.sidebar-links li span {
+opacity: 0;
+transition: opacity 0.2s ease;
+}
+
+.sidebar:hover .sidebar-links li span {
+opacity: 1;
+}
+
+iframe#main-frame {
+position: fixed;
+top: 0;
+left: 70px;
+width: calc(100vw - 70px);
+height: 100vh;
+border: none;
+transition: left 0.3s ease, width 0.3s ease;
+z-index: 1;
+}
+
+.sidebar:hover ~ iframe#main-frame {
+left: 220px;
+width: calc(100vw - 220px);
+}
+
+i {
+font-size: 25px;
+}
+
+button {
+  padding: 12px 20px;
+  background: var(--navbar);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 12px;
+  color: var(--txtcolor);
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease;
+  height:50px;
+}
+
+button:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+ .sz-link {
+      position: fixed;
+      bottom: 4px;
+      left: 10px;
+      z-index: 999998;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      opacity: 0.8;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 5px 10px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.3s ease;
+    }
+    
+    .sz-link:hover {
+      opacity: 1;
+    }
+    
+    .sz-link a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #debugOverlay {
+      z-index:99999999999999999999999999999999999999;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color:var(--secondary);
+      border-radius: 20px;
+      box-shadow: 0 10px 25px var(--primary);
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--txtcolor);
+      display: none;
+      min-width: 220px;
+      line-height: 1.6;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    #fpsGraph {
+      margin-top: 10px;
+      background: white;
+      border-radius: 8px;
+      display: block;
+    }
+    #minBtn {
+      margin-top: 8px;
+      background: var(--glow);
+      color: var(--txtcolor);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #minBtn:hover {
+      background: var(--glow);
+    }

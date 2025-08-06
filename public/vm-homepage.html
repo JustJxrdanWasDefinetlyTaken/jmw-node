@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jordan's Math Work - VM Homepage</title>
+    <link rel="icon" href="/assets/images/jmw.png" />
+    <link rel="shortcut icon" href="/assets/images/jmw.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/vm-landpage.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <meta name="Jordan's Math Work">
+    <meta content="Jordan's Math Work" property="og:title">
+    <meta
+        content="Jordan's Math Work is the ultimate spot where numbers meet creativity, making even the toughest equations feel like a breeze. From algebraic adventures to geometric genius, this site turns everyday math into something seriously epic."
+        property="og:description">
+</head>
+
+<body theme="classic">
+    <h1><img width="300" src="active/jmw.png"></h1>
+    <div class="search-box">
+        <input id="search-input" type="text" placeholder="Search the web...">
+    </div>
+    <div class="presets">
+        <a class="preset" href="https://www.instagram.com" target="_blank">
+            <img src="/assets/images/app/instagram.png" alt="Instagram" width="100">
+            <br>Instagram
+        </a>
+        <a class="preset" href="https://www.snapchat.com" target="_blank">
+            <img src="/assets/images/app/snapchat.png" alt="Snapchat" width="100">
+            <br>Snapchat
+        </a>
+        <a class="preset" href="https://discord.com" target="_blank">
+            <img src="/assets/images/app/discord.jpg" alt="Discord">
+            <br>Discord
+        </a>
+        <a class="preset" href="https://www.youtube.com" target="_blank">
+            <img src="/assets/images/app/yt.png" alt="YouTube">
+            <br>YouTube
+        </a>
+        <a class="preset" href="https://x.com" target="_blank">
+            <img src="/assets/images/app/x.jpg" alt="Twitter">
+            <br>X
+        </a>
+    </div>
+<footer>
+            <h5>This vm was created by the Galactic team, with the help of zena. please report to <a href="dsc.gg/gnetwork">Our official discord</a> if this is used on another site. You NEED our permission or we will send a notice.</h5>
+</footer>
+
+    <script>
+        const input = document.getElementById("search-input");
+        input.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                const query = encodeURIComponent(input.value.trim());
+                if (query) {
+                    const newTab = window.open("https://duckduckgo.com/?q=" + query, "_blank");
+                    if (newTab) {
+                        window.close();
+                    }
+                }
+            }
+        });
+
+        const params = new URLSearchParams(window.location.search);
+        const autoUrl = params.get("autoopen");
+        if (autoUrl) {
+            try {
+                const decoded = decodeURIComponent(autoUrl);
+                if (/^https?:\/\//.test(decoded)) {
+                    const newTab = window.open(decoded, "_blank");
+                    if (newTab) window.close();
+                }
+            } catch (err) {
+                console.warn("Invalid autoopen URL:", err);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movie search</title>
+    <style>
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input#movie-search {
+            width: 80%;
+            max-width: 550px;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: 0.5s;
+            background-color: transparent;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            color: white;
+        }
+
+        input#movie-search:focus {
+            transform: scale(1.07);
+            outline: none;
+            width: 550px;
+        }
+
+        .movie-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .movie-card {
+            background-color: var(--surface);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            max-width: 200px;
+            height: auto;
+            max-height: 400px;
+            padding-bottom: 5px;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 300px;
+            border-radius: 5px;
+        }
+
+        .movie-card h3 {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        button.play-button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button.play-button:hover {
+            background-color: #e5533d;
+        }
+
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input#movie-search {
+            width: 80%;
+            max-width: 550px;
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: 0.5s;
+            background-color: transparent;
+            box-shadow: 0 0 13px var(--txtcolor);
+            backdrop-filter: blur(8px);
+            color: white;
+        }
+
+        input#movie-search:focus {
+            transform: scale(1.07);
+            outline: none;
+            width: 550px;
+        }
+
+        input#movie-search::placeholder {
+            color: white;
+        }
+
+        .movie-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .movie-card {
+            background-color: var(--surface);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            max-width: 200px;
+            height: auto;
+            max-height: 395px;
+            padding-bottom: 5px;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 300px;
+            border-radius: 5px;
+        }
+
+        .movie-card h3 {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+
+        button.play-button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button.play-button:hover {
+            background-color: #e5533d;
+        }
+
+        .tv-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .tv-card {
+            background-color: var(--surface);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .tv-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        .tv-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .tv-card h3 {
+            font-size: 1.1rem;
+            margin: 10px 0;
+        }
+    </style>
+    <link href="/assets/css/main.css" rel="stylesheet" />
+</head>
+
+<body theme="classic">
+    <header>
+        <br>
+    </header>
+    <main>
+        <input id="movie-search" placeholder="Find your favorite movie or show...">
+        <div class="movie-results"></div>
+    </main>
+    <script>
+        const MOVIE_API_KEY = "df59d294eccccdaa6fdeb2ae44143b4f";
+        const MOVIE_API_URL = "https://api.themoviedb.org/3";
+        const POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
+        const searchField = document.getElementById("movie-search");
+        const contentContainer = document.querySelector("main");
+
+        searchField.addEventListener("keypress", handleSearch);
+
+        function handleSearch(event) {
+            if (event.key === "Enter") {
+                const searchTerm = event.target.value.trim();
+                if (searchTerm) {
+                    fetchMovies(searchTerm);
+                } else {
+                    alert("Please enter a movie or TV show name to search.");
+                }
+            }
+        }
+
+        async function fetchMovies(query) {
+            try {
+                const response = await fetch(
+                    `${MOVIE_API_URL}/search/multi?api_key=${MOVIE_API_KEY}&query=${encodeURIComponent(query)}`
+                );
+                const { results } = await response.json();
+                renderMovies(results);
+            } catch (error) {
+                alert("Unable to retrieve movie or TV show data. Please try again later.");
+            }
+        }
+
+        function renderMovies(movies) {
+            const movieResults = document.createElement("div");
+            movieResults.classList.add("movie-results");
+
+            movies.forEach((item) => {
+                const isTV = item.media_type === "tv";
+                const movieCard = document.createElement("div");
+                movieCard.classList.add("movie-card");
+                movieCard.addEventListener("click", () => {
+                    window.location.href = `/media/player.html?movieid=${item.id}&tv=${isTV}`;
+                });
+
+                const poster = document.createElement("img");
+                poster.src = item.poster_path
+                    ? `${POSTER_BASE_URL}${item.poster_path}`
+                    : "https://via.placeholder.com/200x300?text=No+Image";
+                poster.alt = item.title || item.name;
+                poster.onerror = function () {
+                    this.src = '/imagenotfound.png';
+                };
+
+                const title = document.createElement("h3");
+                title.textContent = item.title || item.name;
+
+                movieCard.appendChild(poster);
+                movieCard.appendChild(title);
+                movieResults.appendChild(movieCard);
+            });
+
+            contentContainer.innerHTML = `
+    <input id="movie-search" placeholder="Find your favorite movie or show...">
+  `;
+            contentContainer.appendChild(movieResults);
+
+            const newSearchField = document.getElementById("movie-search");
+            newSearchField.addEventListener("keypress", handleSearch);
+        }
+
+        window.onload = async () => {
+            try {
+                const response = await fetch(
+                    `${MOVIE_API_URL}/trending/all/day?api_key=${MOVIE_API_KEY}`
+                );
+                const { results } = await response.json();
+                renderMovies(results.slice(0, 20));
+            } catch (error) {
+                alert("failure to load featured movies womp womp");
+            }
+        };
+    </script>
+    <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+</body>
+<script>
+    document.addEventListener('keydown', function (e) {
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.keyCode === 85) {
+            e.preventDefault();
+        }
+    });
+
+</script>
+<script src="/assets/scripts/index.js"></script>
+
+</html>

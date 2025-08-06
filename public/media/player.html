@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>movies blah blah blah</title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <style>
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            width: 100%;
+            background-color: #000;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        select.source-selector {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: #f5f5f5;
+        }
+
+        select.source-selector:focus {
+            outline: 2px solid #ff6347;
+        }
+
+        .suggest-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .suggest-container.fade-out {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body theme="classic">
+<div class="suggest-container">
+    <br> 
+    <br> 
+    <br> 
+    <br> 
+    <br> 
+    <br> 
+    <br> 
+    <h2>BE WEARY OF MALWARE!</h2>
+    <p>Some of the sources have malware in them, be careful, make sure to use the one with no ads. if you get malware by using another source, THIS IS ON YOU.</p>
+    <button id="close-suggest" style="background-color: var(--bgcolor); color: var(--txtcolor); border: none; padding: 10px 20px; border-radius: 5px;">Close</button>
+    <button id="close-do-not-show-again" style="background-color: #ff6347; color: white; border: none; padding: 10px 20px; border-radius: 5px;">Do not show again</button>
+    <script>
+        document.getElementById('close-suggest').addEventListener('click', function() {
+            document.querySelector('.suggest-container').classList.add('fade-out');
+            setTimeout(() => {
+                document.querySelector('.suggest-container').style.display = 'none';
+            }, 300);
+        });
+
+        document.getElementById('close-do-not-show-again').addEventListener('click', function() {
+            localStorage.setItem('doNotShowAgain', 'true');
+            document.querySelector('.suggest-container').classList.add('fade-out');
+            setTimeout(() => {
+                document.querySelector('.suggest-container').style.display = 'none';
+            }, 300);
+        });
+
+        if (localStorage.getItem('doNotShowAgain') === 'true') {
+            document.querySelector('.suggest-container').style.display = 'none';
+        }
+        else {
+            document.querySelector('.suggest-container').style.display = 'block';
+        }
+    </script>
+</div>
+    <main>
+        <div id="video-container" class="video-container">
+            <h1>Loading Movie...</h1>
+        </div>
+        <center>
+            <select id="source-selector" class="source-selector">
+                <option value="autoembed" selected>Default server (autoembed) (proxied) (no ads)</option>
+                <option value="" disabled style="font-size:15px;">-- THE REST COULD BE UNSAFE! USE AT YOUR OWN RISK --
+                </option>
+                <option value="embed-su">Server 2 (vidsrc-in) (proxied)</option>
+                <option value="moviesapiclub">Server 3 (vidsrc-pm) (proxied)</option>
+                <option value="vidbinge">Server 4 (vidsrc-me) (proxied)</option>
+                <option value="vidsrcnet">Server 5 (vidsrc-xyz) (proxied)</option>
+                <option value="doubleembed">Server 6 (2embed) (proxied)</option>
+                <option value="vidsrc-cc">Server 7 (vidsrc-cc) (unproxied)</option>
+                <option value="vidlinkpro">Server 8 (vidsrc-net) (proxied)</option>
+            </select>
+    </main>
+    </center>
+    <script>
+        document.addEventListener('click', function (event) {
+            if (event.target.tagName === 'IFRAME') {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        }, true);
+    </script>
+    <script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+    <script>
+        const queryParams = new URLSearchParams(window.location.search);
+        const movieId = queryParams.get("movieid");
+        const isTV = queryParams.get("tv") === "true";
+
+        const videoContainer = document.getElementById("video-container");
+        const sourceSelector = document.getElementById("source-selector");
+
+        function initializePlayer(provider) {
+            if (movieId) {
+                const iframeElement = document.createElement("iframe");
+                iframeElement.allow = "autoplay; fullscreen";
+                iframeElement.allowFullscreen = true;
+
+                let baseUrl = "";
+
+                switch (provider) {
+                    case "vidsrc-net":
+                        baseUrl = "/active/index.html?autofill=https://vidsrc.net/embed";
+                        break;
+                    case "vidsrc-in":
+                        baseUrl = "/active/index.html?autofill=https://vidsrc.in/embed";
+                        break;
+                    case "vidsrc-pm":
+                        baseUrl = "/active/index.html?autofill=https://vidsrc.pm/embed";
+                        break;
+                    case "vidsrc-me":
+                        baseUrl = "/active/index.html?autofill=https://vidsrc.me/embed";
+                        break;
+                    case "vidsrc-xyz":
+                        baseUrl = "/active/index.html?autofill=https://vidsrc.xyz/embed";
+                        break;
+                    case "2embed":
+                        baseUrl = "/active/index.html?autofill=https://www.2embed.skin/embed";
+                        break;
+                    case "vidsrc-cc":
+                        baseUrl = "https://vidsrc.cc/embed";
+                        break;
+                    case "autoembed":
+                        baseUrl = "/active/index.html?autofill=https://autoembed.pro/embed";
+                        break;
+                    default:
+                        baseUrl = "/active/index.html?autofill=https://vidsrc.net/embed";
+                }
+
+                const contentType = isTV ? "tv" : "movie";
+                iframeElement.src = `${baseUrl}/${contentType}/${movieId}${provider === "vidlinkpro" ? "?autoplay=false" : ""}`;
+
+                videoContainer.innerHTML = "";
+                videoContainer.appendChild(iframeElement);
+            } else {
+                videoContainer.innerHTML = "<h1>Error: Content not found</h1>";
+            }
+        }
+
+        initializePlayer("autoembed");
+
+        sourceSelector.addEventListener("change", (event) => {
+            initializePlayer(event.target.value);
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const iframe = document.querySelector('iframe');
+
+            if (iframe) {
+                iframe.onload = function () {
+                    try {
+                        const iframeDoc = iframe.contentWindow;
+
+                        iframeDoc.open = function () { return null; };
+                        iframeDoc.alert = function () { return null; };
+                        iframeDoc.confirm = function () { return null; };
+                        iframeDoc.prompt = function () { return null; };
+
+                        iframeDoc.document.addEventListener('click', function (event) {
+                            if (event.target.tagName === 'A' && event.target.target === '_blank') {
+                                event.preventDefault();
+                            }
+                        }, true);
+                    } catch (error) {
+                        console.warn('Unable to modify iframe due to cross-origin restrictions');
+                    }
+                };
+            }
+        });
+
+    </script>
+    <script>
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+            }
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+<script src="/assets/scripts/index.js"></script>
+<script disable-devtool-auto src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+
+</html>

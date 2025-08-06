@@ -1,0 +1,104 @@
+body[theme="classic"] {
+      --bgcolor: #1e1e2e;
+      --primary: #89b4fa;
+      --secondary: #f38ba8;
+      --txtcolor: #cdd6f4;
+      --surface: rgba(137, 180, 250, 0.1);
+      --surface-hover: rgba(137, 180, 250, 0.15);
+      --border: rgba(137, 180, 250, 0.2);
+      --glow: rgba(137, 180, 250, 0.3);
+}
+
+body[theme="light"] {
+      --bgcolor: gray;
+      --primary: #111;
+      --secondary: rgb(185, 185, 185);
+      --txtcolor: white;
+      --surface: lightgray;
+      --surface-hover: rgb(117, 117, 117);
+      --border: #222;
+      --glow: white;
+}
+
+body[theme="dark"] {
+  --bgcolor: #0f0f0f;
+  --primary: #9f9f9f;
+  --secondary: #2f2f2f;
+  --txtcolor: #f5f5f5;
+  --surface: #424242;
+  --surface-hover: #2a2a2a;
+  --border: #2b2b2b;
+  --glow: #003636;
+}
+
+body[theme="dsc"] {
+  --bgcolor: #36393F;
+  --primary: #5865F2;
+  --secondary: #292b2f;
+  --txtcolor: #5865F2;
+  --surface: #2f3136;
+  --surface-hover: #40444B;
+  --border: #202225;
+  --glow: #8992fb;
+}
+
+body[theme="rogue"] {
+  --bgcolor: #D04343;
+  --primary: #000000;
+  --secondary: #993333;
+  --txtcolor: white;
+  --surface: #a83a3a;
+  --surface-hover: #8c2f2f;
+  --border: #702525;
+  --glow: #310707;
+}
+
+body[theme="legacyv6"] {
+  --bgcolor: #222222;
+  --primary: #adad43;
+  --secondary: #3a3a3a;
+  --txtcolor: #adad43;
+  --surface: #2a2a2a;
+  --surface-hover: #333333;
+  --border: #444444;
+  --glow: #adad43;
+}
+
+body[theme="evil-teto"] {
+  background: url("/assets/images/themeimage/teto.png");
+  background-color:#444;
+  background-attachment: fixed;
+  --bgcolor: #444444;
+  --primary: red;
+  --secondary: #2f2f2f;
+  --txtcolor: #ff0000;
+  --surface: #1e1e1e;
+  --surface-hover: #2a2a2a;
+  --border: #2b2b2b;
+  --glow: #ff0000;
+}
+
+body[theme="pearto"] {
+  background: url("/assets/images/themeimage/pearto.png");
+  background-color:lightgray;
+  background-attachment: fixed;
+  --bgcolor: lightgray;
+  --primary: yellow;
+  --secondary: #2f2f2f;
+  --txtcolor: #ffff00;
+  --surface: gray;
+  --surface-hover: rgb(96, 95, 95);
+  --border: #2b2b2b;
+  --glow: #ffff00;
+}
+
+body[theme="incog"] {
+  --bgcolor: #161923;
+  --primary: #0fc862;
+  --secondary: #0c9b4d;
+  --txtcolor: #00e266;
+  --surface: #193526;
+  --surface-hover: #1d4a32;
+  --border: #0e2d1f;
+  --glow: #3cb371;
+}

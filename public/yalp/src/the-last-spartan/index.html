@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Last Spartan</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+            user-select: none
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='64' height='128' viewBox='0 0 32 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 28h20V16h-4v8H4V4h28v28h-4V8H8v12h4v-8h12v20H0v-4zm12 8h20v4H16v24H0v-4h12V36zm16 12h-4v12h8v4H20V44h12v12h-4v-8zM0 36h8v20H0v-4h4V40H0v-4z' fill='%23d8b685' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background-color: #e0ddd5
+        }
+
+        body {
+            padding-top: 40px
+        }
+
+        #w {
+            width: 768px;
+            margin: 0 auto;
+            position: relative;
+            font-family: Herculanum;
+            box-shadow: 0 8px 8px 3px rgba(0, 0, 0, .5)
+        }
+
+        #w1 {
+            position: relative
+        }
+
+        #c,
+        #w1 {
+            width: 100%;
+            height: 432px;
+        }
+
+        #c {
+            transform: translateZ(0)
+        }
+
+        #c,
+        #gg,
+        #pz,
+        #tt {
+            position: absolute
+        }
+
+        #gg,
+        #pz,
+        #tt {
+            width: 100%;
+            height: 100%;
+            padding: 24px
+        }
+
+        #gg,
+        #pz {
+            display: none;
+            background: rgb(0 0 0/80%);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff
+        }
+
+        #tt {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            color: #fff
+        }
+
+        #t {
+            font-size: 80px;
+            line-height: 60px;
+            flex-grow: 1
+        }
+
+        #t2 {
+            font-size: 32px
+        }
+
+        #t3 {
+            text-align: right;
+            font-size: 18px;
+            margin-bottom: 24px
+        }
+
+        #pz,
+        #rty,
+        #t4 {
+            font-size: 32px;
+            font-style: italic
+        }
+
+        #g {
+            font-size: 72px;
+            color: #fff;
+            margin: 0
+        }
+
+        #i {
+            font-family: monospace;
+            background: #e0ddd5;
+            color: #703529;
+            font-weight: 700;
+            font-size: 18px;
+            padding: 12px
+        }
+
+        #i>div {
+            justify-content: space-evenly
+        }
+
+        #i>div,
+        .m {
+            display: flex
+        }
+
+        .m {
+            justify-content: space-between;
+            font-size: 32px
+        }
+
+        #kr,
+        #sr,
+        .m {
+            font-family: monospace
+        }
+
+        #kr,
+        #sr {
+            text-align: right;
+            margin-bottom: 16px
+        }
+
+        #z {
+            font-size: 12px;
+            position: absolute;
+            left: 6px;
+            bottom: 6px
+        }
+    </style>
+</head>
+
+<body>
+    <div id="w">
+        <div id="w1"><canvas id="c"></canvas>
+            <div id="pz">
+                <div>[P] to Resume</div>
+            </div>
+            <div id="gg">
+                <div>
+                    <h1 id="g">YOU DIED</h1>
+                    <div>An honorable death.</div><br><br>
+                    <div class="m">
+                        <div>Kills</div>
+                        <div id="k"></div>
+                    </div>
+                    <div id="kr"></div>
+                    <div class="m">
+                        <div>Survived</div>
+                        <div id="s"></div>
+                    </div>
+                    <div id="sr"></div>
+                    <div id="rty">[Enter] to Retry</div>
+                </div>
+            </div>
+            <div id="tt">
+                <div id="t">The Last<br>Spartan<div id="t2">404 B.C.</div>
+                </div>
+                <div id="t3">No retreat.<br>No surrender.<br>No way out alive.<br><br>Go down swinging.</div>
+                <div id="t4">[Enter] to Start</div>
+                <div id="z">by @ferronsays</div>
+            </div>
+        </div>
+        <div id="i">
+            <div>
+                <div>Move : WASD</div>
+                <div>Attack : J</div>
+                <div>Block : K</div>
+                <div>Jump : SPACE</div>
+                <div>Pause : P</div>
+            </div>
+            <div>
+                <div>Spartan Charge : K + J</div>
+                <div>Ground Pound : SPACE + J</div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>
