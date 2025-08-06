@@ -9,3 +9,5 @@ self.__uv$config = {
     config: '/vu/uv.config.js',
     sw: '/vu/uv.sw.js',
 };
+
+// no bare for you fucking skid 🖕
