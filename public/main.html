@@ -151,6 +151,31 @@
   background: rgba(0, 0, 0, 0.5);
 }
 
+.dsc-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease;
+}
+
+.dsc-btn:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.dsc-btn i {
+  font-size: 24px;
+}
+
 .update-log {
   position: fixed;
   inset: 0;
@@ -195,6 +220,13 @@
   font-size: 1.4rem;
   cursor: pointer;
 }
+
+.dsc {
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:300px;
+}
   </style>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 </head>
@@ -204,7 +236,9 @@
       The video could not load
     </video>
   </div>
-
+<div class="dsc">
+<button class="dsc-btn" onclick="window.open ('https://dsc.gg/gnetwork', '_blank');"><i class='bx bxl-discord' style="font-size:30px;"></i> Join our discord for more links!</button>
+</div>
   <div class="center">
     <img src="/assets/images/jmw.png" alt="Jordan's Logo" />
     <h1>Jordan's Math Work V7.0.0</h1>

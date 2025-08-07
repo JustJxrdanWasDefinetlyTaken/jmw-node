@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Google</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Product+Sans&display=swap" />
+  <link rel="icon" href="https://google.com/favicon.ico" />
+  <link rel="shortcut icon" href="https://google.com/favicon.ico" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Product Sans', sans-serif;
+      background: white;
+      text-align: center;
+    }
+    .logo {
+      margin-top: 15vh;
+    }
+    .logo img {
+      width: 272px;
+    }
+    .search-bar {
+      margin-top: 20px;
+    }
+    input[type="text"] {
+      width: 600px;
+      height: 40px;
+      font-size: 16px;
+      padding: 0 20px;
+      border: 1px solid #dcdcdc;
+      border-radius: 24px;
+      outline: none;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      margin: 6px;
+      padding: 10px 20px;
+      font-size: 14px;
+      border: none;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .suggestion, .hint {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .suggestion {
+      color: #d93025;
+      display: none;
+    }
+    .hint {
+      color: #5f6368;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">
+    <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google">
+  </div>
+  <div class="search-bar">
+    <input type="text" id="search" placeholder="Search Google">
+    <div class="hint" id="hint">I think you want to click <strong>I'm Feeling Lucky</strong>.</div>
+    <div class="suggestion" id="suggestion">Did you mean to type in <strong>jmw</strong>?</div>
+  </div>
+  <div class="buttons">
+    <button id="searchBtn">Google Search</button>
+    <button id="luckyBtn">I'm Feeling Lucky</button>
+  </div>
+
+  <script>
+    const input = document.getElementById('search');
+    const luckyBtn = document.getElementById('luckyBtn');
+    const searchBtn = document.getElementById('searchBtn');
+    const suggestion = document.getElementById('suggestion');
+    const hint = document.getElementById('hint');
+
+    input.addEventListener('input', () => {
+      const value = input.value.trim().toLowerCase();
+      if (value === 'jmw') {
+        hint.style.display = 'block';
+        suggestion.style.display = 'none';
+      } else if (value !== '') {
+        hint.style.display = 'none';
+        suggestion.style.display = 'block';
+      } else {
+        hint.style.display = 'none';
+        suggestion.style.display = 'none';
+      }
+    });
+
+    luckyBtn.addEventListener('click', () => {
+      const value = input.value.trim().toLowerCase();
+      if (value === 'jmw') {
+        window.location.href = 'index.html';
+      }
+    });
+
+    searchBtn.addEventListener('click', () => {
+      const value = input.value.trim();
+      if (value.toLowerCase() === 'jmw') {
+        hint.style.display = 'block';
+      } else if (value !== '') {
+        window.location.href = `https://www.google.com/search?q=${encodeURIComponent(value)}`;
+      }
+    });
+
+    input.addEventListener('keydown', (e) => {
+      const value = input.value.trim();
+      if (e.key === 'Enter') {
+        if (value.toLowerCase() === 'jmw') {
+          hint.style.display = 'block';
+        } else if (value !== '') {
+          window.location.href = `https://www.google.com/search?q=${encodeURIComponent(value)}`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

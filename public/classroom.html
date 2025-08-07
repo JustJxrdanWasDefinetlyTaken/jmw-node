@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+    <link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Google Sans', Arial, sans-serif;
+            background: #f9f9f9;
+            color: #202124;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 256px;
+            background: white;
+            border-right: 1px solid #dadce0;
+            display: flex;
+            flex-direction: column;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            box-shadow: 0 0 4px rgb(0 0 0 / 0.1);
+        }
+
+        .sidebar-header {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            border-bottom: 1px solid #dadce0;
+            position: relative;
+        }
+
+        .sidebar-header img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            user-select: none;
+        }
+
+        .sidebar-header span {
+            font-size: 20px;
+            font-weight: 400;
+            user-select: none;
+        }
+
+        .menu-button {
+            font-size: 24px;
+            cursor: pointer;
+            user-select: none;
+            margin-right: 16px;
+        }
+
+        .sidebar nav {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .sidebar nav li {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            cursor: pointer;
+            user-select: none;
+            font-size: 14px;
+            color: #3c4043;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
+        }
+
+        .sidebar nav li:hover {
+            background-color: #f1f3f4;
+        }
+
+        .sidebar nav li.active,
+        .sidebar nav li.active:hover {
+            background-color: #d2e3fc;
+            color: #1967d2;
+        }
+
+        .sidebar nav li strong {
+            font-weight: 600;
+        }
+
+        .sidebar nav li svg {
+            margin-right: 16px;
+            fill: #5f6368;
+            min-width: 24px;
+            width: 20px;
+            height: 20px;
+            user-select: none;
+        }
+
+        .sidebar nav li.active svg {
+            fill: #1967d2;
+        }
+
+        .sidebar nav .sub-list {
+            padding-left: 40px;
+            font-weight: 400;
+            color: #5f6368;
+        }
+
+        .sidebar nav .sub-list li {
+            padding: 8px 0;
+            font-size: 13px;
+            border-radius: 6px;
+        }
+
+        .sidebar nav li.settings,
+        .sidebar nav li.archived {
+            margin-top: auto;
+            border-top: 1px solid #dadce0;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 24px 24px 0 24px;
+            overflow-y: auto;
+            background-color: #fff;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            box-shadow: inset 0 0 10px rgb(0 0 0 / 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-right-bar {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            padding: 0 24px;
+            border-bottom: 1px solid #dadce0;
+            user-select: none;
+        }
+
+        .top-right-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+        }
+
+        .top-right-bar button:hover {
+            background-color: #f1f3f4;
+        }
+
+        .top-right-bar svg {
+            fill: #5f6368;
+            width: 24px;
+            height: 24px;
+        }
+
+        .banner {
+            display: flex;
+            align-items: center;
+            background: #e8f0fe;
+            border-radius: 16px;
+            padding: 12px 20px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #202124;
+        }
+
+        .banner img {
+            width: 80px;
+            height: 54px;
+            margin-right: 20px;
+            user-select: none;
+        }
+
+        .banner-text {
+            flex: 1;
+        }
+
+        .banner-text h2 {
+            margin: 0 0 6px 0;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 22px;
+        }
+
+        .banner-text p {
+            margin: 0;
+            color: #3c4043;
+        }
+
+        .banner-links {
+            margin-left: 24px;
+            display: flex;
+            gap: 16px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #1a73e8;
+            cursor: pointer;
+        }
+
+        .banner-links:hover {
+            text-decoration: underline;
+        }
+
+        .banner-close {
+            margin-left: 24px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #5f6368;
+            user-select: none;
+        }
+
+        .banner-close:hover {
+            color: #202124;
+        }
+
+        .class-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .class-card {
+            background: white;
+            border: 1px solid #dadce0;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 2px rgb(60 64 67 / 0.3);
+            user-select: none;
+            transition: box-shadow 0.2s ease;
+            height: 300px;
+        }
+
+        .class-card:hover {
+            box-shadow: 0 4px 8px rgb(60 64 67 / 0.4);
+        }
+
+        .class-card-header {
+            padding: 16px 16px 16px 24px;
+            position: relative;
+            border-bottom: 1px solid #dadce0;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .class-card-header.blue {
+            background: #3c78d8;
+            color: white;
+        }
+
+        .class-card-header.gray {
+            background: #616161;
+            color: white;
+        }
+
+        .class-card-header h3 {
+            margin: 0;
+            font-weight: 400;
+            font-size: 20px;
+            text-transform: uppercase;
+        }
+
+        .class-card-header small {
+            display: block;
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .class-card-header .avatar {
+            position: absolute;
+            bottom: -18px;
+            right: 16px;
+            background: #ec407a;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            color: white;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 48px;
+            text-align: center;
+            user-select: none;
+            box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+        }
+
+        .class-card-content {
+            flex: 1;
+            padding: 40px 24px 16px 24px;
+        }
+
+        .class-card-footer {
+            display: flex;
+            border-top: 1px solid #dadce0;
+            background: #f8f9fa;
+            padding: 8px 8px 8px 16px;
+            gap: 16px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .footer-icon {
+            width: 24px;
+            height: 24px;
+            fill: #5f6368;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .footer-icon:hover {
+            fill: #202124;
+        }
+
+        .dropdown {
+            position: relative;
+            user-select: none;
+        }
+
+        .dropdown-button {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #3c4043;
+            background: white;
+            border: 1px solid transparent;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .dropdown-button:hover,
+        .dropdown-button.active {
+            background-color: #f1f3f4;
+            border-color: #dadce0;
+        }
+
+        .dropdown-button svg {
+            margin-left: auto;
+            width: 16px;
+            height: 16px;
+            fill: #5f6368;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-button.active svg {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgb(60 64 67 / 0.2);
+            max-height: 220px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+        }
+
+        .dropdown-menu.open {
+            display: block;
+        }
+
+        .dropdown-menu li {
+            padding: 12px 16px;
+            cursor: pointer;
+            color: #3c4043;
+            font-size: 14px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .dropdown-menu li:hover {
+            background-color: #f1f3f4;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <aside class="sidebar" role="navigation" aria-label="Sidebar">
+            <div class="sidebar-header">
+                <div class="menu-button" aria-label="Open menu" role="button">&#9776;</div>
+                <img src="https://www.gstatic.com/images/branding/product/1x/classroom_48dp.png" alt="Classroom logo"
+                    aria-hidden="true" />
+                <span>Classroom</span>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </svg>Home</li>
+                    <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path
+                                d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14a2 2 0 002 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 19V8h14v11H5z" />
+                        </svg>Calendar</li>
+                    <li class="dropdown" tabindex="0" aria-haspopup="true" aria-expanded="false">
+                        <div class="dropdown-button" aria-label="Enrolled classes dropdown">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+                                style="margin-right:16px; fill:#5f6368; width:20px; height:20px;">
+                                <path d="M21 11.5l-1.41-1.41L15 15.17V4h-2v11.17l-4.59-4.58L7 11.5 12 16.5l9-9z" />
+                            </svg>
+                            <strong>Enrolled</strong>
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"
+                                style="width:16px; height:16px; margin-left:auto; fill:#5f6368;">
+                                <path d="M7 10l5 5 5-5H7z" />
+                            </svg>
+                        </div>
+                        <ul class="dropdown-menu" role="menu" aria-label="Enrolled classes list">
+                            <li role="menuitem" tabindex="-1"><span
+                                    style="background:#e8f0fe;color:#1967d2;border-radius:50%;padding:2px 7px;margin-right:8px;font-weight:bold;font-size:13px;">1</span>PERIOD
+                                1: AP ENGLISH</li>
+                            <li role="menuitem" tabindex="-1"><span
+                                    style="background:#f1f3f4;color:#3c4043;border-radius:50%;padding:2px 7px;margin-right:8px;font-weight:bold;font-size:13px;">2</span><strong>PERIOD
+                                    2</strong><br /><small
+                                    style="margin-left:24px; font-weight: 400; font-size: 11px; color:#5f6368; text-transform: uppercase;">ALGEBRA
+                                    1</small></li>
+                            <li role="menuitem" tabindex="-1"><span
+                                    style="background:#f1f3f4;color:#3c4043;border-radius:50%;padding:2px 7px;margin-right:8px;font-weight:bold;font-size:13px;"
+                                    class="jmw">3</span>PERIOD 3: Jordan's Math Work</li>
+                        </ul>
+                    </li>
+                    <li><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M21 12v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8H2l10-9 10 9h-2z" />
+                        </svg>Archived classes</li>
+                    <li class="settings"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path
+                                d="M19.14 12.94c.04-.31.07-.63.07-.94 0-.31-.03-.63-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.007 7.007 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.49-.42h-3.84a.5.5 0 0 0-.49.42l-.36 2.54a7.007 7.007 0 0 0-1.62.94l-2.39-.96a.5.5 0 0 0-.6.22l-1.92 3.32a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.07.63-.07.94 0 .31.03.63.07.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.49.38 1.02.69 1.62.94l.36 2.54a.5.5 0 0 0 .49.42h3.84a.5.5 0 0 0 .49-.42l.36-2.54c.6-.25 1.13-.56 1.62-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58z" />
+                        </svg>Settings</li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content" role="main" aria-label="Main content area">
+
+            <div class="top-right-bar" role="navigation" aria-label="Top right navigation">
+                <button aria-label="Create" title="Create new" id="create-button">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="#1967d2" stroke="#1967d2"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                </button>
+                <button aria-label="Google apps" title="Google apps">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <circle cx="4" cy="4" r="2" />
+                        <circle cx="12" cy="4" r="2" />
+                        <circle cx="20" cy="4" r="2" />
+                        <circle cx="4" cy="12" r="2" />
+                        <circle cx="12" cy="12" r="2" />
+                        <circle cx="20" cy="12" r="2" />
+                        <circle cx="4" cy="20" r="2" />
+                        <circle cx="12" cy="20" r="2" />
+                        <circle cx="20" cy="20" r="2" />
+                    </svg>
+                </button>
+                <button aria-label="Google logo" title="Google Classroom home" id="logo-button">
+                    <img src="/assets/images/jmw.png" alt="Google Classroom Logo"
+                        style="width:28px; height:28px; user-select:none;" />
+                </button>
+            </div>
+
+            <section class="banner" role="region" aria-label="Announcement banner">
+                <img src="https://storage.googleapis.com/grow-with-goog-publish-prod-media/images/800x470_MITEdu_illustration_1.ori.scale-100.format-webp.webp"
+                    alt="Generative AI illustration" />
+                <div class="banner-text">
+                    <h2>Introducing Generative AI for Educators</h2>
+                    <p>A two-hour, no-cost online course for K-12 educators. Save time and enhance lesson planning with
+                        generative AI.</p>
+                </div>
+                <div class="banner-links" role="navigation" aria-label="Banner links">
+                    <span tabindex="0" role="link" class="jmw">Learn more</span>
+                    <span tabindex="0" role="link" style="margin-left:16px;" class="jmw">Get started</span>
+                </div>
+                <div class="banner-close" role="button" aria-label="Close banner" tabindex="0">&times;</div>
+            </section>
+
+            <section class="class-cards" aria-label="Classes">
+                <article class="class-card">
+                    <header class="class-card-header blue">
+                        <h3>PERIOD 1</h3>
+                        <small>AP ENGLISH</small>
+                        <small>Vanessa Rodrigez</small>
+                        <div class="avatar" title="V">V</div>
+                    </header>
+                    <div class="class-card-content"></div>
+                    <footer class="class-card-footer" aria-label="Class actions">
+                        <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                        <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 19V8h14v11H5z" />
+                        </svg>
+                        <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 7c-2.21 0-4 1.79-4 4 0 1.15.63 2.15 1.56 2.7L12 21l2.44-7.3c.93-.55 1.56-1.55 1.56-2.7 0-2.21-1.79-4-4-4z" />
+                        </svg>
+                    </footer>
+                </article>
+
+                <article class="class-card">
+                    <header class="class-card-header gray">
+                        <h3>PERIOD 2</h3>
+                        <small>ALGEBRA 1</small>
+                        <small>JACOB JONES</small>
+                        <div class="avatar" style="background-color:rgb(76, 76, 255);" title="V">J</div>
+                    </header>
+                    <div class="class-card-content"></div>
+                    <footer class="class-card-footer" aria-label="Class actions">
+                        <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                        <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 19V8h14v11H5z" />
+                        </svg>
+                        <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 7c-2.21 0-4 1.79-4 4 0 1.15.63 2.15 1.56 2.7L12 21l2.44-7.3c.93-.55 1.56-1.55 1.56-2.7 0-2.21-1.79-4-4-4z" />
+                        </svg>
+                    </footer>
+                </article>
+                <article class="class-card jmw">
+                    <header class="class-card-header gray">
+                        <h3>PERIOD 3</h3>
+                        <small>AP BIOLOGY</small>
+                        <small>JORDAN'S MATH WORK</small>
+                        <div class="avatar" style="background-color:rgb(81, 95, 1);" title="V">J</div>
+                    </header>
+                    <div class="class-card-content"></div>
+                    <footer class="class-card-footer" aria-label="Class actions">
+                        <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                        <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 19V8h14v11H5z" />
+                        </svg>
+                        <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                                d="M12 7c-2.21 0-4 1.79-4 4 0 1.15.63 2.15 1.56 2.7L12 21l2.44-7.3c.93-.55 1.56-1.55 1.56-2.7 0-2.21-1.79-4-4-4z" />
+                        </svg>
+                    </footer>
+                </article>
+            </section>
+
+        </main>
+
+    </div>
+
+    <script>
+        document.querySelector('.banner-close').addEventListener('click', () => {
+            document.querySelector('.banner').style.display = 'none';
+        });
+        document.querySelectorAll('.jmw').forEach(el => {
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        });
+
+        const dropdown = document.querySelector('.dropdown');
+        const dropdownButton = dropdown.querySelector('.dropdown-button');
+        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+
+        dropdownButton.addEventListener('click', () => {
+            const expanded = dropdownButton.classList.toggle('active');
+            dropdown.setAttribute('aria-expanded', expanded);
+            dropdownMenu.classList.toggle('open');
+        });
+
+        dropdown.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                dropdownButton.classList.remove('active');
+                dropdownMenu.classList.remove('open');
+                dropdown.setAttribute('aria-expanded', 'false');
+                dropdownButton.focus();
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!dropdown.contains(e.target)) {
+                dropdownButton.classList.remove('active');
+                dropdownMenu.classList.remove('open');
+                dropdown.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        document.getElementById('create-button').addEventListener('click', () => {
+            alert(`Click the jordan's math work class to get to the g@mes!`);
+        });
+
+        document.getElementById('logo-button').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+
+</html>
