@@ -1,17 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>good</title>
 </head>
+
 <body>
-    
+
 </body>
-    <script src="/baremux/bare.cjs"></script>
-    <script src="/epoxy/index.js"></script>
-    <script src="/vu/vu.bundle.js"></script>
-    <script src="/vu/vu.config.js"></script>
-    <script src="/js/mathhelp/regsw.js"></script>
-    <script src="/js/mathhelp/error.js"></script>
+<script src="/mux/bare.cjs"></script>
+<script src="/epoxy/index.js"></script>
+<script src="/vu/uv.bundle.js"></script>
+<script src="/vu/uv.config.js"></script>
+<script src="/js/mathhelp/regsw.js"></script>
+<script src="/js/mathhelp/error.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        const autofillUrl = params.get('autofill');
+        if (autofillUrl) {
+            autofill(autofillUrl);
+        }
+    });
+</script>
+<script>
+    const historyKey = 'searchHistory';
+    const maxHistory = 1000;
+
+    const input = document.getElementById('uv-address');
+    const historyList = document.getElementById('history-list');
+    const searchInput = document.getElementById('history-search');
+    const toggleBtn = document.getElementById('toggle-history');
+    const clearBtn = document.getElementById('clear-history');
+    const icon = toggleBtn.querySelector('i');
+
+    function loadHistory(filter = '') {
+        const history = JSON.parse(localStorage.getItem(historyKey)) || [];
+        historyList.innerHTML = '';
+        history
+            .filter(item => item.toLowerCase().includes(filter.toLowerCase()))
+            .forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                li.onclick = () => {
+                    const encoded = encodeURIComponent(item);
+                    window.location.href = `/active/index.html?autofill=${encoded}`;
+                };
+                historyList.appendChild(li);
+            });
+    }
+
+    function saveToHistory(value) {
+        if (!value.trim()) return;
+
+        const lowerValue = value.trim().toLowerCase();
+
+        if (isBlockedSite(lowerValue) || containsBlockedKeyword(lowerValue) || containsBlockedKeywordPattern(lowerValue)) {
+            return;
+        }
+
+        let history = JSON.parse(localStorage.getItem(historyKey)) || [];
+
+        history = history.filter(item => item.toLowerCase() !== lowerValue);
+
+        history.unshift(value);
+        if (history.length > maxHistory) history = history.slice(0, maxHistory);
+
+        localStorage.setItem(historyKey, JSON.stringify(history));
+        loadHistory(searchInput.value);
+    }
+
+
+    document.getElementById('uv-form').addEventListener('submit', function (e) {
+        const value = input.value.trim();
+        if (value) saveToHistory(value);
+    });
+
+    searchInput.addEventListener('input', () => {
+        loadHistory(searchInput.value);
+    });
+
+    toggleBtn.addEventListener('click', () => {
+        const collapsed = historyList.classList.toggle('collapsed');
+        searchInput.classList.toggle('collapsed');
+        icon.className = collapsed ? 'bx bx-plus' : 'bx bx-minus';
+    });
+
+    clearBtn.addEventListener('click', () => {
+        if (confirm("Clear all history?")) {
+            localStorage.removeItem(historyKey);
+            loadHistory('');
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        loadHistory();
+        historyList.classList.add('collapsed');
+        searchInput.classList.add('collapsed');
+        icon.className = 'bx bx-plus';
+    });
+    function autofill(url) {
+        address.value = url;
+        form.requestSubmit();
+    }
+</script>
+
 </html>
