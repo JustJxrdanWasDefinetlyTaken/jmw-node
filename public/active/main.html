@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page 4 Pr0xy</title>
+</head>
+<body>
+     <form id="uv-form">
+        <input id="uv-address" type="text" placeholder="What's on your mind today.." class="search" autocomplete="off"/>
+      </form>
+          <iframe id="frame" style="height: 100vh; width: 100vw;"></iframe>
+
+    <script type="module">
+        import { setTransport, setWisp, makeURL, getProxied } from '/js/cat.mjs'
+        const frame = document.getElementById('frame');
+        const addressInput = document.getElementById("uv-address");
+        const form = document.getElementById("uv-form");
+
+        setTransport('epoxy');
+        setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
+
+        frame.src = await getProxied(makeURL('Hello World!'));
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault()
+
+    const urlToLoad = makeURL(addressInput.value, search)
+    const proxiedUrl = await getProxied(urlToLoad)
+      frame.src = proxiedUrl
+  })
+
+    </script>
+</body>
+    <script src="/mux/index.js"></script>
+    <script src="/epoxy/index.js"></script>
+    <script src="/vu/uv.bundle.js"></script>
+    <script src="/vu/uv.config.js"></script>
+    <script src="/js/mathhelp/regsw.js"></script>
+</html>

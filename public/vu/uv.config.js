@@ -9,5 +9,5 @@ self.__uv$config = {
     config: '/vu/uv.config.js',
     sw: '/vu/uv.sw.js',
 };
-
+// ts so corny of course there isnt a bare they can still use ur wisp server homeslice
 // no bare for you fucking skid 🖕
