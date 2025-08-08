@@ -16,9 +16,11 @@
         const frame = document.getElementById('frame');
         const addressInput = document.getElementById("uv-address");
         const form = document.getElementById("uv-form");
+        const search = 'https://search.brave.com/search?q=%s';
 
         setTransport('epoxy');
-        setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
+        // setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
+setWisp("wss://anura.pro/")
 
         frame.src = await getProxied(makeURL('Hello World!'));
   form?.addEventListener("submit", async (event) => {
