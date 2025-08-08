@@ -6,8 +6,8 @@
  * Ideally, this will be registered under the scope in uv.config.js so it will not need to be modified.
  * However, if a user changes the location of uv.bundle.js/uv.config.js or sw.js is not relative to them, they will need to modify this script locally.
  */
-importScripts('/vu/vu.bundle.js');
-importScripts('/vu/vu.config.js');
+importScripts('/vu/uv.bundle.js');
+importScripts('/vu/uv.config.js');
 importScripts(__uv$config.sw);
 
 const uv = new UVServiceWorker();

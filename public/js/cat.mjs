@@ -1,7 +1,7 @@
 // Ultraviolet
-await import('/vu/vu.bundle.js');
+await import('/vu/uv.bundle.js');
 // UV Config
-await import('/vu/vu.config.js');
+await import('/vu/uv.config.js');
 // Bare Mux
 import * as BareMux from 'https://cdn.jsdelivr.net/npm/@mercuryworkshop/bare-mux/dist/index.mjs';
 
