@@ -4,55 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page 4 Pr0xy</title>
+    <script async defer src="/js/tabs.js" type="module"></script>
+    <link href="/assets/css/tabs.css" rel="stylesheet" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 </head>
 <body>
-     <form id="uv-form">
-        <input id="uv-address" type="text" placeholder="What's on your mind today.." class="search" autocomplete="off"/>
+<nav>
+  <div id="tabs"></div>
+  <button
+    id="new-tab-btn"
+    aria-label="New Tab"
+    title="New Tab"
+  >
+
+        <i class='bx bx-plus'></i>
+  </button>
+</nav>
+     <form id="form">
+        <input id="address" type="text" placeholder="What's on your mind today.." class="search" autocomplete="off"/>
       </form>
-          <iframe id="frame" style="height: 100vh; width: 100vw;"></iframe>
-
+<section id="frames"></section>
     <script type="module">
-      (async () => {
-        await import("/mux/index.js");
-        await import("/scram/scramjet.all.js");
-                await import("/scram/scramjet.sync.js");
+  import {
+    setWisp,
+    makeURL,
+    getProxied,
+    setFrames,
+    addressInput,
+    currentTab,
+    Tab
+  } from "/cat.mjs"
 
-      const { ScramjetController } = $scramjetLoadController();
+  // --- INIT ---
+  const form = document.getElementById("form")
+  let search =
+    localStorage.getItem("search-engine") ||
+    "https://search.brave.com/search?q=%s"
 
-const scramjet = new ScramjetController({
-	files: {
-		wasm: "/scram/scramjet.wasm.wasm",
-		all: "/scram/scramjet.all.js",
-		sync: "/scram/scramjet.sync.js",
-  }
-});
+	//
+	// setWisp((location.protocol === "https:" ? "wss://" : "ws://") +
+	//  location.host +
+	//  "/wisp/")
 
-function makeURL(
-	input,
-	template = "https://search.brave.com/search?q=%s",
-) {
-	try {
-		return new URL(input).toString();
-	} catch (err) {}
+  setWisp("wss://anura.pro/")
 
-	const url = new URL(`http://${input}`);
-	if (url.hostname.includes(".")) return url.toString();
 
-	return template.replace("%s", encodeURIComponent(input));
-}
-scramjet.init();
-navigator.serviceWorker.register("/sw.js");
+  // --- EVENTS ---
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault()
 
-const connection = new BareMux.BareMuxConnection("/mux/worker.js");
-await connection.setTransport("/epoxy/index.mjs", [{ wisp: "wss://anura.pro/" }]);
+    const urlToLoad = makeURL(addressInput.value, search)
+    const proxiedUrl = await getProxied(urlToLoad)
 
-alert("hey");
-document.getElementById("uv-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  document.getElementById("frame").src = scramjet.encodeUrl(makeURL(document.getElementById("uv-address").value));
-})
-      })();
-// should i delete the node modueles so we can install scram no ddont the npm package is outdated i just uplodaed it
-    </script>
+    let currentFrame = document.getElementById(`frame-${currentTab}`);
+
+    if (localStorage.getItem("stealth-mode")) {
+      currentFrame?.contentWindow?.location.replace(proxiedUrl)
+    } else {
+      currentFrame.src = proxiedUrl
+    }
+    if(currentFrame === document.getElementById(`frame-${currentTab}`))
+      addressInput.value = urlToLoad
+  })
+
+  window.addEventListener("search-engine-changed", () => {
+    search = localStorage.getItem("search-engine") 
+  })
+
+  window.addEventListener("proxy-backend-changed", () => {
+    backend = localStorage.getItem("proxy-backend") 
+    setProxy(localStorage.getItem("proxy-backend") )
+  })
+
+  window.addEventListener("wisp-server-changed", () => {
+    wisp = localStorage.getItem("wisp-server") 
+    setWisp(localStorage.getItem("wisp-server") )
+  })
+
+  window.addEventListener("proxy-transport-changed", () => {
+    transport = localStorage.getItem("proxy-transport") 
+    setTransport(localStorage.getItem("proxy-transport") )
+  })
+
+  setFrames(document.getElementById("frames") );
+  new Tab();
+      </script>
 </body>
 </html>

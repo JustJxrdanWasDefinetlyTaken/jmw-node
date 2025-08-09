@@ -1,0 +1,112 @@
+/* this is the most basic styling ever, it literally looks like internet explorer */
+.hidden {
+  display: none;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  background: #f8f8f8;
+  border-bottom: 1px solid #ccc;
+  height: 40px;
+  padding: 0 8px;
+  font-family: Arial, sans-serif;
+}
+
+#tabs {
+  flex: 1;
+  display: flex;
+  overflow-x: auto;
+  gap: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+
+#tabs::-webkit-scrollbar {
+  height: 6px;
+}
+#tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+#tabs::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+[data-tab-id] {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  user-select: none;
+  min-width: 120px;
+  max-width: 220px;
+  white-space: nowrap;
+  border-radius: 3px;
+}
+
+[data-tab-id].active {
+  background: #ddd;
+  border-color: #999;
+  font-weight: bold;
+}
+
+[data-tab-id] img {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  border-radius: 2px;
+}
+
+[data-tab-id] .tab {
+  flex: 1;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[data-tab-id] button {
+  margin-left: 6px;
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+[data-tab-id] button:hover {
+  color: #000;
+}
+
+#new-tab-btn {
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #333;
+}
+
+#new-tab-btn:hover {
+  background: #eee;
+  border-color: #999;
+}
+
+/* Draggable tab opacity while dragging */
+.draggable-tab.dragging {
+  opacity: 0.5;
+}
+
+/* Remove outline on buttons, keep focus visible for accessibility */
+button:focus {
+  outline: 2px solid #666;
+  outline-offset: 2px;
+}
