@@ -30,7 +30,7 @@ const scramjet = new ScramjetController({
 function makeURL(
 	input,
 	template = "https://search.brave.com/search?q=%s",
-): string {
+) {
 	try {
 		return new URL(input).toString();
 	} catch (err) {}
