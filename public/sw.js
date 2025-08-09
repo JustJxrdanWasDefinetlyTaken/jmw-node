@@ -1,17 +1,27 @@
-importScripts('../epoxy/index.js');
-importScripts('vu/uv.bundle.js');
-importScripts('vu/uv.config.js');
-importScripts(__uv$config.sw || 'vu/uv.sw.js');
+if (navigator.userAgent.includes("Firefox")) {
+	Object.defineProperty(globalThis, "crossOriginIsolated", {
+		value: true,
+		writable: false,
+	});
+}
 
-const uv = new UVServiceWorker();
+importScripts("/scram/scramjet.all.js");
+const { ScramjetServiceWorker } = $scramjetLoadWorker();
+const scramjet = new ScramjetServiceWorker();
 
-self.addEventListener('fetch', event => {
-    event.respondWith(
-        (async ()=>{
-            if(uv.route(event)) {
-                return await uv.fetch(event);
-            }
-            return await fetch(event.request);
-        })()
-    );
+(async () => {
+	await scramjet.loadConfig();
+
+})
+
+async function handleRequest(event) {
+	if (scramjet.route(event)) {
+		return scramjet.fetch(event);
+	}
+
+	return fetch(event.request);
+}
+
+self.addEventListener("fetch", (event) => {
+	event.respondWith(handleRequest(event));
 });

@@ -12,30 +12,35 @@
           <iframe id="frame" style="height: 100vh; width: 100vw;"></iframe>
 
     <script type="module">
-        import { setTransport, setWisp, makeURL, getProxied } from '/js/cat.mjs'
-        const frame = document.getElementById('frame');
-        const addressInput = document.getElementById("uv-address");
-        const form = document.getElementById("uv-form");
-        const search = 'https://search.brave.com/search?q=%s';
+      (async () => {
+        await import("/mux/index.js");
+        await import("/scram/scramjet.all.js");
+                await import("/scram/scramjet.sync.js");
 
-        setTransport('epoxy');
-        // setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
-setWisp("wss://wisp.mercurywork.shop/")
+      const { ScramjetController } = $scramjetLoadController();
 
-        frame.src = await getProxied(makeURL('Hello World!'));
-  form?.addEventListener("submit", async (event) => {
-    event.preventDefault()
+const scramjet = new ScramjetController({
+	files: {
+		wasm: "/scram/scramjet.wasm.wasm",
+		all: "/scram/scramjet.all.js",
+		sync: "/scram/scramjet.sync.js",
+  }
+});
 
-    const urlToLoad = makeURL(addressInput.value, search)
-    const proxiedUrl = await getProxied(urlToLoad)
-      frame.src = proxiedUrl
-  })
 
+scramjet.init();
+navigator.serviceWorker.register("/sw.js");
+
+const connection = new BareMux.BareMuxConnection("/mux/worker.js");
+await connection.setTransport("/epoxy/index.mjs", [{ wisp: "wss://anura.pro/" }]);
+
+alert("hey");
+document.getElementById("uv-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  document.getElementById("frame").src = scramjet.encodeUrl(document.getElementById("uv-address").value);
+})
+      })();
+// should i delete the node modueles so we can install scram no ddont the npm package is outdated i just uplodaed it
     </script>
 </body>
-    <script src="/mux/index.js"></script>
-    <script src="/epoxy/index.js"></script>
-    <script src="/vu/uv.bundle.js"></script>
-    <script src="/vu/uv.config.js"></script>
-    <script src="/js/mathhelp/regsw.js"></script>
 </html>
