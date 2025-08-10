@@ -259,29 +259,45 @@
             padding: 0;
             margin: 0;
         }
+
+        #takeadih, #chickendih {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  padding: 20px;
+  width: 90%;
+  max-width: 900px;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 20px;
+}
     </style>
 </head>
 
 <body theme="classic">
     <br>
-    <br>
-    <br>
     <div align="center">
         <main id="main">
-            <h1 class="text-slate-50"><span id="local-time"></span></h1>
+            <div id="takeadih">
+                <h1 class="text-slate-150" style="background:none;"><span style="background:none;" id="local-time"></span></h1>
+            </div>
+            <div id="chickendih">
+                <form id="form" style="background:none;">
+                    <input autofocus spellcheck="false" autocomplete="off" id="address" type="text" id="input" required
+                        placeholder="Search with confidence..">
 
-            <form id="form">
-                <input autofocus spellcheck="false" autocomplete="off" id="address" type="text" id="input" required
-                    placeholder="Search with confidence..">
-
-                <div id="suggestions-container" class="absolute w-full bg-gray-800 rounded-md shadow-lg z-30 hidden"
-                    style="top: 100%; left: 0;">
-                    <ul id="suggestions-list" class="divide-y divide-gray-700"></ul>
+                    <div id="suggestions-container" class="absolute w-full bg-gray-800 rounded-md shadow-lg z-30 hidden"
+                        style="top: 100%; left: 0;">
+                        <ul id="suggestions-list" class="divide-y divide-gray-700"></ul>
+                    </div>
+                </form>
+                <div class="row" id="presets" style="background:none;"></div>
+                <div class="row" id="custom">
+                    <div style="background:none;" class="shortcut add-btn" onclick="addShortcut()">+ Add</div>
                 </div>
-            </form>
-            <div class="row" id="presets"></div>
-            <div class="row" id="custom">
-                <div style="background:none;" class="shortcut add-btn" onclick="addShortcut()">+ Add</div>
             </div>
     </div>
     <script defer type="module">
@@ -293,7 +309,7 @@
         } from "/cat.mjs"
 
 
-        let wisp = localStorage.getItem("wisp-server") || "wss://anura.pro/"
+        let wisp = localStorage.getItem("wisp-server") ||  setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
 
         setWisp(wisp)
 
@@ -462,20 +478,21 @@
     loadShortcuts();
     render();
 </script>
-<script>
-    function autofill(url) {
-        address.value = url;
-        form.requestSubmit();
-    }
-</script>
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        const params = new URLSearchParams(window.location.search);
-        const autofillUrl = params.get('autofill');
-        if (autofillUrl) {
-            autofill(autofillUrl);
-        }
-    });
-</script>
+<script type="module">
+import { makeURL, getProxied } from "/cat.mjs"
 
+const searchEngine = localStorage.getItem("search-engine") || "https://search.brave.com/search?q=%s"
+
+async function autofill(url) {
+  const urlToLoad = makeURL(url, searchEngine)
+  const proxiedUrl = await getProxied(urlToLoad)
+  location.href = proxiedUrl
+}
+
+const params = new URLSearchParams(window.location.search)
+const autofillUrl = params.get('autofill')
+if (autofillUrl) {
+  autofill(autofillUrl)
+}
+</script>
 </html>

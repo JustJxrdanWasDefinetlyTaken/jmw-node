@@ -1,102 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JMW | Tabs</title>
-    <script async defer src="./js/tabs.js" type="module"></script>
-    <link href="/assets/css/tabs.css" rel="stylesheet" />
-   <script type="module" async defer>
-  import {
-    setWisp,
-    makeURL,
-    getProxied,
-    setFrames,
-    addressInput,
-    currentTab,
-    Tab
-  } from "/cat.mjs"
 
-  // --- INIT ---
-  const form = document.getElementById("form")
-  let search =
-    localStorage.getItem("search-engine") ||
-    "https://search.brave.com/search?q=%s"
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JMW | Tabs</title>
+  <script async defer src="./js/tabs.js" type="module"></script>
+  <link href="/assets/css/tabs.css" rel="stylesheet" />
+  <script type="module" async defer>
+    import {
+      setWisp,
+      makeURL,
+      getProxied,
+      setFrames,
+      addressInput,
+      currentTab,
+      Tab
+    } from "/cat.mjs"
+
+    // --- INIT ---
+    const form = document.getElementById("form")
+    let search =
+      localStorage.getItem("search-engine") ||
+      "https://search.brave.com/search?q=%s"
 
     async function autofill(url) {
       const urlToLoad = makeURL(url, search)
-    const proxiedUrl = await getProxied(urlToLoad)
+      const proxiedUrl = await getProxied(urlToLoad)
       setTimeout(() => {
 
-document.getElementById(`frame-${currentTab}`).src = proxiedUrl;
+        document.getElementById(`frame-${currentTab}`).src = proxiedUrl;
       }, 200);
-}
+    }
 
     const params = new URLSearchParams(window.location.search);
     const autofillUrl = params.get('autofill');
     if (autofillUrl) {
       autofill(autofillUrl);
     }
-  
-
-	//
-	// setWisp((location.protocol === "https:" ? "wss://" : "ws://") +
-	//  location.host +
-	//  "/wisp/")
-
-  setWisp("wss://wisp.mercurywork.shop/")
 
 
-  // --- EVENTS ---
-  form?.addEventListener("submit", async (event) => {
-    event.preventDefault()
+    //
+    // setWisp((location.protocol === "https:" ? "wss://" : "ws://") +
+    //  location.host +
+    //  "/wisp/")
 
-    const urlToLoad = makeURL(addressInput.value, search)
-    const proxiedUrl = await getProxied(urlToLoad)
-
-    let currentFrame = document.getElementById(`frame-${currentTab}`);
-
-    currentFrame.src = proxiedUrl
-    
-    if(currentFrame === document.getElementById(`frame-${currentTab}`)){
-      addressInput.value = urlToLoad
-
-    if (urlToLoad == "newtab.html") {
-      addressInput.value = "jmw://newtab"
-    }
-    
-    } 
-  })
+    setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
 
 
+    // --- EVENTS ---
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault()
 
-  setFrames(document.getElementById("frames") );
-  new Tab();
-      </script>
+      const urlToLoad = makeURL(addressInput.value, search)
+      const proxiedUrl = await getProxied(urlToLoad)
+
+      let currentFrame = document.getElementById(`frame-${currentTab}`);
+
+      currentFrame.src = proxiedUrl
+
+      if (currentFrame === document.getElementById(`frame-${currentTab}`)) {
+        addressInput.value = urlToLoad
+
+        if (urlToLoad == "newtab.html") {
+          addressInput.value = "jmw://newtab"
+        }
+
+      }
+    })
+
+
+
+    setFrames(document.getElementById("frames"));
+    new Tab();
+  </script>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 </head>
-<body theme="classic">
-<nav>
-  <div id="tabs"></div>
-  <button
-    id="new-tab-btn"
-    aria-label="New Tab"
-    title="New Tab"
-  >
 
-        <i class='bx bx-plus'></i>
-  </button>
-</nav>
-     <form id="form">
-        <input id="address" type="text" placeholder="Search privately.." class="search" autocomplete="off"/>
-       <a href="#" id="fullscreen-icon" class="fc" onclick="full();"><i class="bx bx-fullscreen"></i></a>
-      </form>
-<section id="frames"></section>
- 
-<script async defer>
-            function full() {
+<body theme="classic">
+  <nav>
+    <div id="tabs"></div>
+    <button id="new-tab-btn" aria-label="New Tab" title="New Tab">
+
+      <i class='bx bx-plus'></i>
+    </button>
+  </nav>
+
+  <form id="form" align="center">
+    <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="historyBack();"><i class='bx bx-chevron-left'></i></a>
+    <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="historyForward();"><i class='bx bx-chevron-right'></i></a>
+    <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="reload();"><i class="bx bx-refresh"></i></a>
+    <input id="address" type="text" placeholder="Search privately.." class="search" autocomplete="off" />
+    <a href="#" id="fullscreen-icon" class="fc" onclick="full();"><i class="bx bx-fullscreen"></i></a>
+  </form>
+  <section id="frames"></section>
+
+  <script async defer>
+    function full() {
       let elem = document.querySelector('#frames')
-      if(!document.fullscreenElement) {
+      if (!document.fullscreenElement) {
         elem.requestFullscreen().catch(err => {
           alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`)
         })
@@ -104,7 +106,21 @@ document.getElementById(`frame-${currentTab}`).src = proxiedUrl;
         document.exitFullscreen()
       }
     }
-</script>
+  </script>
 </body>
 <script src="/assets/scripts/index.js"></script>
+<script>
+function reload() {
+  var iframe = document.querySelector("iframe");
+  iframe.contentWindow.location.reload();
+}
+function historyBack() {
+  var iframe = document.querySelector("iframe");
+  iframe.contentWindow.history.back();
+}
+function historyForward() {
+  var iframe = document.querySelector("iframe");
+  iframe.contentWindow.history.forward();
+}
+</script>
 </html>
