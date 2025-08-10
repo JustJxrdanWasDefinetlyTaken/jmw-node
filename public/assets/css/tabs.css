@@ -14,10 +14,10 @@ nav {
   display: flex;
   align-items: center;
   background: var(--bgcolor);
-  border-bottom: 1px solid #ccc;
   height: 40px;
   padding: 0 8px;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
+  margin-bottom:10px;
 }
 
 #tabs {
@@ -26,26 +26,32 @@ nav {
   overflow-x: auto;
   gap: 4px;
   scrollbar-width: thin;
-  scrollbar-color: #ccc transparent;
+  scrollbar-color: var(--txtcolor) transparent;
 }
 
 #tabs::-webkit-scrollbar {
-  height: 6px;
+  width: 7px;
+  background-color: black;
 }
+
 #tabs::-webkit-scrollbar-track {
-  background: transparent;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: transparent;
 }
+
 #tabs::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 3px;
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background: var(--txtcolor);
 }
 
 [data-tab-id] {
   display: flex;
   align-items: center;
-  padding: 4px 8px;
+  padding: 8px;
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: none;
   cursor: pointer;
   user-select: none;
   min-width: 120px;
@@ -61,10 +67,11 @@ nav {
 }
 
 [data-tab-id] img {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   margin-right: 6px;
   border-radius: 2px;
+  background:none;
 }
 
 [data-tab-id] .tab {
@@ -72,7 +79,7 @@ nav {
   font-size: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
-  background:var(--surface)
+  background:none;
 }
 
 [data-tab-id] button {
@@ -108,17 +115,48 @@ nav {
   border-color: #999;
 }
 
-/* Draggable tab opacity while dragging */
 .draggable-tab.dragging {
   opacity: 0.5;
 }
 
-/* Remove outline on buttons, keep focus visible for accessibility */
 button:focus {
   outline: 2px solid #666;
   outline-offset: 2px;
 }
 
 i {
+  background:none;
+}
+
+hr {
+        border: none;
+      height: 1px;
+      background: var(--border);
+      margin: 12px 16px;
+      opacity: 0.5;
+}
+
+.form {
+  width:200px;
+  justify-content: center;
+  align-items:center;
+}
+
+input {
+  width:95%;
+  padding:10px;
+  border:1px solid var(--border);
+  border-radius:8px;
+}
+
+.fc {
+  border: 1px solid var(--border);
   background:var(--surface);
+  color:var(--txtcolor);
+  padding:8px;
+  border-radius:5px;
+}
+
+section {
+  height:350px;
 }

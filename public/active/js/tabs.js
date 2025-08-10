@@ -1,7 +1,6 @@
 import { newTab, switchTab, closeTab } from "/cat.mjs";
 
 window.newTab = newTab;
-alert("a");
 let tabs = [];
 const tabsDiv = document.getElementById("tabs");
 

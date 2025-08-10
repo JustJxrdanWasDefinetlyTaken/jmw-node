@@ -157,10 +157,11 @@ export class Tab {
 		this.frame = document.createElement("iframe");
 		this.frame.setAttribute(
 			"style",
-			"width: 100%; height: 100%; border: 0; position: fixed;",
+			"width: 99vw; height: 82vh; border: 0; position: fixed;",
 		);
-		this.frame.setAttribute("title", "Proxy Frame");
+		this.frame.setAttribute("title", "Poxy Frame");
 		this.frame.setAttribute("id", `frame-${tabCounter}`);
+		this.frame.setAttribute("src", "/active/newtab.html");
 		framesElement.appendChild(this.frame);
 
 		this.switch();
@@ -189,6 +190,11 @@ export class Tab {
 			addressInput.value = decodeURIComponent(
 				this.frame?.contentWindow?.location.href.split("/").pop(),
 			);
+			
+			if(this.frame.contentWindow?.location.href === "newtab.html") {
+				addressInput.value = "jmw://newtab";
+			}
+
 		} catch {}
 
 		document.dispatchEvent(
