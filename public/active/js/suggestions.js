@@ -4,7 +4,7 @@ const suggestionsList = document.getElementById("suggestions-list");
 const form = document.getElementById("form");
 
 let currentHighlightedIndex = -1;
-const worker = new Worker('/workers/fetchSuggestions.ts', { type: 'module' });
+const worker = new Worker('/js/fetchSuggestions.js', { type: 'module' });
 
 const fetchSuggestions = (query) => {
     return new Promise((resolve) => {
