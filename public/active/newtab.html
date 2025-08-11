@@ -481,13 +481,18 @@
 <script type="module">
 import { makeURL, getProxied } from "/cat.mjs"
 
-const searchEngine = localStorage.getItem("search-engine") || "https://search.brave.com/search?q=%s"
+const searchEngine =
+  localStorage.getItem("search-engine") ||
+  "https://search.brave.com/search?q=%s"
 
 async function autofill(url) {
   const urlToLoad = makeURL(url, searchEngine)
   const proxiedUrl = await getProxied(urlToLoad)
   location.href = proxiedUrl
 }
+
+// make it accessible for onclick handlers
+window.autofill = autofill
 
 const params = new URLSearchParams(window.location.search)
 const autofillUrl = params.get('autofill')
