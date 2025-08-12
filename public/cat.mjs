@@ -1,7 +1,7 @@
 //////////////////////////////
 ///          Init          ///
 //////////////////////////////
-import { BareMuxConnection } from "https://unpkg.com/@mercuryworkshop/bare-mux@2.1.7/dist/index.mjs";
+import { BareMuxConnection } from "/mux/index.mjs";
 
 //////////////////////////////
 ///         Options        ///
