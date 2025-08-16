@@ -95,10 +95,9 @@
     <a href="#" id="fullscreen-icon" class="fc" onclick="full();"><i class="bx bx-fullscreen"></i></a>
   </form>
   <section id="frames"></section>
-
   <script async defer>
     function full() {
-      let elem = document.querySelector('#frames')
+      let elem = document.querySelector('iframe')
       if (!document.fullscreenElement) {
         elem.requestFullscreen().catch(err => {
           alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`)
