@@ -160,7 +160,7 @@ input {
   display: inline-block;
   vertical-align: middle;
   min-width: calc(100vw - 185px);
-  outline:none;
+  outline: none;
 }
 
 .fc {
@@ -175,4 +175,20 @@ input {
 
 section {
   height: 350px;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#customAlert[style*="display: block"]~.mainContainer {
+  display: none;
+}
+
+#customAlert {
+  background:black;
 }

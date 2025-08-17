@@ -260,29 +260,57 @@
             margin: 0;
         }
 
-        #takeadih, #chickendih {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
-  padding: 20px;
-  width: 90%;
-  max-width: 900px;
-  box-sizing: border-box;
-  text-align: center;
-  margin-bottom: 20px;
-}
+        #takeadih,
+        #chickendih {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            padding: 20px;
+            width: 90%;
+            max-width: 900px;
+            box-sizing: border-box;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #customAlert[style*="display: block"]~.mainContainer {
+            display: none;
+        }
+
+        #customAlert {
+            background: black;
+        }
     </style>
 </head>
 
 <body theme="classic">
+      <div id="customAlert" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:300px;overflow-y:auto;background:black;color:var(--txtcolor);padding:30px;box-shadow:0 0 30px rgba(0,0,0,0.6);z-index:999999999999999999999999999;border-radius:16px;">
+  <button id="alertClose" style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:22px;cursor:pointer;">✕</button>
+  <div id="alertContent" style="overflow-y:auto;max-height:520px;">
+    <center>
+      <h1 style="font-size:16px;margin-bottom:10px;">⚠️Warning: This proxy is very buggy and is enabled by scramjet. PLEASE DO THIS BEFORE ACCESSING THE PROXY.⚠️</h1>
+      <h2 style="font-size:14px;margin-bottom:8px;">Here are some fixes to errors you might encounter.</h2>
+      <h3 style="font-size:13px;margin-bottom:6px;">"Cannot GET error or 'Uh Oh!' Screen."</h3>
+      <h3 style="font-size:13px;margin-bottom:6px;">if you did this press do not show again.</h3>
+      <p style="font-size:12px;margin-bottom:6px;">Easy Fix (USE 1ST METHOD FIRST):</p>
+      <ul style="font-size:12px;list-style:disc;padding-left:20px;text-align:left;">
+        <li>1st method: Click the link <a href="/active/index.html?autofill=ifyouseethisitisworkingnow" target="_blank" style="font-size:13px;">Right Here</a> to register the SW and then come back to the page</li>
+        <p>IF THAT DOESN'T WORK:</p>
+        <li>2nd method: Clear your cookies (chrome://settings/content/all?searchSubpage=[jmw link]) and press the trashcan icon</li>
+      </ul>
+    </center>
+  </div>
+  <button id="alertHide" style="display:block;margin:20px auto 0 auto;padding:10px 20px;border:none;background:#333;color:#fff;border-radius:10px;cursor:pointer;">Do not show again</button>
+</div>
     <br>
     <div align="center">
         <main id="main">
             <div id="takeadih">
-                <h1 class="text-slate-150" style="background:none;"><span style="background:none;" id="local-time"></span></h1>
+                <h1 class="text-slate-150" style="background:none;"><span style="background:none;"
+                        id="local-time"></span></h1>
             </div>
             <div id="chickendih">
                 <form id="form" style="background:none;">
@@ -309,7 +337,7 @@
         } from "/cat.mjs"
 
 
-        let wisp =  (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+        let wisp = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
 
         setWisp(wisp)
 
@@ -479,25 +507,39 @@
     render();
 </script>
 <script type="module">
-import { makeURL, getProxied } from "/cat.mjs"
+    import { makeURL, getProxied } from "/cat.mjs"
 
-const searchEngine =
-  localStorage.getItem("search-engine") ||
-  "https://search.brave.com/search?q=%s"
+    const searchEngine =
+        localStorage.getItem("search-engine") ||
+        "https://search.brave.com/search?q=%s"
 
-async function autofill(url) {
-  const urlToLoad = makeURL(url, searchEngine)
-  const proxiedUrl = await getProxied(urlToLoad)
-  location.href = proxiedUrl
-}
+    async function autofill(url) {
+        const urlToLoad = makeURL(url, searchEngine)
+        const proxiedUrl = await getProxied(urlToLoad)
+        location.href = proxiedUrl
+    }
 
-// make it accessible for onclick handlers
-window.autofill = autofill
+    // make it accessible for onclick handlers
+    window.autofill = autofill
 
-const params = new URLSearchParams(window.location.search)
-const autofillUrl = params.get('autofill')
-if (autofillUrl) {
-  autofill(autofillUrl)
-}
+    const params = new URLSearchParams(window.location.search)
+    const autofillUrl = params.get('autofill')
+    if (autofillUrl) {
+        autofill(autofillUrl)
+    }
+</script>
+<script>
+(function(){
+  if(localStorage.getItem("hideCustomAlert")==="true") return
+  var alertBox=document.getElementById("customAlert")
+  var closeBtn=document.getElementById("alertClose")
+  var hideBtn=document.getElementById("alertHide")
+  alertBox.style.display="block"
+  closeBtn.addEventListener("click",function(){alertBox.style.display="none"})
+  hideBtn.addEventListener("click",function(){
+    localStorage.setItem("hideCustomAlert","true")
+    alertBox.style.display="none"
+  })
+})();
 </script>
 </html>

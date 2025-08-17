@@ -293,6 +293,38 @@
       </head>
 
       <body theme="classic">
+      <div id="customAlert" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:300px;overflow-y:auto;background:black;color:var(--txtcolor);padding:30px;box-shadow:0 0 30px rgba(0,0,0,0.6);z-index:999999999999999999999999999;border-radius:16px;">
+  <button id="alertClose" style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:22px;cursor:pointer;">✕</button>
+  <div id="alertContent" style="overflow-y:auto;max-height:520px;">
+    <center>
+      <h1 style="font-size:16px;margin-bottom:10px;">⚠️Warning: This proxy is very buggy and is enabled by scramjet. PLEASE DO THIS BEFORE ACCESSING THE PROXY.⚠️</h1>
+      <h2 style="font-size:14px;margin-bottom:8px;">Here are some fixes to errors you might encounter.</h2>
+      <h3 style="font-size:13px;margin-bottom:6px;">"Cannot GET error or 'Uh Oh!' Screen."</h3>
+      <h3 style="font-size:13px;margin-bottom:6px;">if you did this press do not show again.</h3>
+      <p style="font-size:12px;margin-bottom:6px;">Easy Fix (USE 1ST METHOD FIRST):</p>
+      <ul style="font-size:12px;list-style:disc;padding-left:20px;text-align:left;">
+        <li>1st method: Click the link <a href="/active/index.html?autofill=ifyouseethisitisworkingnow" target="_blank" style="font-size:13px;">Right Here</a> to register the SW and then come back to the page</li>
+        <p>IF THAT DOESN'T WORK:</p>
+        <li>2nd method: Clear your cookies (chrome://settings/content/all?searchSubpage=[jmw link]) and press the trashcan icon</li>
+      </ul>
+    </center>
+  </div>
+  <button id="alertHide" style="display:block;margin:20px auto 0 auto;padding:10px 20px;border:none;background:#333;color:#fff;border-radius:10px;cursor:pointer;">Do not show again</button>
+</div>
+<script>
+(function(){
+  if(localStorage.getItem("hideCustomAlert")==="true") return
+  var alertBox=document.getElementById("customAlert")
+  var closeBtn=document.getElementById("alertClose")
+  var hideBtn=document.getElementById("alertHide")
+  alertBox.style.display="block"
+  closeBtn.addEventListener("click",function(){alertBox.style.display="none"})
+  hideBtn.addEventListener("click",function(){
+    localStorage.setItem("hideCustomAlert","true")
+    alertBox.style.display="none"
+  })
+})();
+</script>
         <div id="page-container">
           <div class="content">
         <script type="text/javascript">

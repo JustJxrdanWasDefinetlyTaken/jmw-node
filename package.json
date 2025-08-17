@@ -16,6 +16,8 @@
     "@mercuryworkshop/epoxy-transport": "^2.1.28",
     "@titaniumnetwork-dev/ultraviolet": "^3.2.10",
     "express": "^5.1.0",
-    "wisp-server-node": "^1.1.7"
+    "wisp-server-node": "^1.1.7",
+    "dotenv": "^16.1.0",
+    "node-fetch": "^2.6.12"
   }
 }
