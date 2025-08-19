@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>JMW Chat — Public • Groups • DMs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="/assets/images/jmw.png"/>
+  <link rel="shortcut icon" href="/assets/images/jmw.png"/>
+  <link rel="manifest" href="/manifest.json"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.4.0/dist/purify.min.js"></script>
+  <style>
+    @import url('/assets/css/themes.css');
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,sans-serif;background:var(--bgcolor);color:var(--txtcolor);height:100vh;display:flex}
+    .sidebar{width:300px;max-width:38vw;background:var(--surface);border-right:1px solid var(--surface-hover);display:flex;flex-direction:column}
+    .side-header{padding:12px 14px;font-weight:600;border-bottom:1px solid var(--surface-hover);display:flex;align-items:center;gap:8px;justify-content:space-between}
+    .id-badge{font-size:12px;opacity:.7}
+    .side-section{padding:10px 12px;border-bottom:1px solid var(--surface-hover)}
+    .side-section h4{margin:0 0 8px 0;font-size:13px;opacity:.8}
+    .pill{display:flex;gap:6px}
+    .pill input{flex:1;padding:8px;border:1px solid var(--surface-hover);border-radius:8px;background:var(--surface);color:var(--txtcolor)}
+    .pill button{padding:8px 10px;border:none;border-radius:8px;background:var(--surface-hover);color:var(--txtcolor);cursor:pointer}
+    .list{overflow:auto;max-height:35vh;display:flex;flex-direction:column;gap:6px}
+    .user{display:flex;justify-content:space-between;align-items:center;background:var(--bgcolor);padding:8px;border-radius:8px}
+    .user .meta-id{display:block;font-size:11px;opacity:.6}
+    .user .actions{display:flex;gap:6px}
+    .user button{border:none;border-radius:6px;background:var(--surface-hover);color:var(--txtcolor);padding:4px 8px;cursor:pointer}
+    .main{flex:1;display:flex;flex-direction:column;min-width:0}
+    .header{background:var(--surface-hover);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;font-weight:600}
+    .header .right{display:flex;gap:8px;align-items:center}
+    .header button{background:#dc3545;border:none;color:#fff;font-weight:600;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:.9rem}
+    .tabs{display:flex;gap:8px;padding:8px;border-bottom:1px solid var(--surface-hover);background:var(--surface)}
+    .tab{padding:6px 10px;border-radius:8px;background:var(--bgcolor);cursor:pointer;user-select:none}
+    .tab.active{outline:2px solid var(--surface-hover)}
+    .panes{flex:1;display:flex;min-height:0}
+    .pane{flex:1;display:none;flex-direction:column;min-width:0}
+    .pane.active{display:flex}
+    .chat-area{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--bgcolor)}
+    .message{display:flex;align-items:flex-start;gap:10px;padding:10px;background:black;border-radius:12px;max-width:70%;word-break:break-word;position:relative}
+    .self{align-self:flex-end;background:var(--surface);color:var(--txtcolor)}
+    .avatar{width:32px;height:32px;background:var(--surface-hover);color:var(--txtcolor);display:flex;justify-content:center;align-items:center;font-size:14px;font-weight:bold;border-radius:50%;flex-shrink:0}
+    .meta{font-size:12px;opacity:.7;margin-bottom:4px}
+    .input-area{display:flex;gap:10px;padding:10px;background:var(--surface);border-top:1px solid var(--surface-hover)}
+    .input-area input{flex:1;padding:10px;border:1px solid var(--surface-hover);border-radius:8px;background:var(--surface);color:var(--txtcolor)}
+    .input-area button{padding:10px 12px;background:var(--surface);color:var(--txtcolor);border:none;border-radius:8px;cursor:pointer}
+    .msg-delete{position:absolute;right:8px;top:8px;background:transparent;border:none;color:#f55;cursor:pointer;font-size:14px;padding:4px;border-radius:6px}
+    #emojiList{display:none;flex-wrap:wrap;flex-direction:row;width:600px;position:fixed;bottom:70px;right:20px;background:var(--txtcolor);border:1px solid #ccc;border-radius:10px;padding:10px;box-shadow:0 0 10px rgba(0,0,0,.1);max-width:600px;gap:5px;z-index:1000}
+    .centered{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,.25);backdrop-filter:blur(3px)}
+    .modal{background:var(--bgcolor);padding:2rem;border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.1);width:90%;max-width:800px;text-align:center}
+    .modal input,.modal button{width:100%;padding:.8rem;margin-top:1rem;font-size:1rem;border:1px solid #ccc;border-radius:8px}
+    .modal button{background:var(--surface-hover);color:var(--txtcolor);border:none;cursor:pointer}
+    .row{display:flex;gap:10px}
+    .row input{flex:1}
+    .muted-note{font-size:12px;opacity:.7;margin-top:6px}
+  </style>
+</head>
+<body theme="classic">
+  <div class="centered" id="joinScreen">
+    <div class="modal">
+      <h2>JMW Chat</h2>
+      <p>Public chat, group rooms, and direct messages.</p>
+      <div class="row">
+        <input style="background:var(--surface);" id="nameInput" placeholder="Enter your name" maxlength="50" autocomplete="off"/>
+      </div>
+      <div class="row">
+        <input style="background:var(--surface);" id="roomInput" placeholder="Optional: enter group code (min 6 chars)" maxlength="32" autocomplete="off"/>
+      </div>
+      <button id="joinBtn">Enter</button>
+      <p id="errorText" style="color:red;font-size:.9rem;border-radius:8px;"></p>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="side-header">
+      <div>
+        <div id="meName">You</div>
+        <div class="id-badge" id="meId"></div>
+      </div>
+      <div id="roleBadge" class="id-badge"></div>
+    </div>
+
+    <div class="side-section">
+      <h4>Join/Create Group</h4>
+      <div class="pill">
+        <input id="joinGroupInput" placeholder="group code"/>
+        <button id="joinGroupBtn">Join</button>
+      </div>
+      <div class="muted-note">Current: <span id="currentGroup">None</span></div>
+    </div>
+
+    <div class="side-section">
+      <h4>Online Users</h4>
+      <div class="list" id="userList"></div>
+    </div>
+
+    <div class="side-section" id="modPanel" style="display:none">
+      <h4>Moderator Tools</h4>
+      <div class="muted-note">Click a user → choose Mute/Kick/Ban.</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <div>JMW Chat • <span id="displayName"></span></div>
+      <div class="right"><span id="userCount">0</span> online <button id="leaveBtn">Leave Chat</button></div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-pane="publicPane">Public</div>
+      <div class="tab" data-pane="groupPane">Group</div>
+      <div class="tab" data-pane="dmPane">Direct</div>
+    </div>
+
+    <div class="panes">
+      <div class="pane active" id="publicPane">
+        <div class="chat-area" id="publicArea"></div>
+        <div class="input-area">
+          <input id="publicInput" placeholder="Message everyone..." maxlength="500" autocomplete="off"/>
+          <button id="emojiBtnPublic" title="Emoji"><i class='bx bx-smile'></i></button>
+          <button id="sendPublic">Send</button>
+        </div>
+      </div>
+
+      <div class="pane" id="groupPane">
+        <div class="chat-area" id="groupArea"></div>
+        <div class="input-area">
+          <input id="groupInput" placeholder="Message current group..." maxlength="500" autocomplete="off"/>
+          <button id="emojiBtnGroup" title="Emoji"><i class='bx bx-smile'></i></button>
+          <button id="sendGroup">Send</button>
+        </div>
+      </div>
+
+      <div class="pane" id="dmPane">
+        <div class="side-section" style="border:none">
+          <div class="pill">
+            <input id="dmToInput" placeholder="Recipient userId"/>
+            <button id="dmPick" title="Pick from users">Pick</button>
+          </div>
+        </div>
+        <div class="chat-area" id="dmArea"></div>
+        <div class="input-area">
+          <input id="dmInput" placeholder="Direct message..." maxlength="500" autocomplete="off"/>
+          <button id="emojiBtnDm" title="Emoji"><i class='bx bx-smile'></i></button>
+          <button id="sendDm">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="emojiList"></div>
+
+  <script>
+    const OWNER_CODES_ENCRYPTED = ["SUxvdmVHYWxhY3RpYw==","R2FsYWN0aWNCZXN0","QWRtaW5TdHVmZg==","SlJETkdMQ1RD"];
+    const blacklist=['crap','whigga','piss','cock','faggot','rape','cunt','nunu','whore','slut','nigger','kike','chigga','chink','gook','beaner','retard','dyke','fag','bastard','bollocks','bugger','bloody','arsehole','wanker'];
+    const usernameBlacklist=['admin','moderator','mod','support','owner','system'];
+    const addressPattern=/(\d{1,5}\s\w+\s(street|st|road|rd|avenue|ave|lane|ln|drive|dr|court|ct|boulevard|blvd|place|pl|square|sq|trail|trl|parkway|pkwy|circle|cir))|(\b\d{1,3}(\.\d{1,3}){3}\b)/i;
+    const emojiMap={smile:'😄',heart:'❤️',broken_heart:'💔',wilted_rose:'🥀',thumbsup:'👍',clap:'👏',fire:'🔥',grin:'😁',cry:'😢',angry:'😠',wink:'😉',star:'⭐',poop:'💩',ok:'👌',joy:'😂',sob:'😭',kiss:'😘',thinking:'🤔',hug:'🤗',pray:'🙏',cool:'😎',sleepy:'😴',shocked:'😲',scream:'😱',nerd:'🤓',blush:'😊',yum:'😋',devil:'😈',robot:'🤖',skull:'💀',alien:'👽',sun:'🌞',moon:'🌝',cat:'🐱',dog:'🐶',cake:'🎂',balloon:'🎈'};
+    const STORAGE_KEYS={public:'jmw_public',group:'jmw_group',dm:'jmw_dm'};
+
+    function sanitize(t){return DOMPurify.sanitize(t,{ALLOWED_TAGS:[],ALLOWED_ATTR:[]});}
+    function blocked(t){const x=t.toLowerCase();return blacklist.some(w=>x.includes(w))||addressPattern.test(t);}
+    function replaceEmojis(t){return t.replace(/:\((\w+)\):/g,(_,n)=>emojiMap[n]||`:(${n}):`).replace(/:([a-z0-9_+-]+):/gi,(m,n)=>emojiMap[n]||m);}
+
+    let ws=null, username='', userId='', currentGroup=null, users=new Map(), isMod=false, mutedUntil=0;
+
+    const el=id=>document.getElementById(id);
+    const joinScreen=el('joinScreen'), nameInput=el('nameInput'), roomInput=el('roomInput'), errorText=el('errorText');
+    const displayName=el('displayName'), meName=el('meName'), meId=el('meId'), userCount=el('userCount'), userList=el('userList'), roleBadge=el('roleBadge');
+    const publicArea=el('publicArea'), groupArea=el('groupArea'), dmArea=el('dmArea');
+    const publicInput=el('publicInput'), groupInput=el('groupInput'), dmInput=el('dmInput');
+    const currentGroupEl=el('currentGroup'), dmToInput=el('dmToInput');
+    const emojiList=el('emojiList');
+
+    function genUserId(name){const n=Math.floor(100000+Math.random()*900000);return `${name}-${n}`;}
+    function now(){return Date.now()}
+    function canSpeak(){return now()>=mutedUntil}
+    function isOwnerCode(input){for(let c of OWNER_CODES_ENCRYPTED){try{if(input===atob(c))return true}catch{} }return false}
+
+    function connect(){
+      const proto=location.protocol==='https:'?'wss':'ws';
+      ws=new WebSocket(`${proto}://${location.host}/ws`);
+      ws.onopen=()=>ws.send(JSON.stringify({type:'hello',username,userId}));
+      ws.onmessage=(e)=>{try{handle(JSON.parse(e.data))}catch{}};
+      ws.onclose=()=>{};
+      ws.onerror=()=>{};
+    }
+
+    function setRole(role){isMod = role==='mod' || username==='galacticadmin'; roleBadge.textContent = isMod ? 'Role: Moderator' : ''; el('modPanel').style.display = isMod ? '' : 'none';}
+
+    function handle(m){
+      if(m.type==='welcome'){ if(m.userId) userId=m.userId; meId.textContent=userId?`#${userId}`:''; if(Array.isArray(m.users)) setUsers(m.users); if(m.role) setRole(m.role); else setRole(''); if(roomInput.value.trim().length>=6){joinGroup(roomInput.value.trim());} }
+      else if(m.type==='system'){ render(publicArea,'System',m.text,false); save(publicArea,STORAGE_KEYS.public); }
+      else if(m.type==='user_list'){ setUsers(m.users||[]); }
+      else if(m.type==='user_join'){ users.set(m.user.userId,m.user); refreshUsers(); }
+      else if(m.type==='user_leave'){ users.delete(m.userId); refreshUsers(); }
+      else if(m.type==='public'){ render(publicArea,m.fromName||m.from,m.text,(m.fromId===userId)); save(publicArea,STORAGE_KEYS.public); }
+      else if(m.type==='group'){ if(!currentGroup || m.group!==currentGroup) return; render(groupArea,m.fromName||m.from,m.text,(m.fromId===userId),`Group: ${m.group}`); save(groupArea,STORAGE_KEYS.group); }
+      else if(m.type==='dm'){ const mine = m.fromId===userId; const who = mine ? `To ${m.toName||m.to}` : `From ${m.fromName||m.from}`; render(dmArea, who, m.text, mine); save(dmArea,STORAGE_KEYS.dm); }
+      else if(m.type==='mod_effect'){ if(m.action==='mute' && m.until){ mutedUntil = m.until; notify(`You are muted until ${new Date(m.until).toLocaleTimeString()}`); } if(m.action==='kick'){ notify('You were kicked.'); } if(m.action==='ban'){ notify('You were banned.'); } }
+    }
+
+    function setUsers(arr){ users.clear(); (arr||[]).forEach(u=>users.set(u.userId,u)); refreshUsers(); }
+    function refreshUsers(){
+      userList.innerHTML='';
+      [...users.values()].sort((a,b)=>a.username.localeCompare(b.username)).forEach(u=>{
+        const wrap=document.createElement('div'); wrap.className='user';
+        const left=document.createElement('div');
+        left.innerHTML = `<strong>${sanitize(u.username)}</strong><span class="meta-id">#${sanitize(u.userId)}</span>`;
+        const actions=document.createElement('div'); actions.className='actions';
+        const dmBtn=document.createElement('button'); dmBtn.textContent='DM';
+        dmBtn.onclick=()=>{ dmToInput.value=u.userId; switchTab('dmPane'); dmInput.focus(); };
+        actions.appendChild(dmBtn);
+        if(isMod && u.userId!==userId){
+          const muteBtn=document.createElement('button'); muteBtn.textContent='Mute 5m';
+          muteBtn.onclick=()=>sendMod('mute',u.userId,5*60*1000);
+          const kickBtn=document.createElement('button'); kickBtn.textContent='Kick';
+          kickBtn.onclick=()=>sendMod('kick',u.userId);
+          const banBtn=document.createElement('button'); banBtn.textContent='Ban';
+          banBtn.onclick=()=>sendMod('ban',u.userId);
+          actions.append(muteBtn,kickBtn,banBtn);
+        }
+        wrap.append(left,actions);
+        userList.appendChild(wrap);
+      });
+      userCount.textContent=users.size;
+    }
+
+    function sendMod(action,targetId,durationMs){ if(!isMod) return; ws && ws.send(JSON.stringify({type:'mod',action,targetId,durationMs})); }
+
+    function render(area,name,text,isSelf,meta){
+      if(blocked(text)) text='[Message removed due to prohibited content]';
+      const safeName=sanitize(name||''); const safeText=replaceEmojis(sanitize(text||'')); const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+      const msg=document.createElement('div'); msg.className='message'+(isSelf?' self':'');
+      const avatarLetter=sanitize(safeName.replace('👑','').trim().charAt(0).toUpperCase()||'?');
+      msg.innerHTML=`<div class="avatar">${avatarLetter}</div><div><div class="meta">${safeName}${meta?` • ${sanitize(meta)}`:''} • ${time}</div><div>${safeText}</div></div>`;
+      const del=document.createElement('button'); del.className='msg-delete'; del.innerText='✖'; del.onclick=()=>{ const id=msg.getAttribute('data-msg-id'); if(id) ws&&ws.send(JSON.stringify({type:'delete',msgId:id})); msg.remove(); };
+      msg.appendChild(del);
+      area.appendChild(msg); area.scrollTop=area.scrollHeight;
+      if(!isSelf && 'Notification' in window && Notification.permission==='granted'){ new Notification(safeName,{body:safeText}); }
+    }
+
+    function save(area,key){ const messages=Array.from(area.querySelectorAll('.message')).map(m=>m.outerHTML); localStorage.setItem(key,JSON.stringify(messages)); }
+    function load(area,key){ const saved=localStorage.getItem(key); if(!saved) return; const arr=JSON.parse(saved)||[]; area.innerHTML=''; arr.forEach(h=>{const d=document.createElement('div'); d.innerHTML=h; area.appendChild(d.firstElementChild);}); area.scrollTop=area.scrollHeight; }
+
+    function sendPublic(){ if(!canSpeak()) return alert('You are muted right now.'); let t=sanitize(publicInput.value.trim()); if(!t) return; if(blocked(t)) return alert('Your message contains prohibited content.'); t=replaceEmojis(t); ws&&ws.send(JSON.stringify({type:'public',text:t})); publicInput.value=''; }
+    function sendGroup(){ if(!canSpeak()) return alert('You are muted right now.'); if(!currentGroup) return alert('Join a group first.'); let t=sanitize(groupInput.value.trim()); if(!t) return; if(blocked(t)) return alert('Your message contains prohibited content.'); t=replaceEmojis(t); ws&&ws.send(JSON.stringify({type:'group',group:currentGroup,text:t})); groupInput.value=''; }
+    function sendDm(){ if(!canSpeak()) return alert('You are muted right now.'); const to=sanitize(dmToInput.value.trim()); if(!to) return alert('Pick a recipient.'); let t=sanitize(dmInput.value.trim()); if(!t) return; if(blocked(t)) return alert('Your message contains prohibited content.'); t=replaceEmojis(t); ws&&ws.send(JSON.stringify({type:'dm',to,text:t})); dmInput.value=''; }
+
+    function joinGroup(code){ const c=sanitize(code.trim()); if(!c||c.length<6) return alert('Group code must be at least 6 chars.'); currentGroup=c; currentGroupEl.textContent=c; ws&&ws.send(JSON.stringify({type:'join',group:c})); switchTab('groupPane'); }
+    function switchTab(id){ document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.pane===id)); document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.id===id)); }
+
+    function toggleEmojiList(targetInput){ if(emojiList.style.display==='none' || !emojiList.style.display){ renderEmojiList(targetInput); emojiList.style.display='flex'; } else { emojiList.style.display='none'; } }
+    function renderEmojiList(targetInput){ emojiList.innerHTML=''; for(const [name,emoji] of Object.entries(emojiMap)){ const button=document.createElement('button'); button.style.margin='4px'; button.style.padding='1px'; button.style.fontSize='20px'; button.style.borderRadius='0px'; button.style.height='30px'; button.textContent=emoji; button.title=name; button.onclick=()=>{ targetInput.value += `:(${name}):`; targetInput.focus(); emojiList.style.display='none'; }; emojiList.appendChild(button); } }
+    function notify(msg){ if('Notification' in window && Notification.permission==='granted'){ new Notification('JMW Chat',{body:msg}); } }
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      load(publicArea,STORAGE_KEYS.public);
+      load(groupArea,STORAGE_KEYS.group);
+      load(dmArea,STORAGE_KEYS.dm);
+      document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.pane)));
+      el('joinBtn').onclick=()=>{
+        errorText.textContent='';
+        const rawName=nameInput.value.trim();
+        const name=sanitize(rawName);
+        if(!name){errorText.textContent='Please enter your name.';return;}
+        if(name.length>50){errorText.textContent='Name must be 50 characters or less.';return;}
+        if(usernameBlacklist.includes(name.toLowerCase())){errorText.textContent='This username is reserved. Choose another.';return;}
+        if(isOwnerCode(name)){ username = 'galacticadmin'; } else { username = name; }
+        const savedId = localStorage.getItem('jmw_userId');
+        const savedName = localStorage.getItem('jmw_username');
+        if(savedName===username && savedId){ userId=savedId; } else { userId=genUserId(username.replace('👑 ','').trim()); }
+        localStorage.setItem('jmw_username',username);
+        localStorage.setItem('jmw_userId',userId);
+        displayName.textContent=username; meName.textContent=username; meId.textContent='#'+userId;
+        joinScreen.style.display='none';
+        if('Notification' in window && Notification.permission!=='granted'){ Notification.requestPermission(); }
+        connect();
+      };
+      el('leaveBtn').onclick=()=>{ if(ws){ try{ws.close()}catch{} } ws=null; users.clear(); refreshUsers(); currentGroup=null; currentGroupEl.textContent='None'; joinScreen.style.display='flex'; };
+      el('sendPublic').onclick=sendPublic;
+      el('sendGroup').onclick=sendGroup;
+      el('sendDm').onclick=sendDm;
+      publicInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendPublic();}});
+      groupInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendGroup();}});
+      dmInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendDm();}});
+      el('emojiBtnPublic').onclick=()=>toggleEmojiList(publicInput);
+      el('emojiBtnGroup').onclick=()=>toggleEmojiList(groupInput);
+      el('emojiBtnDm').onclick=()=>toggleEmojiList(dmInput);
+      el('joinGroupBtn').onclick=()=>joinGroup(el('joinGroupInput').value);
+      el('dmPick').onclick=()=>{ const first = userList.querySelector('.user .meta-id'); if(first){ dmToInput.value = first.textContent.replace('#','').trim(); switchTab('dmPane'); dmInput.focus(); } else alert('No users to pick.'); };
+      const obs1=new MutationObserver(()=>save(publicArea,STORAGE_KEYS.public)); obs1.observe(publicArea,{childList:true});
+      const obs2=new MutationObserver(()=>save(groupArea,STORAGE_KEYS.group));  obs2.observe(groupArea,{childList:true});
+      const obs3=new MutationObserver(()=>save(dmArea,STORAGE_KEYS.dm));      obs3.observe(dmArea,{childList:true});
+    });
+  </script>
+
+  <script src="/assets/scripts/index.js"></script>
+</body>
+</html>

@@ -572,11 +572,11 @@
       </li>
       <li data-url="/yalp/">
         <i class='bx bx-joystick'></i>
-        <span>Games</span>
+        <span>Gᾰmes</span>
       </li>
       <li data-url="/sppa/">
         <i class='bx bx-grid-alt'></i>
-        <span>Apps</span>
+        <span>Ἇpps</span>
       </li>
       <li data-url="/active/">
         <i class='bx bx-search-alt'></i>
@@ -584,7 +584,7 @@
       </li>
       <li data-url="/AI/">
         <i class='bx bx-bot'></i>
-        <span>AI</span>
+        <span>ἏI</span>
       </li>
       <li data-url="/media/">
         <i class='bx bx-camera-movie'></i>
@@ -900,6 +900,18 @@
     }
   });
 </script>
-<script src="/assets/scripts/antict.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const key = "lastRedirect";
+    const now = Date.now();
+    const day = 24 * 60 * 60 * 1000;
+    const lastRedirect = localStorage.getItem(key);
 
+    if (!lastRedirect || now - Number(lastRedirect) > day) {
+      localStorage.setItem(key, String(now));
+      window.location.replace("/active/index.html?autofill=ifyouseethisitisworking&goback=true");
+    }
+  });
+</script>
+<script src="/assets/scripts/antict.js"></script>
 </html>

@@ -91,7 +91,7 @@
       <ul style="font-size:12px;list-style:disc;padding-left:20px;text-align:left;">
         <li>1st method: Click the link <a href="/active/index.html?autofill=ifyouseethisitisworkingnow" target="_blank" style="font-size:13px;">Right Here</a> to register the SW and then come back to the page</li>
         <p>IF THAT DOESN'T WORK:</p>
-        <li>2nd method: Clear your cookies (chrome://settings/content/all?searchSubpage=[jmw link]) and press the trashcan icon</li>
+        <li>2nd method: Clear your cookies (chrome://settings/content/all?searchSubpage=[jmw link]) and press the trashcan icon, then do the first method again.</li>
       </ul>
     </center>
   </div>
@@ -155,5 +155,13 @@ function historyForward() {
     alertBox.style.display="none"
   })
 })();
+</script>
+<script>
+  const paramss = new URLSearchParams(window.location.search);
+  if (paramss.has("goback")) {
+    setTimeout(() => {
+      window.location.replace("/index.html");
+    }, 10000);
+  }
 </script>
 </html>

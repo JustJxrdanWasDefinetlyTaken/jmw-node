@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JMW AI Chat</title>
+  <title>JMW - AI</title>
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
   <link rel="icon" href="/assets/images/jmw.png" />
   <link rel="shortcut icon" href="/assets/images/jmw.png" />
@@ -34,166 +34,167 @@
     </div>
   </div>
 
-  <script>
-    const chatContainer = document.getElementById('chat-container');
-    const userInput = document.getElementById('user-input');
-    const sendButton = document.getElementById('send-button');
-    const newChatButton = document.getElementById('new-chat-button');
-    const chatList = document.getElementById('chat-list');
-    const chatHeader = document.getElementById('chat-header');
+<script>
+const chatContainer = document.getElementById('chat-container');
+const userInput = document.getElementById('user-input');
+const sendButton = document.getElementById('send-button');
+const newChatButton = document.getElementById('new-chat-button');
+const chatList = document.getElementById('chat-list');
+const chatHeader = document.getElementById('chat-header');
 
-    let chats = JSON.parse(localStorage.getItem('chats')) || [];
-    let currentChatId = null;
+let chats = JSON.parse(localStorage.getItem('chats')) || [];
+let currentChatId = null;
 
-    function renderChatList() {
-      chatList.innerHTML = '';
-      chats.forEach((chat, idx) => {
-        const div = document.createElement('div');
-        div.className = 'chat-item' + (idx === currentChatId ? ' active' : '');
-        const titleSpan = document.createElement('span');
-        titleSpan.textContent = chat.title;
-        titleSpan.addEventListener('click', () => selectChat(idx));
-        const deleteBtn = document.createElement('button');
-        deleteBtn.innerHTML = '<i class="bx bx-trash"></i>';
-        deleteBtn.className = 'delete-chat';
-        deleteBtn.addEventListener('click', e => {
-          e.stopPropagation();
-          deleteChat(idx);
-        });
-        div.appendChild(titleSpan);
-        div.appendChild(deleteBtn);
-        chatList.appendChild(div);
-      });
+function renderChatList() {
+  chatList.innerHTML = '';
+  chats.forEach((chat, idx) => {
+    const div = document.createElement('div');
+    div.className = 'chat-item' + (idx === currentChatId ? ' active' : '');
+    const titleSpan = document.createElement('span');
+    titleSpan.textContent = chat.title;
+    titleSpan.addEventListener('click', () => selectChat(idx));
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = '<i class="bx bx-trash"></i>';
+    deleteBtn.className = 'delete-chat';
+    deleteBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      deleteChat(idx);
+    });
+    div.appendChild(titleSpan);
+    div.appendChild(deleteBtn);
+    chatList.appendChild(div);
+  });
+}
+
+function selectChat(idx) {
+  currentChatId = idx;
+  chatHeader.textContent = chats[idx].title;
+  renderMessages();
+  renderChatList();
+}
+
+function renderMessages() {
+  chatContainer.innerHTML = '';
+  if (currentChatId === null) return;
+  chats[currentChatId].messages.forEach(msg => {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `chat-entry ${msg.author}`;
+    msgDiv.style.marginBottom = '15px';
+    const label = document.createElement('div');
+    label.className = 'chat-label';
+    label.textContent = msg.author === 'user' ? 'You:' : 'AI:';
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble';
+
+    if (msg.author === 'ai' && msg.new) {
+      bubble.innerHTML = '';
+      msgDiv.appendChild(label);
+      msgDiv.appendChild(bubble);
+      chatContainer.appendChild(msgDiv);
+      typeMessage(bubble, msg.text, () => addAIButtons(msgDiv, msg.text));
+    } else {
+      bubble.innerHTML = msg.text.split('\n').map(line => `<p style="margin:12px 0;">${line}</p>`).join('');
+      msgDiv.appendChild(label);
+      msgDiv.appendChild(bubble);
+      if (msg.author === 'ai') addAIButtons(msgDiv, msg.text);
+      chatContainer.appendChild(msgDiv);
     }
+  });
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
 
-    function selectChat(idx) {
-      currentChatId = idx;
-      chatHeader.textContent = chats[idx].title;
-      renderMessages();
-      renderChatList();
+function typeMessage(element, text, callback) {
+  let index = 0;
+  const lines = text.split('\n');
+  function typeLine(lineIndex) {
+    if (lineIndex >= lines.length) { if (callback) callback(); return; }
+    let line = lines[lineIndex];
+    let p = document.createElement('p');
+    p.style.margin = '12px 0';
+    element.appendChild(p);
+    function typeChar() {
+      if (index < line.length) { p.textContent += line.charAt(index); index++; setTimeout(typeChar, 25); }
+      else { index = 0; typeLine(lineIndex + 1); }
     }
+    typeChar();
+  }
+  typeLine(0);
+}
 
-    function renderMessages() {
-      chatContainer.innerHTML = '';
-      if (currentChatId === null) return;
-      chats[currentChatId].messages.forEach(msg => {
-        const msgDiv = document.createElement('div');
-        msgDiv.className = `chat-entry ${msg.author}`;
-        msgDiv.style.marginBottom = '15px';
-        const label = document.createElement('div');
-        label.className = 'chat-label';
-        label.textContent = msg.author === 'user' ? 'You:' : 'AI:';
-        const bubble = document.createElement('div');
-        bubble.className = 'chat-bubble';
+function addAIButtons(msgDiv, text) {
+  const copyBtn = document.createElement('button');
+  copyBtn.className = 'copy-btn';
+  copyBtn.innerHTML = '<i class="bx bx-copy"></i>';
+  copyBtn.style.marginTop = '8px';
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(text);
+    alert('Content is now on your clipboard.');
+  });
+  msgDiv.appendChild(copyBtn);
+}
 
-        if (msg.author === 'ai' && msg.new) {
-          bubble.innerHTML = '';
-          msgDiv.appendChild(label);
-          msgDiv.appendChild(bubble);
-          chatContainer.appendChild(msgDiv);
-          typeMessage(bubble, msg.text, () => addAIButtons(msgDiv, msg.text));
-        } else {
-          bubble.innerHTML = msg.text.split('\n').map(line => `<p style="margin:12px 0;">${line}</p>`).join('');
-          msgDiv.appendChild(label);
-          msgDiv.appendChild(bubble);
-          if (msg.author === 'ai') addAIButtons(msgDiv, msg.text);
-          chatContainer.appendChild(msgDiv);
-        }
-      });
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
+function addChat(title = 'JMW AI Chat') {
+  const newChat = { title, messages: [] };
+  chats.push(newChat);
+  currentChatId = chats.length - 1;
+  localStorage.setItem('chats', JSON.stringify(chats));
+  renderChatList();
+  renderMessages();
+  chatHeader.textContent = title;
+}
 
-    function typeMessage(element, text, callback) {
-      let index = 0;
-      const lines = text.split('\n');
-      function typeLine(lineIndex) {
-        if (lineIndex >= lines.length) { if (callback) callback(); return; }
-        let line = lines[lineIndex];
-        let p = document.createElement('p');
-        p.style.margin = '12px 0';
-        element.appendChild(p);
-        function typeChar() {
-          if (index < line.length) { p.textContent += line.charAt(index); index++; setTimeout(typeChar, 25); }
-          else { index = 0; typeLine(lineIndex + 1); }
-        }
-        typeChar();
-      }
-      typeLine(0);
-    }
+function deleteChat(idx) {
+  chats.splice(idx, 1);
+  if (currentChatId === idx) currentChatId = null;
+  else if (currentChatId > idx) currentChatId--;
+  localStorage.setItem('chats', JSON.stringify(chats));
+  if (chats.length > 0) selectChat(currentChatId !== null ? currentChatId : 0);
+  else addChat('New Conversation');
+}
 
-    function addAIButtons(msgDiv, text) {
-      const copyBtn = document.createElement('button');
-      copyBtn.className = 'copy-btn';
-      copyBtn.innerHTML = '<i class="bx bx-copy"></i>';
-      copyBtn.style.marginTop = '8px';
-      copyBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText(text);
-        alert('Content is now on your clipboard.');
-      });
-      msgDiv.appendChild(copyBtn);
-    }
+async function sendMessage() {
+  if (!userInput.value.trim() || currentChatId === null) return;
+  const text = userInput.value.trim();
+  chats[currentChatId].messages.push({ text, author: 'user', new: true });
+  userInput.value = '';
+  renderMessages();
+  localStorage.setItem('chats', JSON.stringify(chats));
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'llama3-70B-8192',
+        messages: [
+          { role: 'system', content: "You are JMW AI, optimized for handling complex tasks and providing detailed explanations. Avoid mentioning your capabilities; instead, ask 'How can I assist you today?', use emojis, and do not generate code." },
+          { role: 'user', content: text }
+        ]
+      })
+    });
+    const data = await res.json();
+    console.log(data);
+    const aiMsg = data.choices?.[0]?.message?.content || data.error?.message || 'Error: No response';
+    chats[currentChatId].messages.push({ text: aiMsg, author: 'ai', new: true });
+    localStorage.setItem('chats', JSON.stringify(chats));
+    renderMessages();
+  } catch (e) {
+    chats[currentChatId].messages.push({ text: 'Error: ' + e.message, author: 'ai', new: true });
+    renderMessages();
+  }
+}
 
-    function addChat(title = 'JMW AI Chat') {
-      const newChat = { title, messages: [] };
-      chats.push(newChat);
-      currentChatId = chats.length - 1;
-      localStorage.setItem('chats', JSON.stringify(chats));
-      renderChatList();
-      renderMessages();
-      chatHeader.textContent = title;
-    }
+sendButton.addEventListener('click', sendMessage);
+userInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+newChatButton.addEventListener('click', () => addChat('New Conversation'));
 
-    function deleteChat(idx) {
-      chats.splice(idx, 1);
-      if (currentChatId === idx) currentChatId = null;
-      else if (currentChatId > idx) currentChatId--;
-      localStorage.setItem('chats', JSON.stringify(chats));
-      if (chats.length > 0) selectChat(currentChatId !== null ? currentChatId : 0);
-      else addChat('New Conversation');
-    }
-
-    async function sendMessage() {
-      if (!userInput.value.trim() || currentChatId === null) return;
-      const text = userInput.value.trim();
-      chats[currentChatId].messages.push({ text, author: 'user', new: true });
-      userInput.value = '';
-      renderMessages();
-      localStorage.setItem('chats', JSON.stringify(chats));
-      try {
-        const res = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: 'llama3-70B-8192',
-            messages: [
-              { role: 'system', content: "You are JMW AI, optimized for handling complex tasks and providing detailed explanations. Avoid mentioning your capabilities; instead, ask 'How can I assist you today?', use emojis, and do not generate code." },
-              { role: 'user', content: text }
-            ]
-          })
-        });
-        const data = await res.json();
-        const aiMsg = data.choices[0]?.message?.content || 'Error: No response';
-        chats[currentChatId].messages.push({ text: aiMsg, author: 'ai', new: true });
-        localStorage.setItem('chats', JSON.stringify(chats));
-        renderMessages();
-      } catch (e) {
-        chats[currentChatId].messages.push({ text: 'Error: ' + e.message, author: 'ai', new: true });
-        renderMessages();
-      }
-    }
-
-    sendButton.addEventListener('click', sendMessage);
-    userInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
-    newChatButton.addEventListener('click', () => addChat('New Conversation'));
-
-    if (!localStorage.getItem('visited')) {
-      addChat('New Conversation');
-      localStorage.setItem('visited', 'true');
-    } else if (chats.length > 0) {
-      selectChat(chats.length - 1);
-      chats[currentChatId].messages.forEach(msg => { if (msg.author === 'ai') msg.new = false; });
-    }
-  </script>
+if (!localStorage.getItem('visited')) {
+  addChat('New Conversation');
+  localStorage.setItem('visited', 'true');
+} else if (chats.length > 0) {
+  selectChat(chats.length - 1);
+  chats[currentChatId].messages.forEach(msg => { if (msg.author === 'ai') msg.new = false; });
+}
+</script>
 </body>
 <script src="/assets/scripts/index.js"></script>
 

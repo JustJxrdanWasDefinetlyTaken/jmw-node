@@ -1,0 +1,35 @@
+{
+  "version": 3,
+  "builds": [
+    {
+      "src": "api/chat.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "public/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/chat",
+      "dest": "/api/chat.js"
+    },
+    {
+      "src": "/vu/(.*)",
+      "dest": "/node_modules/@titaniumnetwork-dev/ultraviolet/$1"
+    },
+    {
+      "src": "/mux/(.*)",
+      "dest": "/node_modules/@mercuryworkshop/bare-mux/node/$1"
+    },
+    {
+      "src": "/epoxy/(.*)",
+      "dest": "/node_modules/@mercuryworkshop/epoxy-transport/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ]
+}
