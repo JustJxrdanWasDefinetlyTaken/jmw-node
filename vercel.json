@@ -11,11 +11,5 @@
     { "src": "/mux/(.*)", "dest": "/node_modules/@mercuryworkshop/bare-mux/node/$1" },
     { "src": "/epoxy/(.*)", "dest": "/node_modules/@mercuryworkshop/epoxy-transport/$1" },
     { "src": "/(.*)", "dest": "/public/$1" }
-  ],
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
-    },
-    "installCommand": "npm install"
-  }
+  ]
 }
