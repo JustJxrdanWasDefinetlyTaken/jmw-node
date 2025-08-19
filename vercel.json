@@ -1,35 +1,21 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "api/chat.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
-    }
+    { "src": "public/**/*", "use": "@vercel/static" },
+    { "src": "node_modules/@titaniumnetwork-dev/ultraviolet/**", "use": "@vercel/static" },
+    { "src": "node_modules/@mercuryworkshop/bare-mux/node/**", "use": "@vercel/static" },
+    { "src": "node_modules/@mercuryworkshop/epoxy-transport/**", "use": "@vercel/static" }
   ],
   "routes": [
-    {
-      "src": "/api/chat",
-      "dest": "/api/chat.js"
+    { "src": "/vu/(.*)", "dest": "/node_modules/@titaniumnetwork-dev/ultraviolet/$1" },
+    { "src": "/mux/(.*)", "dest": "/node_modules/@mercuryworkshop/bare-mux/node/$1" },
+    { "src": "/epoxy/(.*)", "dest": "/node_modules/@mercuryworkshop/epoxy-transport/$1" },
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ],
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
     },
-    {
-      "src": "/vu/(.*)",
-      "dest": "/node_modules/@titaniumnetwork-dev/ultraviolet/$1"
-    },
-    {
-      "src": "/mux/(.*)",
-      "dest": "/node_modules/@mercuryworkshop/bare-mux/node/$1"
-    },
-    {
-      "src": "/epoxy/(.*)",
-      "dest": "/node_modules/@mercuryworkshop/epoxy-transport/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/public/$1"
-    }
-  ]
+    "installCommand": "npm install"
+  }
 }
