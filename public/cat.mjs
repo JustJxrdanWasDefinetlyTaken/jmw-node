@@ -238,7 +238,7 @@ export class Tab {
       }),
     );
 
-    if (url === "newtab") url = "bromine://newtab";
+    if (url === "newtab") url = "jmw://newtab";
     addressInput.value = url;
   }
 }

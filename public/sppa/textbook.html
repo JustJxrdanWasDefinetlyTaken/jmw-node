@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,373 +8,369 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/newtab.png" />
-    <link rel="shortcut icon" href="/newtab.png" />
+  <link rel="shortcut icon" href="/newtab.png" />
   <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
-  <link rel="manifest" href="/manifest.json"/>
+  <link rel="manifest" href="/manifest.json" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
   <style>
     .iframe {
       float: center;
-              width: 100%; 
-            height: 100%;
-            text-align: center;
-          }
-          .fullscreen {
-            font-size: 20;
-            border-radius: 8px;
-            border: none;
-            color: var(--txtcolor);
-            font-size: 30px;
-            justify-content: space-between;
-          }
-          .reload {
-            font-size: 20;
-            border-radius: 8px;
-            border: none;
-            color: var(--txtcolor);
-            font-size: 30px;
-            justify-content: space-between;
-          }
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+
+    .fullscreen {
+      font-size: 20;
+      border-radius: 8px;
+      border: none;
+      color: var(--txtcolor);
+      font-size: 30px;
+      justify-content: space-between;
+    }
+
+    .reload {
+      font-size: 20;
+      border-radius: 8px;
+      border: none;
+      color: var(--txtcolor);
+      font-size: 30px;
+      justify-content: space-between;
+    }
+
     .reload:hover {
       transform: rotate(-360deg);
     }
-          body {
-            background-color: var(--bgcolor);
-            color: var(--txtcolor);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-          }
+
+    body {
+      background-color: var(--bgcolor);
+      color: var(--txtcolor);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
 
 
 
-          #game-container {
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 660px;
-          }
+    #game-container {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 660px;
+    }
 
-          #game-container iframe {
-            border: none;
-            float: center;
-            width: 100%;
-            height: 100%;
-            height: 90vh;
-            width: 100vw;
-            text-align: center;
-            border-radius: 5px;
-          }
+    #game-container iframe {
+      border: none;
+      float: center;
+      width: 100%;
+      height: 100%;
+      height: 90vh;
+      width: 100vw;
+      text-align: center;
+      border-radius: 5px;
+    }
 
-          #server-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
+    #server-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-          #server-buttons a {
-            display: block;
-            position: relative;
-            top: 0;
-            margin: 0 10px;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 1.2rem;
-            text-decoration: none;
-            color: #EFEFEF;
-            background-color: #DD4A68;
-            transition: background-color 0.3s ease;
-          }
+    #server-buttons a {
+      display: block;
+      position: relative;
+      top: 0;
+      margin: 0 10px;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: #EFEFEF;
+      background-color: #DD4A68;
+      transition: background-color 0.3s ease;
+    }
 
-          #server-buttons a:hover {
-            background-color: #FF6B88;
-          }
+    #server-buttons a:hover {
+      background-color: #FF6B88;
+    }
 
-          #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #1f1f1f;
-            z-index: 9999;
-            user-select: none;
-          }
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #1f1f1f;
+      z-index: 9999;
+      user-select: none;
+    }
 
-          #loader.hide {
-            animation: fadeOut 1s;
-            animation-fill-mode: forwards;
-          }
+    #loader.hide {
+      animation: fadeOut 1s;
+      animation-fill-mode: forwards;
+    }
 
-          @keyframes fadeOut {
-            0% {
-              opacity: 1;
-            }
+    @keyframes fadeOut {
+      0% {
+        opacity: 1;
+      }
 
-            100% {
-              opacity: 0;
-            }
-          }
+      100% {
+        opacity: 0;
+      }
+    }
 
-          #loader h1 {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-            font-size: 7vw;
-            font-weight: 700;
-            text-align: center;
-          }
+    #loader h1 {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 7vw;
+      font-weight: 700;
+      text-align: center;
+    }
 
-          #loader h1 span {
-            color: #ff0006;
-          }
+    #loader h1 span {
+      color: #ff0006;
+    }
 
-          #loader p {
-            position: absolute;
-            top: 53%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-            font-size: 1.2vw;
-            font-weight: 500;
-            text-align: center;
-          }
+    #loader p {
+      position: absolute;
+      top: 53%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 1.2vw;
+      font-weight: 500;
+      text-align: center;
+    }
 
-          #loader .loader {
-            position: absolute;
-            top: 63%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 6vw;
-            height: 6vw;
-            border-radius: 50%;
-            border: 10px solid #fff;
-            border-top-color: #941417;
-            animation: loader 1s linear infinite;
-          }
+    #loader .loader {
+      position: absolute;
+      top: 63%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6vw;
+      height: 6vw;
+      border-radius: 50%;
+      border: 10px solid #fff;
+      border-top-color: #941417;
+      animation: loader 1s linear infinite;
+    }
 
-          @keyframes loader {
-            0% {
-              transform: translate(-50%, -50%) rotate(0deg);
-            }
+    @keyframes loader {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
 
-            100% {
-              transform: translate(-50%, -50%) rotate(360deg);
-            }
-          }
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
 
-          .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 94.9%;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  height: 50px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-  z-index: 1000;
-  border-radius: 20px;
-  padding: 0 15px;
-}
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 94.9%;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      width: 80%;
+      height: 50px;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      border-radius: 20px;
+      padding: 0 15px;
+    }
 
-.navbar:hover {
-  transform: translateY(-30px);
-}
+    .navbar:hover {
+      transform: translateY(-30px);
+    }
 
-.navbar .icon {
-  display: flex;
-  align-items: center;
-}
+    .navbar .icon {
+      display: flex;
+      align-items: center;
+    }
 
-.navbar .icon img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
+    .navbar .icon img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
 
-.navbar .buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .navbar .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.navbar .buttons .btn {
-  width: 40px;
-  height: 40px;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  color: white;
-  border: none;
-  font-size: 22px;
-}
+    .navbar .buttons .btn {
+      width: 40px;
+      height: 40px;
+      background-color: rgba(0, 0, 0, 0.4);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      color: white;
+      border: none;
+      font-size: 22px;
+    }
 
-.navbar .buttons .btn:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
+    .navbar .buttons .btn:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
 
-@media screen and (max-width: 768px) {
-  .navbar .icon img {
-    width: 30px;
-    height: 30px;
-  }
+    @media screen and (max-width: 768px) {
+      .navbar .icon img {
+        width: 30px;
+        height: 30px;
+      }
 
-  .navbar .buttons .btn {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-  }
-}
-  #chatContainer {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    width: 35%;
-    height: 91%;
-    border: 1px solid var(--txtcolor, #000);
-    z-index: 1000;
-    display: none;
-    background: white;
-    box-sizing: border-box;
-  }
-  #chatIframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-  }
-  #chatCloseButton {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    width: 25px;
-    height: 25px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 20px;
-    padding: 0;
-    user-select: none;
-  }
-        </style>
+      .navbar .buttons .btn {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+      }
+    }
+
+    #chatContainer {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      width: 35%;
+      height: 91%;
+      border: 1px solid var(--txtcolor, #000);
+      z-index: 1000;
+      display: none;
+      background: white;
+      box-sizing: border-box;
+    }
+
+    #chatIframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    #chatCloseButton {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      width: 25px;
+      height: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 20px;
+      padding: 0;
+      user-select: none;
+    }
+  </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ8CVXYBF9"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-TQ8CVXYBF9');
   </script>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-      </head>
+</head>
 
-      <body theme="classic">
+<body theme="classic">
       <div id="customAlert" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:300px;overflow-y:auto;background:black;color:var(--txtcolor);padding:30px;box-shadow:0 0 30px rgba(0,0,0,0.6);z-index:999999999999999999999999999;border-radius:16px;">
-  <button id="alertClose" style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:22px;cursor:pointer;">✕</button>
+  <button id="alertClose" style="position:absolute;top:15px;right:15px;background:transparent;background-color:transparent;border:none;font-size:22px;cursor:pointer;">✕</button>
   <div id="alertContent" style="overflow-y:auto;max-height:520px;">
     <center>
-      <h1 style="font-size:16px;margin-bottom:10px;">⚠️Warning: This proxy is very buggy and is enabled by scramjet. PLEASE DO THIS BEFORE ACCESSING THE PROXY.⚠️</h1>
+      <br>
+      <br>
+      <h1 style="font-size:16px;margin-bottom:10px;">⚠️ READ BEFORE YOU USE THIS, REMEMBER THIS ⚠️</h1>
+      <h2 style="font-size:14px;margin-bottom:8px;">⚠️Warning: This proxy is very buggy and is enabled by scramjet. PLEASE DO THIS BEFORE ACCESSING THE UNBLOCKER.⚠️</h2>
       <h2 style="font-size:14px;margin-bottom:8px;">Here are some fixes to errors you might encounter.</h2>
       <h3 style="font-size:13px;margin-bottom:6px;">"Cannot GET error or 'Uh Oh!' Screen."</h3>
-      <h3 style="font-size:13px;margin-bottom:6px;">if you did this press do not show again.</h3>
-      <p style="font-size:12px;margin-bottom:6px;">Easy Fix (USE 1ST METHOD FIRST):</p>
+      <p style="font-size:12px;margin-bottom:6px;">Easy Fix (USE METHOD 1 FIRST):</p>
       <ul style="font-size:12px;list-style:disc;padding-left:20px;text-align:left;">
-        <li>1st method: Click the link <a href="/active/index.html?autofill=ifyouseethisitisworkingnow" target="_blank" style="font-size:13px;">Right Here</a> to register the SW and then come back to the page</li>
+        <li>Method 1: Click the link <a style="color:white;" href="/active/index.html?autofill=ifyouseethisitisworkingnow" target="_blank" style="font-size:13px;">Right Here</a> to register the SW and then come back to the page</li>
         <p>IF THAT DOESN'T WORK:</p>
-        <li>2nd method: Clear your cookies (chrome://settings/content/all?searchSubpage=[jmw link]) and press the trashcan icon, then do the first method again.</li>
+        <li>Method 2: Clear your cookies, copy the url over <span onclick="copy();" style="text-decoration: underline;cursor:pointer;color:white;">HERE</span> or go to chrome://settings/content/all?searchSubpage=(jmw link here), then repeat the first method.</li>
       </ul>
+      <h4>Join <a style="color:white;" href="//dsc.gg/gnetwork">Our Discord Server</a> If you have any trouble (discord.gg/gSjNsVxX5y)</h4>
     </center>
   </div>
   <button id="alertHide" style="display:block;margin:20px auto 0 auto;padding:10px 20px;border:none;background:#333;color:#fff;border-radius:10px;cursor:pointer;">Do not show again</button>
 </div>
-<script>
-(function(){
-  if(localStorage.getItem("hideCustomAlert")==="true") return
-  var alertBox=document.getElementById("customAlert")
-  var closeBtn=document.getElementById("alertClose")
-  var hideBtn=document.getElementById("alertHide")
-  alertBox.style.display="block"
-  closeBtn.addEventListener("click",function(){alertBox.style.display="none"})
-  hideBtn.addEventListener("click",function(){
-    localStorage.setItem("hideCustomAlert","true")
-    alertBox.style.display="none"
-  })
-})();
-</script>
-        <div id="page-container">
-          <div class="content">
-        <script type="text/javascript">
-          function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: "en", layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL }, "google_translate_element");
-          }
-        </script>
+  <div id="page-container">
+    <div class="content">
+      <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({ pageLanguage: "en", layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL }, "google_translate_element");
+        }
+      </script>
 
-        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-        <center>
-          <br>
-          <div id="fileInfo"></div>
-        </center>
+      <script type="text/javascript"
+        src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      <center>
         <br>
-        <div id="game-container" style="border-radius: 20px; background: transparent; height: 600px;">
-          <div class="iframe">
-            <iframe
-              class="abc" id="gameFramey"></iframe>
-            <br>
+        <div id="fileInfo"></div>
+      </center>
+      <br>
+      <div id="game-container" style="border-radius: 20px; background: transparent; height: 600px;">
+        <div class="iframe">
+          <iframe class="abc" id="gameFramey"></iframe>
+          <br>
+        </div>
+        <br>
+        <div class="navbar">
+          <div class="icon">
+            <a href="/yalp/"><img src="/assets/images/jmw.png" alt="Icon"></a>
           </div>
-<br>
-<div class="navbar">
-  <div class="icon">
-    <a href="/yalp/"><img src="/assets/images/jmw.png" alt="Icon"></a>
-  </div>
-  <div class="buttons">
-    <a href="/yalp/" class="btn"><i class='bx bx-arrow-back'></i></a>
-    <button onclick="reload()" class="btn"><i class='bx bx-refresh'></i></button>
-    <button onclick="toggleFullscreen()" class="btn"><i class='bx bx-fullscreen'></i></button>
-    <button onclick="record()" class="btn"><i class='bx bx-camera'></i></button>
-    <button id="chatToggleButton" class="btn"><i class='bx bx-chat'></i></button>
-  </div>
-</div>
+          <div class="buttons">
+            <a href="/yalp/" class="btn"><i class='bx bx-arrow-back'></i></a>
+            <button onclick="reload()" class="btn"><i class='bx bx-refresh'></i></button>
+            <button onclick="toggleFullscreen()" class="btn"><i class='bx bx-fullscreen'></i></button>
+            <button onclick="record()" class="btn"><i class='bx bx-camera'></i></button>
+            <button id="chatToggleButton" class="btn"><i class='bx bx-chat'></i></button>
+          </div>
         </div>
-        </div>
-      </div> 
-      <div id="chatContainer">
-        <button id="chatCloseButton">×</button>
-        <iframe id="chatIframe" src="/tahc/"></iframe>
-      </div>   
+      </div>
+    </div>
+  </div>
+  <div id="chatContainer">
+    <button id="chatCloseButton">×</button>
+    <iframe id="chatIframe" src="/tahc/"></iframe>
+  </div>
   <script>
     function goBack() {
-        var iframe = document.getElementById('gameFramey');
-        iframe.contentWindow.history.back();
+      var iframe = document.getElementById('gameFramey');
+      iframe.contentWindow.history.back();
     }
 
     function goForward() {
-        var iframe = document.getElementById('gameFramey');
-        iframe.contentWindow.history.forward();
+      var iframe = document.getElementById('gameFramey');
+      iframe.contentWindow.history.forward();
     }
-    </script>
+  </script>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const file = urlParams.get('historicalfigure');
@@ -406,7 +401,7 @@
     }
   </script>
   <script>
-            document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
       try {
         if (document.documentElement.requestFullscreen) {
           document.documentElement.requestFullscreen();
@@ -423,44 +418,64 @@
     });
   </script>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    let menu = document.querySelector('.menu');
+    document.addEventListener("DOMContentLoaded", function () {
+      let menu = document.querySelector('.menu');
 
-    window.addEventListener('scroll', function() {
+      window.addEventListener('scroll', function () {
         if (window.scrollY > 100) {
-            menu.classList.add('active');
+          menu.classList.add('active');
         } else {
-            menu.classList.remove('active');
+          menu.classList.remove('active');
         }
+      });
     });
-});
 
   </script>
-        <script>
-function chatFunction() {
-  const toggleButton = document.getElementById('chatToggleButton');
-  const chatContainer = document.getElementById('chatContainer');
-  const closeButton = document.getElementById('chatCloseButton');
+  <script>
+    function chatFunction() {
+      const toggleButton = document.getElementById('chatToggleButton');
+      const chatContainer = document.getElementById('chatContainer');
+      const closeButton = document.getElementById('chatCloseButton');
 
-  toggleButton.addEventListener('click', () => {
-    if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
-      chatContainer.style.display = 'block';
-    } else {
-      chatContainer.style.display = 'none';
+      toggleButton.addEventListener('click', () => {
+        if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+          chatContainer.style.display = 'block';
+        } else {
+          chatContainer.style.display = 'none';
+        }
+      });
+
+      closeButton.addEventListener('click', () => {
+        chatContainer.style.display = 'none';
+      });
     }
-  });
 
-  closeButton.addEventListener('click', () => {
-    chatContainer.style.display = 'none';
+    window.addEventListener('DOMContentLoaded', chatFunction);
+  </script>
+</body>
+<script src="/assets/scripts/index.js"></script>
+  <script>
+(function(){
+  if(localStorage.getItem("hideCustomAlert")==="true") return
+  var alertBox=document.getElementById("customAlert")
+  var closeBtn=document.getElementById("alertClose")
+  var hideBtn=document.getElementById("alertHide")
+  alertBox.style.display="block"
+  closeBtn.addEventListener("click",function(){alertBox.style.display="none"})
+  hideBtn.addEventListener("click",function(){
+    localStorage.setItem("hideCustomAlert","true")
+    alertBox.style.display="none"
+  })
+})();
+</script>
+
+<script>
+function copy() {
+  const url = window.location.origin;
+  const text = "chrome://settings/content/all?searchSubpage=" + url;
+  navigator.clipboard.writeText(text).then(() => {
+    alert(text + " is now in your clipboard. Please paste the URL in the search bar in a new tab.");
   });
 }
-
-window.addEventListener('DOMContentLoaded', chatFunction);
-        </script>
-      </body>
-  <script src="/assets/scripts/s1.js"></script>
-  <script src="/assets/scripts/s2.js"></script>
-        <script src="/assets/scripts/index.js"></script>
-        <script src="/assets/scripts/panic.js"></script>
-        <script src="/assets/scripts/2auto.js"></script>
-      </html>
+</script>
+</html>

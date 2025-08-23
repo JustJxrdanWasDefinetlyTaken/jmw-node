@@ -288,19 +288,22 @@
 
 <body theme="classic">
       <div id="customAlert" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:300px;overflow-y:auto;background:black;color:var(--txtcolor);padding:30px;box-shadow:0 0 30px rgba(0,0,0,0.6);z-index:999999999999999999999999999;border-radius:16px;">
-  <button id="alertClose" style="position:absolute;top:15px;right:15px;background:none;border:none;font-size:22px;cursor:pointer;">✕</button>
+  <button id="alertClose" style="position:absolute;top:15px;right:15px;background:transparent;background-color:transparent;border:none;font-size:22px;cursor:pointer;">✕</button>
   <div id="alertContent" style="overflow-y:auto;max-height:520px;">
     <center>
-      <h1 style="font-size:16px;margin-bottom:10px;">⚠️Warning: This proxy is very buggy and is enabled by scramjet. PLEASE DO THIS BEFORE ACCESSING THE PROXY.⚠️</h1>
+      <br>
+      <br>
+      <h1 style="font-size:16px;margin-bottom:10px;">⚠️ READ BEFORE YOU USE THIS,REMEMBER THIS ⚠️</h1>
+      <h2 style="font-size:14px;margin-bottom:8px;">⚠️Warning: This proxy is very buggy and is enabled by scramjet. PLEASE DO THIS BEFORE ACCESSING THE UNBLOCKER.⚠️</h2>
       <h2 style="font-size:14px;margin-bottom:8px;">Here are some fixes to errors you might encounter.</h2>
       <h3 style="font-size:13px;margin-bottom:6px;">"Cannot GET error or 'Uh Oh!' Screen."</h3>
-      <h3 style="font-size:13px;margin-bottom:6px;">if you did this press do not show again.</h3>
-      <p style="font-size:12px;margin-bottom:6px;">Easy Fix (USE 1ST METHOD FIRST):</p>
+      <p style="font-size:12px;margin-bottom:6px;">Easy Fix (USE METHOD 1 FIRST):</p>
       <ul style="font-size:12px;list-style:disc;padding-left:20px;text-align:left;">
-        <li>1st method: Click the link <a href="/active/index.html?autofill=ifyouseethisitisworkingnow" target="_blank" style="font-size:13px;">Right Here</a> to register the SW and then come back to the page</li>
+        <li>Method 1: Click the link <a style="color:white;" href="/active/index.html?autofill=ifyouseethisitisworkingnow" target="_blank" style="font-size:13px;">Right Here</a> to register the SW and then come back to the page</li>
         <p>IF THAT DOESN'T WORK:</p>
-        <li>2nd method: Clear your cookies or go to (chrome://settings/content/all?searchSubpage=[jmw link]) and press the trashcan icon, then do the first method again.</li>
+        <li>Method 2: Clear your cookies, copy the url over <span onclick="copy();" style="text-decoration: underline;cursor:pointer;color:white;">HERE</span> or go to chrome://settings/content/all?searchSubpage=(jmw link here), then repeat the first method.</li>
       </ul>
+      <h4>Join <a style="color:white;" href="//dsc.gg/gnetwork">Our Discord Server</a> If you have any trouble (discord.gg/gSjNsVxX5y)</h4>
     </center>
   </div>
   <button id="alertHide" style="display:block;margin:20px auto 0 auto;padding:10px 20px;border:none;background:#333;color:#fff;border-radius:10px;cursor:pointer;">Do not show again</button>
@@ -382,7 +385,7 @@
     const defaultPresets = [
         { name: "Cloud Gaming", url: "https://xbox.com/en-us/play", icon: "/assets/images/preset/xbox.png" },
         { name: "Geforce Now", url: "https://play.geforcenow.com", icon: "/assets/images/preset/geforcenow.jpeg" },
-        { name: "Tiktok", url: "https://tiktok.com", icon: "/assets/images/preset/tiktok.png" },
+        { name: "Twitch", url: "https://twitch.tv", icon: "/assets/images/app/twitch.png" },
         { name: "Discord", url: "https://discord.com/login", icon: "/assets/images/preset/discord.png" },
         { name: "+ Add", isAdd: true, icon: "plus.png" }
     ];
@@ -519,7 +522,7 @@
         location.href = proxiedUrl
     }
 
-    // make it accessible for onclick handlers
+    
     window.autofill = autofill
 
     const params = new URLSearchParams(window.location.search)
@@ -528,7 +531,7 @@
         autofill(autofillUrl)
     }
 </script>
-<script>
+  <script>
 (function(){
   if(localStorage.getItem("hideCustomAlert")==="true") return
   var alertBox=document.getElementById("customAlert")
@@ -541,5 +544,44 @@
     alertBox.style.display="none"
   })
 })();
+</script>
+
+<script>
+function copy() {
+  const url = window.location.origin;
+  const text = "chrome://settings/content/all?searchSubpage=" + url;
+  navigator.clipboard.writeText(text).then(() => {
+    alert(text + " is now in your clipboard. Please paste the URL in the search bar in a new tab.");
+  });
+}
+</script>
+<script>
+  const paramss = new URLSearchParams(window.location.search);
+  if (paramss.has("goback")) {
+    setTimeout(() => {
+      window.location.replace("/");
+    }, 2);
+  }
+</script>
+<script>
+  if (paramss.has("goback")) {
+    const overlay = document.createElement("div");
+    Object.assign(overlay.style, {
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      background: "rgba(0,0,0,0.7)",
+      color: "#fff",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: "24px",
+      zIndex: "99999999999999999"
+    });
+    overlay.textContent = "Loading... please wait";
+    document.body.appendChild(overlay);
+  }
 </script>
 </html>
