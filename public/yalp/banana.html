@@ -244,7 +244,41 @@
     font-size: 18px;
   }
 }
-
+#chatContainer {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      width: 50%;
+      height: 91%;
+      border: 1px solid var(--txtcolor, #000);
+      z-index: 1000;
+      display: none;
+      background: white;
+      box-sizing: border-box;
+    }
+    #chatIframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    #chatCloseButton {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      width: 25px;
+      height: 25px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 20px;
+      padding: 0;
+      user-select: none;
+    }
         </style>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ8CVXYBF9"></script>
@@ -295,30 +329,24 @@
         </div>
         </div>
       </div> 
-      <script src="/assets/scripts/fade.js"></script>
+        <div id="chatContainer">
+    <button id="chatCloseButton">×</button>
+    <iframe id="chatIframe" src="/tahc/"></iframe>
+  </div>
       <script>
-        function chatFunction() {
-          alert('Click the button to toggle chat on and off!');
-
-          const iframe = document.createElement('iframe');
-          iframe.style.position = 'fixed';
-          iframe.style.top = '10px';
-          iframe.style.left = '10px';
-          iframe.style.width = '35%';
-          iframe.style.height = '91%';
-          iframe.style.border = '1px solid var(--txtcolor)';
-          iframe.style.zIndex = '1000';
-          iframe.style.display = 'none';
-          iframe.src = '/science/3/';
-          document.body.appendChild(iframe);
-        
-          const button = document.getElementById('chatToggleButton');
-          button.addEventListener('click', () => {
-            const isVisible = iframe.style.display === 'block';
-            iframe.style.display = isVisible ? 'none' : 'block';
-            button.textContent = isVisible ? 'Open Chat' : 'Close Chat';
-          });
-        }
+    function chatFunction() {
+      const toggleButton = document.getElementById('chatToggleButton')
+      const chatContainer = document.getElementById('chatContainer')
+      const closeButton = document.getElementById('chatCloseButton')
+      toggleButton.addEventListener('click', () => {
+        if (chatContainer.style.display === 'none' || chatContainer.style.display === '') chatContainer.style.display = 'block'
+        else chatContainer.style.display = 'none'
+      })
+      closeButton.addEventListener('click', () => {
+        chatContainer.style.display = 'none'
+      })
+    }
+    window.addEventListener('DOMContentLoaded', chatFunction)
         </script>
       <script>
         const urlParams = new URLSearchParams(window.location.search);

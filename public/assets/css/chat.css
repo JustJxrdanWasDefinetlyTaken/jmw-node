@@ -1,0 +1,314 @@
+@import url('/assets/css/themes.css');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bgcolor);
+    color: var(--txtcolor);
+}
+
+header {
+    background: var(--surface-hover);
+    color: var(--txtcolor);
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+header h1 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.btn {
+    background: var(--surface);
+    color: var(--txtcolor);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn.secondary {
+    background: var(--secondary);
+}
+
+.btn.ghost {
+    background: transparent;
+    border: 1px solid var(--surface);
+}
+
+.layout {
+    display: flex;
+    height: calc(100vh - 56px);
+}
+
+.users-panel {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    background: var(--bgcolor);
+    border-right: 1px solid var(--border);
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+}
+
+.users-panel.open {
+    transform: translateX(0);
+}
+
+.users-panel header {
+    background: transparent;
+    color: var(--txtcolor);
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.users-list {
+    overflow: auto;
+    padding: 0.5rem;
+    background:var(--bgcolor);
+}
+
+.user-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.user-row:hover {
+    background: var(--surface-hover);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.user-name {
+    font-weight: 600;
+}
+
+.user-meta {
+    font-size: 0.75rem;
+    color: var(--txtcolor);
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    margin-left: 0;
+}
+
+.sidebar {
+    width: 260px;
+    border-right: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+}
+
+.side-section {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.side-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.room-list {
+    padding: 0.5rem;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.room-btn {
+    width: 100%;
+    text-align: left;
+    padding: 0.55rem 0.7rem;
+    background: var(--surface);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.room-btn.active {
+    background: var(--surface);
+    color: #fff;
+    outline: 2px solid var(--glow);
+}
+
+.chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+}
+
+.chat-header {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.messages {
+    flex: 1;
+    overflow: auto;
+    padding: 1rem;
+    background: var(--bgcolor);
+}
+
+.bubble {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 0.75rem;
+}
+
+.bubble .content {
+    background: var(--surface);
+    padding: 0.6rem 0.75rem;
+    border-radius: 12px;
+}
+
+.bubble.me .content {
+    background: var(--primary);
+    color: #fff;
+}
+
+.bubble .name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 0.1rem;
+    color: var(--txtcolor);
+}
+
+.composer {
+    display: flex;
+    border-top: 1px solid var(--border);
+}
+
+.composer input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: none;
+    outline: none;
+    background: var(--bgcolor);
+    color: var(--txtcolor);
+}
+
+.composer button {
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    padding: 0.8rem 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+}
+
+.modal {
+    background: var(--surface);
+    width: 360px;
+    max-width: 90vw;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px var(--glow);
+}
+
+.modal header {
+    padding: 1rem 1rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+}
+
+.modal .body {
+    padding: 1rem;
+}
+
+.modal .footer {
+    padding: 0 1rem 1rem;
+    display: flex;
+    gap: 0.6rem;
+    justify-content: flex-end;
+}
+
+.input {
+    width: 100%;
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bgcolor);
+    color: var(--txtcolor);
+}
+
+.list {
+    max-height: 320px;
+    overflow: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.4rem;
+}
+
+.list-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.5rem;
+    border-radius: 6px;
+}
+
+.list-row:hover {
+    background: var(--surface-hover);
+}
+
+.list-row input {
+    margin-right: 0.25rem;
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--txtcolor);
+    margin-top: 0.4rem;
+}
