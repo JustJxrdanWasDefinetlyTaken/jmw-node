@@ -151,151 +151,179 @@
 
   <div id="emojiList"></div>
 
-  <script>
-    const OWNER_CODES_ENCRYPTED = ["SUxvdmVHYWxhY3RpYw==","R2FsYWN0aWNCZXN0","QWRtaW5TdHVmZg==","SlJETkdMQ1RD"];
-    const blacklist=['crap','whigga','piss','cock','faggot','rape','cunt','nunu','whore','slut','nigger','kike','chigga','chink','gook','beaner','retard','dyke','fag','bastard','bollocks','bugger','bloody','arsehole','wanker'];
-    const usernameBlacklist=['admin','moderator','mod','support','owner','system'];
-    const addressPattern=/(\d{1,5}\s\w+\s(street|st|road|rd|avenue|ave|lane|ln|drive|dr|court|ct|boulevard|blvd|place|pl|square|sq|trail|trl|parkway|pkwy|circle|cir))|(\b\d{1,3}(\.\d{1,3}){3}\b)/i;
-    const emojiMap={smile:'😄',heart:'❤️',broken_heart:'💔',wilted_rose:'🥀',thumbsup:'👍',clap:'👏',fire:'🔥',grin:'😁',cry:'😢',angry:'😠',wink:'😉',star:'⭐',poop:'💩',ok:'👌',joy:'😂',sob:'😭',kiss:'😘',thinking:'🤔',hug:'🤗',pray:'🙏',cool:'😎',sleepy:'😴',shocked:'😲',scream:'😱',nerd:'🤓',blush:'😊',yum:'😋',devil:'😈',robot:'🤖',skull:'💀',alien:'👽',sun:'🌞',moon:'🌝',cat:'🐱',dog:'🐶',cake:'🎂',balloon:'🎈'};
-    const STORAGE_KEYS={public:'jmw_public',group:'jmw_group',dm:'jmw_dm'};
+<script type="module">
+let ws;
+let username = '';
+let roomCode = '';
+let isRecording = false;
+let recognition;
+let isRoomCodeVisible = false;
 
-    function sanitize(t){return DOMPurify.sanitize(t,{ALLOWED_TAGS:[],ALLOWED_ATTR:[]});}
-    function blocked(t){const x=t.toLowerCase();return blacklist.some(w=>x.includes(w))||addressPattern.test(t);}
-    function replaceEmojis(t){return t.replace(/:\((\w+)\):/g,(_,n)=>emojiMap[n]||`:(${n}):`).replace(/:([a-z0-9_+-]+):/gi,(m,n)=>emojiMap[n]||m);}
+// Emoji map (same as before)
+const emojiMap = { smile: '😄', heart: '❤️', broken_heart: '💔', wilted_rose: '🥀', thumbsup: '👍', clap: '👏', fire: '🔥', grin: '😁', cry: '😢', angry: '😠', wink: '😉', star: '⭐', poop: '💩', ok: '👌', joy: '😂', sob: '😭', kiss: '😘', thinking: '🤔', hug: '🤗', pray: '🙏', cool: '😎', sleepy: '😴', shocked: '😲', scream: '😱', nerd: '🤓', blush: '😊', yum: '😋', devil: '😈', robot: '🤖', skull: '💀', alien: '👽', sun: '🌞', moon: '🌝', cat: '🐱', dog: '🐶', cake: '🎂', balloon: '🎈' };
 
-    let ws=null, username='', userId='', currentGroup=null, users=new Map(), isMod=false, mutedUntil=0;
+// Sanitize input using DOMPurify
+function sanitizeInput(text) {
+  return DOMPurify.sanitize(text, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+}
 
-    const el=id=>document.getElementById(id);
-    const joinScreen=el('joinScreen'), nameInput=el('nameInput'), roomInput=el('roomInput'), errorText=el('errorText');
-    const displayName=el('displayName'), meName=el('meName'), meId=el('meId'), userCount=el('userCount'), userList=el('userList'), roleBadge=el('roleBadge');
-    const publicArea=el('publicArea'), groupArea=el('groupArea'), dmArea=el('dmArea');
-    const publicInput=el('publicInput'), groupInput=el('groupInput'), dmInput=el('dmInput');
-    const currentGroupEl=el('currentGroup'), dmToInput=el('dmToInput');
-    const emojiList=el('emojiList');
+// Emoji replacement
+function replaceEmojis(text) {
+  return text.replace(/:([a-z0-9_+-]+):/gi, (match, name) => emojiMap[name] || match);
+}
 
-    function genUserId(name){const n=Math.floor(100000+Math.random()*900000);return `${name}-${n}`;}
-    function now(){return Date.now()}
-    function canSpeak(){return now()>=mutedUntil}
-    function isOwnerCode(input){for(let c of OWNER_CODES_ENCRYPTED){try{if(input===atob(c))return true}catch{} }return false}
+// Message rendering
+function renderMessage(text, name, isSelf, time) {
+  const area = document.getElementById('chatArea');
+  const message = document.createElement('div');
+  message.className = 'message' + (isSelf ? ' self' : '');
+  const avatarLetter = sanitizeInput(name.replace('👑', '').trim().charAt(0).toUpperCase());
+  const displayName = name.startsWith('👑') ? `<strong>${sanitizeInput(name)}</strong>` : sanitizeInput(name);
+  message.innerHTML = `
+    <div class="avatar">${avatarLetter}</div>
+    <div>
+      <div class="meta">${displayName} • ${time || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+      <div>${replaceEmojis(sanitizeInput(text))}</div>
+    </div>
+  `;
+  area.appendChild(message);
+  area.scrollTop = area.scrollHeight;
+  saveMessages();
+}
 
-    function connect(){
-      const proto=location.protocol==='https:'?'wss':'ws';
-      ws=new WebSocket(`${proto}://${location.host}/ws`);
-      ws.onopen=()=>ws.send(JSON.stringify({type:'hello',username,userId}));
-      ws.onmessage=(e)=>{try{handle(JSON.parse(e.data))}catch{}};
-      ws.onclose=()=>{};
-      ws.onerror=()=>{};
+// Save/load messages to localStorage
+const STORAGE_KEY = 'jmw_chatMessages';
+function saveMessages() {
+  const messages = Array.from(document.querySelectorAll('#chatArea .message')).map(m => m.outerHTML);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+}
+function loadMessages() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  if (!saved) return;
+  const area = document.getElementById('chatArea');
+  area.innerHTML = '';
+  JSON.parse(saved).forEach(html => {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    area.appendChild(div.firstElementChild);
+  });
+  area.scrollTop = area.scrollHeight;
+}
+
+// Connect to WSS
+function startWS() {
+  ws = new WebSocket(`ws://localhost:4141/wisp/`);
+  ws.onopen = () => {
+    ws.send(JSON.stringify({ type: 'join', username, room: roomCode }));
+    console.log('Connected to WSS');
+  };
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (data.type === 'message') {
+      const isSelf = data.name === username;
+      renderMessage(data.text, data.name, isSelf, data.time);
+    } else if (data.type === 'system') {
+      renderMessage(data.message, 'System', false);
     }
+  };
+  ws.onclose = () => console.log('Disconnected from WSS');
+  ws.onerror = (err) => console.error('WSS error', err);
+}
 
-    function setRole(role){isMod = role==='mod' || username==='galacticadmin'; roleBadge.textContent = isMod ? 'Role: Moderator' : ''; el('modPanel').style.display = isMod ? '' : 'none';}
+// Send chat
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const text = sanitizeInput(input.value.trim());
+  if (!text) return;
+  ws.send(JSON.stringify({ type: 'message', text }));
+  input.value = '';
+}
 
-    function handle(m){
-      if(m.type==='welcome'){ if(m.userId) userId=m.userId; meId.textContent=userId?`#${userId}`:''; if(Array.isArray(m.users)) setUsers(m.users); if(m.role) setRole(m.role); else setRole(''); if(roomInput.value.trim().length>=6){joinGroup(roomInput.value.trim());} }
-      else if(m.type==='system'){ render(publicArea,'System',m.text,false); save(publicArea,STORAGE_KEYS.public); }
-      else if(m.type==='user_list'){ setUsers(m.users||[]); }
-      else if(m.type==='user_join'){ users.set(m.user.userId,m.user); refreshUsers(); }
-      else if(m.type==='user_leave'){ users.delete(m.userId); refreshUsers(); }
-      else if(m.type==='public'){ render(publicArea,m.fromName||m.from,m.text,(m.fromId===userId)); save(publicArea,STORAGE_KEYS.public); }
-      else if(m.type==='group'){ if(!currentGroup || m.group!==currentGroup) return; render(groupArea,m.fromName||m.from,m.text,(m.fromId===userId),`Group: ${m.group}`); save(groupArea,STORAGE_KEYS.group); }
-      else if(m.type==='dm'){ const mine = m.fromId===userId; const who = mine ? `To ${m.toName||m.to}` : `From ${m.fromName||m.from}`; render(dmArea, who, m.text, mine); save(dmArea,STORAGE_KEYS.dm); }
-      else if(m.type==='mod_effect'){ if(m.action==='mute' && m.until){ mutedUntil = m.until; notify(`You are muted until ${new Date(m.until).toLocaleTimeString()}`); } if(m.action==='kick'){ notify('You were kicked.'); } if(m.action==='ban'){ notify('You were banned.'); } }
-    }
+// Join chat
+function joinChat() {
+  const rawName = document.getElementById('nameInput').value.trim();
+  const rawRoom = document.getElementById('roomInput').value.trim();
+  if (!rawName || !rawRoom) return alert('Enter name and room code');
+  username = rawName === 'galacticadmin' ? '👑 ' + rawName : rawName;
+  roomCode = rawRoom;
+  document.getElementById('displayName').textContent = username;
+  document.getElementById('roomCodeMasked').textContent = '••••••';
+  document.getElementById('joinScreen').style.display = 'none';
+  document.getElementById('chatUI').style.display = 'flex';
+  startWS();
+  loadMessages();
+  localStorage.setItem('jmw_username', username);
+  localStorage.setItem('jmw_roomCode', roomCode);
+}
 
-    function setUsers(arr){ users.clear(); (arr||[]).forEach(u=>users.set(u.userId,u)); refreshUsers(); }
-    function refreshUsers(){
-      userList.innerHTML='';
-      [...users.values()].sort((a,b)=>a.username.localeCompare(b.username)).forEach(u=>{
-        const wrap=document.createElement('div'); wrap.className='user';
-        const left=document.createElement('div');
-        left.innerHTML = `<strong>${sanitize(u.username)}</strong><span class="meta-id">#${sanitize(u.userId)}</span>`;
-        const actions=document.createElement('div'); actions.className='actions';
-        const dmBtn=document.createElement('button'); dmBtn.textContent='DM';
-        dmBtn.onclick=()=>{ dmToInput.value=u.userId; switchTab('dmPane'); dmInput.focus(); };
-        actions.appendChild(dmBtn);
-        if(isMod && u.userId!==userId){
-          const muteBtn=document.createElement('button'); muteBtn.textContent='Mute 5m';
-          muteBtn.onclick=()=>sendMod('mute',u.userId,5*60*1000);
-          const kickBtn=document.createElement('button'); kickBtn.textContent='Kick';
-          kickBtn.onclick=()=>sendMod('kick',u.userId);
-          const banBtn=document.createElement('button'); banBtn.textContent='Ban';
-          banBtn.onclick=()=>sendMod('ban',u.userId);
-          actions.append(muteBtn,kickBtn,banBtn);
-        }
-        wrap.append(left,actions);
-        userList.appendChild(wrap);
-      });
-      userCount.textContent=users.size;
-    }
+// Leave chat
+function leaveChat() {
+  if (ws) ws.close();
+  document.getElementById('chatArea').innerHTML = '';
+  document.getElementById('chatInput').value = '';
+  document.getElementById('nameInput').value = '';
+  document.getElementById('roomInput').value = '';
+  document.getElementById('chatUI').style.display = 'none';
+  document.getElementById('joinScreen').style.display = 'flex';
+  localStorage.removeItem('jmw_username');
+  localStorage.removeItem('jmw_roomCode');
+  localStorage.removeItem(STORAGE_KEY);
+}
 
-    function sendMod(action,targetId,durationMs){ if(!isMod) return; ws && ws.send(JSON.stringify({type:'mod',action,targetId,durationMs})); }
-
-    function render(area,name,text,isSelf,meta){
-      if(blocked(text)) text='[Message removed due to prohibited content]';
-      const safeName=sanitize(name||''); const safeText=replaceEmojis(sanitize(text||'')); const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-      const msg=document.createElement('div'); msg.className='message'+(isSelf?' self':'');
-      const avatarLetter=sanitize(safeName.replace('👑','').trim().charAt(0).toUpperCase()||'?');
-      msg.innerHTML=`<div class="avatar">${avatarLetter}</div><div><div class="meta">${safeName}${meta?` • ${sanitize(meta)}`:''} • ${time}</div><div>${safeText}</div></div>`;
-      const del=document.createElement('button'); del.className='msg-delete'; del.innerText='✖'; del.onclick=()=>{ const id=msg.getAttribute('data-msg-id'); if(id) ws&&ws.send(JSON.stringify({type:'delete',msgId:id})); msg.remove(); };
-      msg.appendChild(del);
-      area.appendChild(msg); area.scrollTop=area.scrollHeight;
-      if(!isSelf && 'Notification' in window && Notification.permission==='granted'){ new Notification(safeName,{body:safeText}); }
-    }
-
-    function save(area,key){ const messages=Array.from(area.querySelectorAll('.message')).map(m=>m.outerHTML); localStorage.setItem(key,JSON.stringify(messages)); }
-    function load(area,key){ const saved=localStorage.getItem(key); if(!saved) return; const arr=JSON.parse(saved)||[]; area.innerHTML=''; arr.forEach(h=>{const d=document.createElement('div'); d.innerHTML=h; area.appendChild(d.firstElementChild);}); area.scrollTop=area.scrollHeight; }
-
-    function sendPublic(){ if(!canSpeak()) return alert('You are muted right now.'); let t=sanitize(publicInput.value.trim()); if(!t) return; if(blocked(t)) return alert('Your message contains prohibited content.'); t=replaceEmojis(t); ws&&ws.send(JSON.stringify({type:'public',text:t})); publicInput.value=''; }
-    function sendGroup(){ if(!canSpeak()) return alert('You are muted right now.'); if(!currentGroup) return alert('Join a group first.'); let t=sanitize(groupInput.value.trim()); if(!t) return; if(blocked(t)) return alert('Your message contains prohibited content.'); t=replaceEmojis(t); ws&&ws.send(JSON.stringify({type:'group',group:currentGroup,text:t})); groupInput.value=''; }
-    function sendDm(){ if(!canSpeak()) return alert('You are muted right now.'); const to=sanitize(dmToInput.value.trim()); if(!to) return alert('Pick a recipient.'); let t=sanitize(dmInput.value.trim()); if(!t) return; if(blocked(t)) return alert('Your message contains prohibited content.'); t=replaceEmojis(t); ws&&ws.send(JSON.stringify({type:'dm',to,text:t})); dmInput.value=''; }
-
-    function joinGroup(code){ const c=sanitize(code.trim()); if(!c||c.length<6) return alert('Group code must be at least 6 chars.'); currentGroup=c; currentGroupEl.textContent=c; ws&&ws.send(JSON.stringify({type:'join',group:c})); switchTab('groupPane'); }
-    function switchTab(id){ document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.pane===id)); document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.id===id)); }
-
-    function toggleEmojiList(targetInput){ if(emojiList.style.display==='none' || !emojiList.style.display){ renderEmojiList(targetInput); emojiList.style.display='flex'; } else { emojiList.style.display='none'; } }
-    function renderEmojiList(targetInput){ emojiList.innerHTML=''; for(const [name,emoji] of Object.entries(emojiMap)){ const button=document.createElement('button'); button.style.margin='4px'; button.style.padding='1px'; button.style.fontSize='20px'; button.style.borderRadius='0px'; button.style.height='30px'; button.textContent=emoji; button.title=name; button.onclick=()=>{ targetInput.value += `:(${name}):`; targetInput.focus(); emojiList.style.display='none'; }; emojiList.appendChild(button); } }
-    function notify(msg){ if('Notification' in window && Notification.permission==='granted'){ new Notification('JMW Chat',{body:msg}); } }
-
-    document.addEventListener('DOMContentLoaded',()=>{
-      load(publicArea,STORAGE_KEYS.public);
-      load(groupArea,STORAGE_KEYS.group);
-      load(dmArea,STORAGE_KEYS.dm);
-      document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.pane)));
-      el('joinBtn').onclick=()=>{
-        errorText.textContent='';
-        const rawName=nameInput.value.trim();
-        const name=sanitize(rawName);
-        if(!name){errorText.textContent='Please enter your name.';return;}
-        if(name.length>50){errorText.textContent='Name must be 50 characters or less.';return;}
-        if(usernameBlacklist.includes(name.toLowerCase())){errorText.textContent='This username is reserved. Choose another.';return;}
-        if(isOwnerCode(name)){ username = 'galacticadmin'; } else { username = name; }
-        const savedId = localStorage.getItem('jmw_userId');
-        const savedName = localStorage.getItem('jmw_username');
-        if(savedName===username && savedId){ userId=savedId; } else { userId=genUserId(username.replace('👑 ','').trim()); }
-        localStorage.setItem('jmw_username',username);
-        localStorage.setItem('jmw_userId',userId);
-        displayName.textContent=username; meName.textContent=username; meId.textContent='#'+userId;
-        joinScreen.style.display='none';
-        if('Notification' in window && Notification.permission!=='granted'){ Notification.requestPermission(); }
-        connect();
-      };
-      el('leaveBtn').onclick=()=>{ if(ws){ try{ws.close()}catch{} } ws=null; users.clear(); refreshUsers(); currentGroup=null; currentGroupEl.textContent='None'; joinScreen.style.display='flex'; };
-      el('sendPublic').onclick=sendPublic;
-      el('sendGroup').onclick=sendGroup;
-      el('sendDm').onclick=sendDm;
-      publicInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendPublic();}});
-      groupInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendGroup();}});
-      dmInput.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendDm();}});
-      el('emojiBtnPublic').onclick=()=>toggleEmojiList(publicInput);
-      el('emojiBtnGroup').onclick=()=>toggleEmojiList(groupInput);
-      el('emojiBtnDm').onclick=()=>toggleEmojiList(dmInput);
-      el('joinGroupBtn').onclick=()=>joinGroup(el('joinGroupInput').value);
-      el('dmPick').onclick=()=>{ const first = userList.querySelector('.user .meta-id'); if(first){ dmToInput.value = first.textContent.replace('#','').trim(); switchTab('dmPane'); dmInput.focus(); } else alert('No users to pick.'); };
-      const obs1=new MutationObserver(()=>save(publicArea,STORAGE_KEYS.public)); obs1.observe(publicArea,{childList:true});
-      const obs2=new MutationObserver(()=>save(groupArea,STORAGE_KEYS.group));  obs2.observe(groupArea,{childList:true});
-      const obs3=new MutationObserver(()=>save(dmArea,STORAGE_KEYS.dm));      obs3.observe(dmArea,{childList:true});
+// Toggle emoji list
+function toggleEmojiList() {
+  const list = document.getElementById('emojiList');
+  if (list.style.display === 'none') {
+    list.innerHTML = '';
+    Object.entries(emojiMap).forEach(([name, symbol]) => {
+      const btn = document.createElement('button');
+      btn.textContent = symbol;
+      btn.title = `:${name}:`;
+      btn.onclick = () => { document.getElementById('chatInput').value += `:${name}:`; input.focus(); toggleEmojiList(); };
+      list.appendChild(btn);
     });
-  </script>
+    list.style.display = 'flex';
+  } else {
+    list.style.display = 'none';
+  }
+}
+
+// Voice input
+function toggleMic() {
+  if (isRecording) { recognition.stop(); return; }
+  if (!('webkitSpeechRecognition' in window)) return alert('Browser does not support speech recognition');
+  recognition = new webkitSpeechRecognition();
+  recognition.lang = 'en-US';
+  recognition.onstart = () => { isRecording = true; document.getElementById('micBtn').innerHTML = 'Recording..'; };
+  recognition.onresult = e => { document.getElementById('chatInput').value = e.results[0][0].transcript; sendChat(); };
+  recognition.onend = recognition.onerror = () => { isRecording = false; document.getElementById('micBtn').innerHTML = `<i class='bx bx-microphone'></i>`; };
+  recognition.start();
+}
+
+// Show room code toggle
+document.getElementById('roomCodeMasked').addEventListener('click', () => {
+  const el = document.getElementById('roomCodeMasked');
+  el.textContent = isRoomCodeVisible ? '••••••' : roomCode;
+  isRoomCodeVisible = !isRoomCodeVisible;
+});
+
+// Load saved username/room
+window.addEventListener('DOMContentLoaded', () => {
+  const savedName = localStorage.getItem('jmw_username');
+  const savedRoom = localStorage.getItem('jmw_roomCode');
+  if (savedName && savedRoom) { username = savedName; roomCode = savedRoom; joinChat(); }
+});
+
+// Send on enter
+document.getElementById('chatInput').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendChat(); } });
+</script>
 
   <script src="/assets/scripts/index.js"></script>
 </body>
+<script>
+  var script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/npm/eruda';
+document.body.appendChild(script);
+script.onload = function() { eruda.init(); };
+</script>
 </html>

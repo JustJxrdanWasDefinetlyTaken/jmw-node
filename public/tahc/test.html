@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebase Chat - Public & Groups & DMs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bgcolor: #1e1e2e;
+      --primary: #89b4fa;
+      --secondary: #f38ba8;
+      --txtcolor: #cdd6f4;
+      --surface: rgba(137, 180, 250, 0.1);
+      --surface-hover: rgba(137, 180, 250, 0.15);
+      --border: rgba(137, 180, 250, 0.2);
+      --glow: rgba(137, 180, 250, 0.3);
+    }
+
+    * { box-sizing: border-box; }
+    body { margin:0; font-family:'Inter',sans-serif; background:var(--bgcolor); color:var(--txtcolor); }
+    .centered { display:flex; justify-content:center; align-items:center; height:100vh; }
+    .modal { background: var(--bgcolor); padding:2rem; border-radius:12px; width:90%; max-width:400px; text-align:center; box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+    .modal input, .modal button { width:100%; padding:0.8rem; margin-top:1rem; font-size:1rem; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--txtcolor);}
+    .modal button { cursor:pointer; }
+
+    #chatUI { display:none; flex-direction:column; height:100vh; }
+    .header { background:var(--surface-hover); padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; font-weight:600; }
+    .chat-area { flex:1; overflow-y:auto; padding:1rem; display:flex; flex-direction:column; gap:10px; }
+    .message { display:flex; align-items:flex-start; gap:10px; padding:0.8rem 1rem; border-radius:12px; background:var(--surface); max-width:500px; word-break:break-word; }
+    .self { align-self:flex-end; background:var(--primary); color:#000; }
+    .avatar { width:32px; height:32px; border-radius:50%; display:flex; justify-content:center; align-items:center; font-weight:bold; background:var(--surface-hover); color:var(--txtcolor); flex-shrink:0; }
+    .meta { font-size:12px; color:#888; margin-bottom:5px; }
+    .input-area { display:flex; gap:10px; padding:1rem; background:var(--surface-hover); border-top:1px solid var(--border);}
+    .input-area input { flex:1; padding:0.8rem; border-radius:8px; border:1px solid var(--surface); background:var(--surface); color:var(--txtcolor); }
+    .input-area button { padding:0.8rem 1.2rem; border-radius:8px; border:none; cursor:pointer; background:var(--primary); color:#000; }
+    .user-list { margin-top:1rem; display:flex; flex-direction:column; gap:5px; }
+    .user-item { display:flex; justify-content:space-between; align-items:center; padding:0.5rem; background:var(--surface); border-radius:8px; cursor:pointer; }
+    .user-item:hover { background:var(--surface-hover); }
+  </style>
+</head>
+<body>
+
+<div class="centered" id="joinScreen">
+  <div class="modal">
+    <h1>Firebase Chat</h1>
+    <input type="text" id="nameInput" placeholder="Enter your name (max 20)">
+    <input type="text" id="roomInput" placeholder="Enter room code (min 6 chars)">
+    <button onclick="joinChat()">Join Chat</button>
+  </div>
+</div>
+
+<div id="chatUI">
+  <div class="header">
+    <div>Room: <span id="roomNameDisplay"></span></div>
+    <button onclick="leaveChat()">Leave Chat</button>
+  </div>
+
+  <div class="chat-area" id="chatArea"></div>
+
+  <div class="user-list" id="userList"></div>
+
+  <div class="input-area">
+    <input type="text" id="chatInput" placeholder="Type a message..." maxlength="500">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+// Your Firebase config
+const firebaseConfig = { apiKey: "YOUR_KEY", authDomain: "YOUR_DOMAIN", projectId: "YOUR_PROJECT", storageBucket: "YOUR_BUCKET", messagingSenderId: "YOUR_SENDER", appId: "YOUR_APPID" };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth();
+
+let username = '';
+let roomId = '';
+const messagesDiv = document.getElementById('chatArea');
+const userListDiv = document.getElementById('userList');
+let users = [];
+
+async function joinChat() {
+  try {
+    const nameInput = document.getElementById('nameInput').value.trim();
+    const roomInput = document.getElementById('roomInput').value.trim();
+    if (!nameInput) return alert("Enter a username");
+    if (!roomInput || roomInput.length < 6) return alert("Room code must be at least 6 chars");
+
+    username = nameInput + '-' + Math.floor(Math.random()*10000);
+    roomId = roomInput;
+
+    alert("Signing in anonymously...");
+    await signInAnonymously(auth);
+    alert("Signed in as " + username);
+
+    document.getElementById('joinScreen').style.display = 'none';
+    document.getElementById('chatUI').style.display = 'flex';
+    document.getElementById('roomNameDisplay').textContent = roomId;
+
+    await addUserToRoom();
+    setupMessageListener();
+    setupUserListener();
+  } catch (err) { alert("Join chat error: " + err.message); }
+}
+
+async function addUserToRoom() {
+  try {
+    const userRef = doc(db, `rooms/${roomId}/users`, auth.currentUser.uid);
+    await setDoc(userRef, { name: username, uid: auth.currentUser.uid });
+    const messagesRef = collection(db, `rooms/${roomId}/messages`);
+    await addDoc(messagesRef, { text: `${username} joined the chat`, name: 'system', createdAt: Date.now() });
+  } catch (err) { alert("Add user error: " + err.message); }
+}
+
+async function sendMessage(dmUid = null) {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  try {
+    let messagesRef;
+    if (dmUid) {
+      messagesRef = collection(db, `dm/${getDMId(auth.currentUser.uid, dmUid)}/messages`);
+    } else {
+      messagesRef = collection(db, `rooms/${roomId}/messages`);
+    }
+    await addDoc(messagesRef, { text, name: username, uid: auth.currentUser.uid, createdAt: Date.now() });
+    input.value = '';
+  } catch (err) { alert("Send message error: " + err.message); }
+}
+
+function setupMessageListener(dmUid = null) {
+  try {
+    let messagesRef;
+    if (dmUid) {
+      messagesRef = collection(db, `dm/${getDMId(auth.currentUser.uid, dmUid)}/messages`);
+    } else {
+      messagesRef = collection(db, `rooms/${roomId}/messages`);
+    }
+    const q = query(messagesRef, orderBy('createdAt'));
+    onSnapshot(q, snapshot => {
+      messagesDiv.innerHTML = '';
+      snapshot.forEach(doc => {
+        const msg = doc.data();
+        const div = document.createElement('div');
+        div.className = 'message' + (msg.uid === auth.currentUser.uid ? ' self' : '');
+        div.innerHTML = `<div class="avatar">${getAvatarLetters(msg.name)}</div>
+                         <div><div class="meta">${msg.name}</div>${msg.text}</div>`;
+        messagesDiv.appendChild(div);
+      });
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }, error => { alert("Listener error: " + error.message); });
+  } catch (err) { alert("Setup message listener error: " + err.message); }
+}
+
+function setupUserListener() {
+  try {
+    const usersRef = collection(db, `rooms/${roomId}/users`);
+    onSnapshot(usersRef, snapshot => {
+      userListDiv.innerHTML = '';
+      users = [];
+      snapshot.forEach(doc => {
+        const u = doc.data();
+        if (u.uid !== auth.currentUser.uid) users.push(u);
+      });
+      renderUserList();
+    });
+  } catch (err) { alert("User listener error: " + err.message); }
+}
+
+function renderUserList() {
+  userListDiv.innerHTML = '';
+  users.forEach(u => {
+    const div = document.createElement('div');
+    div.className = 'user-item';
+    div.textContent = u.name;
+    const dmBtn = document.createElement('button');
+    dmBtn.textContent = 'DM';
+    dmBtn.onclick = () => setupMessageListener(u.uid);
+    div.appendChild(dmBtn);
+    userListDiv.appendChild(div);
+  });
+}
+
+function leaveChat() {
+  username = '';
+  roomId = '';
+  messagesDiv.innerHTML = '';
+  userListDiv.innerHTML = '';
+  document.getElementById('joinScreen').style.display = 'flex';
+  document.getElementById('chatUI').style.display = 'none';
+}
+
+function getDMId(uid1, uid2) { return uid1 < uid2 ? `${uid1}_${uid2}` : `${uid2}_${uid1}`; }
+function getAvatarLetters(name) { const parts = name.split(' '); return parts.length===1?parts[0][0].toUpperCase():(parts[0][0]+parts[1][0]).toUpperCase(); }
+
+document.getElementById('chatInput').addEventListener('keydown', e => { if (e.key==='Enter') sendMessage(); });
+</script>
+</body>
+</html>

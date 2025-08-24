@@ -1,0 +1,2777 @@
+let currentMode = "all";
+
+const htmlString = `                                <a class='link button' href='https://dsc.gg/gnetwork' target="_blank"><img height="175"
+                                                src="/assets/images/app/discord.jpg"
+                                                onerror="this.src='/assets/img/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="">[Game Suggestions] .gg/SJA6Hx8gep</span></a>
+                                <a class='link button' href='https://dsc.gg/gnetwork' target="_blank"><img
+                                                height="175" src="/assets/images/app/discord.jpg"
+                                                onerror="this.src='/assets/img/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="">[Bug Reporting] .gg/SJA6Hx8gep</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=1&type=3kh0'><img height="175"
+                                                src="https://cdn.statically.io/gh/GalacticNetwork/3kh0-assets/main/1/meta/apple-touch-icon.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1">1</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=10-minutes-till-dawn&type=3kh0'><img
+                                                height="175"
+                                                src="https://cdn.statically.io/gh/GalacticNetwork/3kh0-assets/main/10-minutes-till-dawn/splash.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="10 Minutes Till Dawn">10 Minutes Till Dawn</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=2048&type=3kh0'><img height="175"
+                                                src="/assets/images/game/2048.png" class="image" width="175"><span
+                                                class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="2048">2048</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=8ball&type=local'><img height="175"
+                                                src="/assets/images/game/8ball.jpeg" class="image" width="175"><span
+                                                class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="2048">8 Ball Classic</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=1v1-lol/oldest&type=local'><img
+                                                height="175" src="/assets/images/game/1v1lolold.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1v1.lol">1v1.lol Oldest Version</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=1v1-lol/old&type=local'><img
+                                                height="175" src="/assets/images/game/1v1-lol.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1v1.lol">1v1.lol Older Version</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=1v1-lol/new&type=local'><img
+                                                height="175" src="/assets/images/game/1v1lol.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1v1.lol">1v1.lol New</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=1on1soccer.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/1-on-1-soccer.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1 on 1 soccer">1 on 1 Soccer</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=1o1/football&type=local'><img
+                                                height="175" src="/assets/images/game/1o1football.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 football">1 on 1 football</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=1o1/basketball&type=local'><img
+                                                height="175" src="/assets/images/game/1on1.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">1 on 1 Basketball</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=12-minibattles&type=local'><img
+                                                height="175" src="/assets/images/game/12-minibattles.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="12 Minibattles">12 Minibattles</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=4th-and-goal/2013&type=local'><img
+                                                height="175" src="/assets/images/game/4th-and-Goal-2013.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="4th and Goal 2013">4th and Goal 2013</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=4th-and-goal/2014&type=local'><img
+                                                height="175" src="/assets/images/game/4thandgoal2014.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="4th and goal 2014">4th and Goal 2014</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=4th-and-goal/2015&type=local'><img
+                                                height="175" src="/assets/images/game/4thag2015.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="4th and goal 2015">4th and Goal 2015</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=4th-and-goal/2016&type=local'><img
+                                                height="175" src="/assets/images/game/2016.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:175px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="4th and goal 2016">4th and Goal 2016</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=4th-and-goal/2018&type=local'><img
+                                                height="175" src="/assets/images/game/4andgoal2018.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="4th and goal 2018">4th and goal 2018</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=4th-and-goal/2022&type=local'><img
+                                                height="175" src="/assets/images/game/4andgoal2022.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="4th and goal 2022">4th and goal 2022</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=60-sec/burger&type=local'><img
+                                                height="175" src="/assets/images/game/burger.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="60 bg">60 sec burger run</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=60-sec/santa&type=local'><img
+                                                height="175" src="/assets/images/game/santa.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="60 santa">60 sec santa run</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=a-small-world-cup&type=local'><img
+                                                height="175" src="/assets/images/game/asmallworldcup.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                class="some" alt="A Dance Of Fire And Ice">A Small World
+                                                Cup<br></span></a>
+                                <a class='link button' href='/yalp/ela.html?book=awesome-tanks&type=local'><img
+                                                height="175" src="/assets/images/game/atank.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="awesome">Awesome Tanks</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=adventure&type=local'><img height="175"
+                                                src="/assets/images/game/adventure.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="adventure opalist">Adventure Opalist</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=a-dance-of-fire-and-ice&type=3kh0'><img
+                                                height="175" src="/assets/images/game/adofi.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                class="some" alt="A Dance Of Fire And Ice">A Dance of Fire
+                                                and Ice<br></span></a>
+                                <a class='link button' href='/yalp/ela.html?book=alien-hominid&type=local'><img
+                                                height="175" src="/assets/images/game/alien-hominid.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Alien Hominid">Alien Hominid</span></a>
+                                <a class='link button'
+                                        href='/yalp/ela.html?book=amazing-strange-rope-police&type=local'><img
+                                                height="175" src="/assets/images/game/amazing-strange.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width:max-content;"
+                                                alt="Amazing Strange Rope Police">Amazing Stange
+                                                Police</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=among-us&type=local'><img height="175"
+                                                src="/assets/images/game/among-us.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Among Us">Among Us</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=angry-birds&type=local'><img
+                                                height="175" src="/assets/images/game/angry-birds.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Angry Birds">Angry Birds</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=adarkroom&type=local'><img
+                                                height="175" src="/assets/images/game/a-dark-room.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="A Dark Room">A Dark Room</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=acid-bunny&type=local'><img
+                                                height="175" src="/assets/images/game/acid-bunny.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="acid bunny">Acid Bunny</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=axis-league&type=local'><img
+                                                height="175" src="/assets/images/game/axis-football.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Axis Football League">Axis Football League</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=achievementunlocked&type=3kh0'><img
+                                                height="175" src="/assets/images/game/achievementunlocked.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="wyboss">Achievement Unlocked</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=adv-unlcked&type=local'><img
+                                                height="175" src="/assets/images/game/acunlocked2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="achvunl">Achievement Unlocked 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=angry-sharks&type=3kh0'><img
+                                                height="175" src="/assets/images/game/angry-sharks.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Angry Sharks</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=aquapark-slides&type=3kh0'><img
+                                                height="175" src="/assets/images/game/aquapark-slides.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Aquapark Slides</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=astray&type=local'><img height="175"
+                                                src="/assets/images/game/astray.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Astray</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=arcane&type=local'><img height="175"
+                                                src="/assets/images/game/arcane.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Angry Birds">Arcane</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=aceattourney&type=local'><img
+                                                height="175" src="/assets/images/game/aceatt.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Ace Attorney</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=andys-apple-farm&type=local'><img
+                                                height="175" src="/assets/images/game/aaf.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Andy's Apple Farm</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=batim&type=local'><img height="175"
+                                                src="/assets/images/game/batim.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Bendy And The Ink Machine</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bad-parenting&type=local'><img
+                                                height="175" src="/assets/images/game/badparents.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Bad Parenting</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=backrooms&type=3kh0'><img height="175"
+                                                src="https://cdn.statically.io/gh/GalacticNetwork/3kh0-assets/main/backrooms/img/splash.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="backrooms">Backrooms</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bad-piggies&type=local'><img
+                                                height="175" src="/assets/images/game/bad-piggies.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="bad piggies">Bad Piggies</span></a>
+                                <a class='link button' href='/active/index.html?autofill=https://jcw87.github.io/c2-sans-fight/'><img
+                                                height="175" src="/assets/images/game/bad-time-sim.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="bad time simulator">Bad Time Simulator</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bacon-may-die&type=3kh0'><img
+                                                height="175" src="/assets/images/game/bacon-may-die.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Bacon May Die">Bacon May Die</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bad-ice-cream&type=3kh0'><img
+                                                height="175" src="/assets/images/game/bad-ice-cream.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="bad ice cream">Bad Ice Cream</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bad-ice-cream&type=3kh0'><img
+                                                height="175" src="/assets/images/game/bad-ice-cream-2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="bad ice cream 2">Bad Ice Cream 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bad-ice-cream&type=3kh0'><img
+                                                height="175" src="/assets/images/game/bad-ice-cream-3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="bad ice cream 3">Bad Ice Cream 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=baldi&type=local'><img height="175"
+                                                src="/assets/images/game/baldi.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Baldi's Basics">Baldi's Basics</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=baldi/camping&type=local'><img
+                                                height="175" src="/assets/images/game/baldicamping.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width:fit-content;"
+                                                alt="baldi's basics camping">Baldi's Basics Camping</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=basketball-stars&type=local'><img
+                                                height="175"
+                                                src="https://cdn.statically.io/GalacticNetwork/3kh0-assets/main/basketball-stars/basketball-stars.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="basketball stars">Basketball Stars</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=basketball-legends&type=local'><img
+                                                height="175" src="/assets/images/game/basketball-legends.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="basketball legends">Basketball Legends</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=basketbros&type=local'><img
+                                                height="175" src="/assets/images/game/basketbros-io.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="basketbros.io">BasketBros.IO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=binding-issac&type=local'><img
+                                                height="175" src="/assets/images/game/binding-of-issac.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="binding of issac">Binding of Issac</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bitlife&type=local'><img height="175"
+                                                src="/assets/images/game/btlf.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="bitlife">Bitlife</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bloxd-io&type=local'><img height="175"
+                                                src="/assets/images/game/bloxd-io.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Bloxd.io">Bloxd.IO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bob-the-robber&type=local'><img
+                                                height="175" src="/assets/images/game/btr.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="bob the robber">Bob The Robber</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bob-the-robber/2&type=local'><img
+                                                height="175" src="/assets/images/game/btr2.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Bob The Robber 2">Bob The Robber 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bob-the-robber/3&type=local'><img
+                                                height="175" src="/assets/images/game/btr3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Bob The Robber 3">Bob The Robber 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bob-the-robber/4&type=local'><img
+                                                height="175" src="/assets/images/game/btr4.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Bob The Robber 4">Bob The Robber 4</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bob-the-robber/5&type=local'><img
+                                                height="175" src="/assets/images/game/btr5.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Bob the robber 5">Bob The Robber 5</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=brawl-stars&type=local'><img
+                                                height="175" src="/assets/images/game/brawl-stars-game.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="brawl stars">Brawl Stars</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=burrito-bison&type=local'><img
+                                                height="175" src="/assets/images/game/burrito-bison.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="burrito bison">Burrito Bison</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=burrito-bison/revenge&type=local'><img
+                                                height="175" src="/assets/images/game/burito-bison-revenge.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="brawl stars">Burrito Bison Revenge</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=buckshit&type=local'><img height="175"
+                                                src="/assets/images/game/buckshot.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="buckshot roulette">Buckshot Roulette</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=boxhead2play&type=3kh0'><img
+                                                height="175" src="/assets/images/game/boxhead2play.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="bh2p">BoxHead2Play</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=blockpost&type=3kh0'><img height="175"
+                                                src="/assets/images/game/blockpost.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="wyboss">BlockPost</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=banjo-kazooie&type=local'><img
+                                                height="175" src="/assets/images/game/banjo.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="BK">Banjo Kazooie</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=bloonstd1.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/bloonstd.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="btd">Bloons TD</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bloonstd2&type=3kh0'><img height="175"
+                                                src="/assets/images/game/bloonstd2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="btd2">Bloons TD 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=btd3&type=local'><img height="175"
+                                                src="/assets/images/game/btd3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="btd3">Bloons TD 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=btd4&type=local'><img height="175"
+                                                src="/assets/images/game/btd4.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="btd4">Bloons TD 4</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=btd5&type=3kh0'><img height="175"
+                                                src="/assets/images/game/btd5.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="btd5">Bloons TD 5</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bloxors&type=3kh0'><img height="175"
+                                                src="/assets/images/game/block.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="bloxors">Bloxors</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=basket-random&type=3kh0'><img
+                                                height="175" src="/assets/images/game/basket.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="BR">Basket Random</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=boxing-random&type=3kh0'><img
+                                                height="175" src="/assets/images/game/boxing.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="boxing random">Boxing Random</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=bigredbutton&type=3kh0'><img
+                                                height="175" src="/assets/images/game/bigredbutton.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Big Red Button</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=blacholesquare&type=3kh0'><img
+                                                height="175" src="/assets/images/game/blackholesquare.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Black Hole Square</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=basket-and-ball&type=local'><img
+                                                height="175" src="/assets/images/game/basketnball.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Basket And Ball</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ball-dodge&type=local'><img
+                                                height="175" src="/assets/images/game/ball-dodge.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="eaglercraft 1.3.3">Ball Dodge</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=my-nutsacks&type=local'><img
+                                                height="175" src="/assets/images/game/myballznbricks.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width:fit-content;"
+                                                alt="SMC">Balls And Bricks</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=blade-ball&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/blade-ball.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width:fit-content;"
+                                                alt="SMC">Blade Ball</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=burgernfrights&type=local'><img
+                                                height="175" src="/assets/images/game/bnf.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Burger and Frights</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=btts&type=local'><img height="175"
+                                                src="/assets/images/game/btts.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="BR">Big Town Tiny Square</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=btts/2&type=local'><img height="175"
+                                                src="/assets/images/game/btts2.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="BR">Big Town Tiny Square 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=block-blast&type=local'><img
+                                                height="175" src="/assets/images/game/block-blast.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Block Blast</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=balatro&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/balatro.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Balatro</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=crazycattle3d&type=local'><img
+                                                height="175" src="/assets/images/game/cc3d.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Crazy Cattle 3D</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=cooking-mama&type=local'><img
+                                                height="175" src="/assets/images/game/cooking-mama.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Cooking Mama</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=cannon-basketball&type=local'><img
+                                                height="175" src="/assets/images/game/cb.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="cannon basketball">Cannon Basketball</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=cannon-basketball/2&type=local'><img
+                                                height="175" src="/assets/images/game/cb2.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="cannon basketball 2">Cannon Basketball 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=cannon-basketball-4&type=3kh0'><img
+                                                height="175" src="/assets/images/game/cannon-4.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Cannon Basketball 4</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=cars-io&type=local'><img height="175"
+                                                src="/assets/images/game/cars-io.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="cars.io">Cars.IO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=castel-wars-modern&type=local'><img
+                                                height="175" src="/assets/images/game/castel-wars-modern.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="castel wars modern">Castel Wars Modern</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=cat-mario&type=local'><img height="175"
+                                                src="/assets/images/game/cat-mario.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="cat mario">Cat Mario</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=acid-bunny&type=local'><img
+                                                height="175" src="/assets/images/game/clicker-heroes.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="clicker heroes">Clicker Heroes</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=cluster-rush&type=local'><img
+                                                height="175" src="/assets/images/game/cluster-rush.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="cluster rush">Cluster Rush</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ctr&type=local'><img height="175"
+                                                src="/assets/images/game/ctr.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Cut The Rope">Cut The Rope</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ctr/tt&type=local'><img height="175"
+                                                src="/assets/images/game/ctrtt.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="cut the rope: time travel">Cut the Rope: Time</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=csgo&type=local'><img height="175"
+                                                src="/assets/images/game/bhop.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="cs:go: bhop">CSGO: BHOP</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=craftmine&type=local'><img height="175"
+                                                src="/assets/images/game/craftmine.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="craftmine">CraftMine</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=core-ball&type=local'><img height="175"
+                                                src="/assets/images/game/core-ball.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="core ball">Core Ball</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=cookieclicker&type=local'><img
+                                                height="175" src="/assets/images/game/cookie-clicker.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Cookie Clicker</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=chromaincident&type=local'><img
+                                                height="175" src="/assets/images/game/chroma.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Chroma Incident</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=crossyroad&type=3kh0'><img height="175"
+                                                src="/assets/images/game/crossyroad.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Crossy Road</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=cod&type=local'><img height="175"
+                                                src="/assets/images/game/call-of-duty.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="wyboss">Call Of Duty</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=cookie-run&type=local'><img
+                                                height="175" src="/assets/images/game/cookie-run.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="dad n me">Cookie Run Kingdom</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=candy-crush&type=local'><img
+                                                height="175" src="/assets/images/game/candy-crush.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="dad n me">Candy Crush</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=crazy-crash-landing&type=local'><img
+                                                height="175" src="/assets/images/game/crazy-crash-landing.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Crazy Crash Landing</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=crazy-cars&type=local'><img
+                                                height="175" src="/assets/images/game/cc.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Crazy Cars</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ccok3d&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/c3d.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Crazy Chicken 3D</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=counter-strike&type=local'><img
+                                                height="175" src="/assets/images/game/hfcs.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Counter Strike 1.6</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=class-of-09&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/co09.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Class Of 09 (DEMO)</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=celeste&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/celeste.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Celeste Classic</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=dad-n-me&type=local'><img height="175"
+                                                src="/assets/images/game/dad-n-me.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="dad n me">Dad N Me</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=dbz-kart&type=local'><img height="175"
+                                                src="/assets/images/game/dbz-kart.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="dragonballz kart">DragonBallZ Kart</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=deepest-sword&type=local'><img
+                                                height="175" src="/assets/images/game/deepest-sword.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="deepest sword">Deepest sword</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=dk-country&type=local'><img
+                                                height="175" src="/assets/images/game/donkey-country.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="donkey kong country">Donkey Kong Country</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=doom&type=local'><img height="175"
+                                                src="/assets/images/game/Doom_cover_art.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="doom">Doom</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=drift-hunters&type=3kh0'><img
+                                                height="175" src="/assets/images/game/drift-hunters.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="drift hunters">Drift Hunters</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=drift-boss&type=local'><img
+                                                height="175" src="/assets/images/game/drift-boss.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="drift boss">Drift Boss</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=duck-hunt&type=local'><img height="175"
+                                                src="/assets/images/game/duck-hunt.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:noewrap"
+                                                alt="duck hunt">Duck Hunt</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=ducklife.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/dl1.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="duck life 1">Duck Life 1</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=ducklife2.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/ducklife2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="duck life 2">Duck Life 2</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=ducklife3.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/duck3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="duck life 3">Duck Life 3</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=ducklife4.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/duck4.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="duck life 4">Duck Life 4</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=duck-life-five&type=local'><img
+                                                height="175" src="/assets/images/game/duck-life-5.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="duck life 5">Duck Life 5</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=death-run-3d&type=3kh0'><img
+                                                height="175" src="/assets/images/game/death.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Death Run 3D</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=doge2048&type=3kh0'><img height="175"
+                                                src="/assets/images/game/doge.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Doge2048</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=doodle-jump&type=3kh0'><img
+                                                height="175" src="/assets/images/game/doodle.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Doodle Jump</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=draw-the-hill&type=3kh0'><img
+                                                height="175" src="/assets/images/game/draw-the-hill.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Draw The Hill</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=duke-nukem-2&type=3kh0'><img
+                                                height="175" src="/assets/images/game/duke.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Duke Nukem 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=dwdt&type=local'><img height="175"
+                                                src="/assets/images/game/dwtd.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Dumb Ways To Die</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=dtt&type=local'><img height="175"
+                                                src="/assets/images/game/dtt.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Defend the Tank</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=db2&type=local'><img height="175"
+                                                src="/assets/images/game/db2.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Drunken Boxing 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=drive-mad&type=3kh0'><img height="175"
+                                                src="https://cdn.statically.io/GalacticNetwork/3kh0-assets/main/drive-mad/logo.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Drive Mad</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=deltarune&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/deltarune.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Deltarune</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=edge-surf&type=local'><img height="175"
+                                                src="/assets/images/game/edge.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Edge Surf</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=escapingtheprison&type=3kh0'><img
+                                                height="175" src="/assets/images/game/escapingtheprison.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Escaping The Prison</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=evilglitch&type=local'><img
+                                                height="175" src="/assets/images/game/evil.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Evil Glitch</span></a>
+                                <a class='link button' href='/yalp/banan.html?book=edgenotfound&type=local'><img
+                                                height="175" src="/assets/images/game/edge.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Edge Not Found</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=eaglercraft/1122&type=local'><img
+                                                height="175" src="/assets/images/game/1122.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="eaglercraft 1.3.3">Eaglercraft 1.12.2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=eaglercraft/133&type=local'><img
+                                                height="175" src="/assets/images/game/1.3.3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="eaglercraft 1.3.3">Eaglercraft 1.3.3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=eaglercraft/152&type=local'><img
+                                                height="175" src="/assets/images/game/favicon.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="eaglercraft 1.5.2">Eaglercraft 1.5.2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=eaglercraft/menu&type=local'><img
+                                                height="175" src="/assets/images/game/splash.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="eaglercraft 1.8.8">Eaglercraft 1.8.8</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=eaglercraft/189&type=local'><img
+                                                height="175" src="/assets/images/game/1.8.9.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="eaglercraft 1.8.9">Eaglercraft 1.8.9</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=eggy-car&type=local'><img height="175"
+                                                src="/assets/images/game/eggy-car.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Eggy Car">Eggy Car</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=elastic-man&type=local'><img
+                                                height="175" src="/assets/images/game/elastic.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Elastic Man">Elastic Man</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fortnite&type=local'><img height="175"
+                                                src="/assets/images/game/f.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="fortnite">Fortnite</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fortnite-mobile&type=local'><img
+                                                height="175" src="/assets/images/game/f.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="fortnite">Fortnite Mobile</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fortzone&type=local'><img height="175"
+                                                src="/assets/images/game/fortzone.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tetris">FortZone</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fpa&type=local'><img height="175"
+                                                src="/assets/images/game/fancy-pants.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="Fancy Pants Adventure">Fancy Pants</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=doom&type=local'><img height="175"
+                                                src="/assets/images/game/fancy-pants-2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="Fancy Pants Adventure 2">Fancy Pants Adventure 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fbwg&type=local'><img height="175"
+                                                src="/assets/images/game/fire-water-1.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Fire Boy and Water Girl">Fire Boy Water Girl</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fbwg/2&type=local'><img height="175"
+                                                src="/assets/images/game/fire-water-2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Fire Boy and Water Girl 2">Fire Boy Water Girl 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fbwg/3&type=local'><img height="175"
+                                                src="/assets/images/game/fire-water-3.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Fire Boy and Water Girl 3">Fire Boy Water Girl 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fbwg/4&type=local'><img height="175"
+                                                src="/assets/images/game/fire-water-4.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Fire Boy and Water Girl 4">Fire Boy Water Girl 4</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fbwg/5&type=local'><img height="175"
+                                                src="/assets/images/game/fire-water-5.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Fire Boy and Water Girl 5">Fire Boy Water Girl 5</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fbwg/6&type=local'><img height="175"
+                                                src="/assets/images/game/fire-water-6.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Fire Boy and Water Girl 6">Fire Boy Water Girl 6</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaw&type=local'><img height="175"
+                                                src="/assets/images/game/Long_arms.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Five Nights At Winstons">five nights at winston</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf&type=local'><img height="175"
+                                                src="/assets/images/game/fnaf.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Five Nights At Freddy's">FNAF</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf/2&type=local'><img height="175"
+                                                src="/assets/images/game/fnaf-2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;overflow: visible;"
+                                                alt="Five Nights At Freddy's Two">FNAF 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf/3&type=local'><img height="175"
+                                                src="/assets/images/game/fnaf-3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;flex-wrap: wrap;overflow: visible;"
+                                                alt="Five Nights At Freddy's 3">FNAF 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf/4&type=local'><img height="175"
+                                                src="/assets/images/game/fnaf-4.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;overflow: visible;"
+                                                alt="Five Nights At Freddy's 4">FNAF 4</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf/sl&type=local'><img height="175"
+                                                src="/assets/images/game/fnaf-sl.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;overflow: visible;"
+                                                alt="Five Nights At Freddy's">Five Nights At freddy
+                                                SL</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf/fp&type=local'><img height="175"
+                                                src="/assets/images/game/fnaf-final-pug.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Five Nights At Freddy's Final Pugatory">FNAF Final
+                                                Pugatory</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf/hw&type=local'><img height="175"
+                                                src="/assets/images/game/fnaf-hw.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;overflow: visible;"
+                                                alt="Five Nights At Freddy's HW">FNAF Help Wanted</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf/pizza&type=local'><img
+                                                height="175" src="/assets/images/game/pizza.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;overflow: visible;"
+                                                alt="Five Nights At Freddy's">FNAF Pizza Simulator</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf/ucn&type=local'><img height="175"
+                                                src="/assets/images/game/fnaf-ucn.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;overflow: visible;"
+                                                alt="Five Nights At Freddy's">FNAF UCN</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnaf/jrs&type=local'><img height="175"
+                                                src="/assets/images/game/jr's.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;overflow: visible;"
+                                                alt="Five Nights At Freddy's">FNAF JR's</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnf&type=local'><img height="175"
+                                                src="/assets/images/game/fnf.gif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="friday night funkin">Friday Night Funkin</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fnf/week-8&type=local'><img
+                                                height="175" src="/assets/images/game/fnf.gif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="friday night funkin" class="buggy">FNF Updated</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=football-legends&type=local'><img
+                                                height="175" src="/assets/images/game/football-legends-2021.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="soccer legends 2021">Football Legends 2021</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fruit-ninja&type=local'><img
+                                                height="175" src="/assets/images/game/fruit-ninja.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="fruit ninja">Fruit Ninja</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=four-colors&type=local'><img
+                                                height="175" src="/assets/images/game/four_colors.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="four colors">Four Colors</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=flappy-plane&type=local'><img
+                                                height="175" src="/assets/images/game/flappy-plane.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="falppy plane">Flappy Plane</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=flappybird&type=local'><img
+                                                height="175" src="/assets/images/game/flappy-plane.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="flappy bird">Flappy Bird</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fleeingthecomplex&type=3kh0'><img
+                                                height="175" src="/assets/images/game/flee.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="FTC">Fleeing The Complex</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=lava&type=local'><img height="175"
+                                                src="/assets/images/game/floor-is-lava.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="fil">Floor Is Lava</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=frying-nemo&type=3kh0'><img
+                                                height="175" src="/assets/images/game/frying.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Frying Nemo</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=froggys-battle&type=3kh0'><img
+                                                height="175" src="/assets/images/game/froggies.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Froggies Battle</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fall-guys&type=local'><img height="175"
+                                                src="/assets/images/game/fall-guys.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="wyboss">Fall Guys Ripoff</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=funny-shooter-2&type=local'><img
+                                                height="175" src="/assets/images/game/funny-shooter-2.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Funny Shooter 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=falling-ball&type=local'><img
+                                                height="175" src="/assets/images/game/falling-ball.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Falling Ball</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fps-io&type=local'><img height="175"
+                                                src="/assets/images/game/fps-io.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">FPS.IO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=fc&type=local'><img height="175"
+                                                src="/assets/images/game/ea-sports-fc-mobile-24-soccer.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="wyboss">Fifa Mobile</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=football-bros&type=local'><img
+                                                height="175" src="/assets/images/game/football.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Football Bros</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gba&type=local'><img height="175"
+                                                src="/assets/images/game/gba.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GBA">GameBoy Advanced</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gba/js&type=local'><img height="175"
+                                                src="/assets/images/game/gba-js.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="GBA.JS">GBA.JS</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=geometrydash&type=local'><img
+                                                height="175" src="/assets/images/game/gd.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="Geometry Dash">Geometry Dash</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gd/meltdown&type=local'><img
+                                                height="175" src="/assets/images/game/meltdown.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gdm">GD Meltdown</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gd/world&type=local'><img height="175"
+                                                src="/assets/images/game/word.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Gdw">Geometry Dash World</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gd/subzero&type=local'><img
+                                                height="175" src="/assets/images/game/subzero.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GDSZ">GD Subzero</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=getting-over-it&type=local'><img
+                                                height="175" src="/assets/images/game/goi.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GBA.JS">Getting Over It</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=google-feud&type=local'><img
+                                                height="175" src="/assets/images/game/gfued.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GFeud">Google Feud</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=google/doodle-cricket&type=local'><img
+                                                height="175" src="/assets/images/game/cricket.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GDC">Google Cricket</span></a>
+                                <a class='link button'
+                                        href='/yalp/ela.html?book=google/doodle-champion-island&type=local'><img
+                                                height="175" src="/assets/images/game/championisland.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:195px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GDCI">Google Champion Island</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=google/santa-tracker&type=local'><img
+                                                height="175" src="/assets/images/game/santa-tracker.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GST">Google Santa Tracker</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=google/doodle-baseball&type=local'><img
+                                                height="175" src="/assets/images/game/baseball.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:195px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GDB">Google Doodle Baseball</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=snake&type=local'><img height="175"
+                                                src="/assets/images/game/snake.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GS">Google Snake</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=granny&type=local'><img height="175"
+                                                src="/assets/images/game/granny.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="granny">Granny</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gun-night&type=local'><img height="175"
+                                                src="/assets/images/game/gun-night-io.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Gunnight">GunNight.IO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gravity-soccer&type=local'><img
+                                                height="175" src="/assets/images/game/gravity.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Gravity Soccer">Gravity Soccer</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gimme-the-airpod&type=3kh0'><img
+                                                height="175" src="/assets/images/game/airpod.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Gimme The Airpod</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gearsofbabies&type=3kh0'><img
+                                                height="175" src="/assets/images/game/gears.ico"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Gears Of Babies</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=glass-city&type=3kh0'><img height="175"
+                                                src="/assets/images/game/glass.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Glass City</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=getaway-shootout&type=local'><img
+                                                height="175" src="/assets/images/game/getaway-shootout.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Getaway Shootout</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gunspin&type=local'><img height="175"
+                                                src="/assets/images/game/gunspin.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Gunspin</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gun-mayhem&type=local'><img
+                                                height="175" src="/assets/images/game/gm.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Gun Mayhem</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gladihoppers&type=local'><img
+                                                height="175" src="/assets/images/game/gladi.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Gladihoppers</span></a><a class='link button'
+                                        href='/yalp/ela.html?book=gift-wrapped&type=local'><img height="175"
+                                                src="/assets/images/game/gw.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Gift Wrapped</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=geforce-now&type=local'><img
+                                                height="175" src="/assets/images/app/geforcenow.png"
+                                                onerror="this.src='/assets/img/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Geforce Now" class="buggy">Geforce Now</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=genshin&type=local'><img
+                                                height="175" src="/assets/images/game/genshinimpact.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Genshin Impact</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=gettothetopalthoughthereisnotop&type=local'><img
+                                                height="175" src="/assets/images/game/gttt.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Get To The Top Although There Is No Top</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=hw&type=local'><img height="175"
+                                                src="/assets/images/game/b.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Happy Wheels</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=hardware-tycoon&type=3kh0'><img
+                                                height="175" src="/assets/images/game/hardware.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Hardware Tycoon</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=helicopter&type=3kh0'><img height="175"
+                                                src="/assets/images/game/heli.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Helicopter</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=hextris&type=3kh0'><img height="175"
+                                                src="/assets/images/game/hextris.ico"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Hextris</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=house-of-hazards&type=local'><img
+                                                height="175" src="/assets/images/game/house-of-hazards.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hoh">House Of Hazards</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=hill-climbing-racing&type=local'><img
+                                                height="175" src="/assets/images/game/hill-climbing-racing.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Hill Climbing Racing</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=half-life&type=local'><img height="175"
+                                                src="/assets/images/game/half-life.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Half Life</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=hungry-lamu&type=3kh0'><img
+                                                height="175" src="/assets/images/game/hungry.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Hungry Lamu</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=hole-io&type=local'><img height="175"
+                                                src="/assets/images/game/holeio.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="holeio">Hole.IO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=hotline-miami&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/hotlinemiami.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GBA.JS">Hotline Miami</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=iceagebaby&type=3kh0'><img height="175"
+                                                src="/assets/images/game/iceage.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Ice Age Baby</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=iceagebaby2&type=3kh0'><img
+                                                height="175" src="/assets/images/game/agebaby.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Ice Age Baby 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=iron-snout&type=local'><img
+                                                height="175" src="/assets/images/game/iron-snout.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Iron Snout">Iron Snout</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=idle-breakout&type=3kh0'><img
+                                                height="175" src="/assets/images/game/breakout.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Idle Breakout</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=idle-shark&type=3kh0'><img height="175"
+                                                src="/assets/images/game/sharklogo.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Idle Shark</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=invite-the-blackbird&type=3kh0'><img
+                                                height="175" src="/assets/images/game/invite.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Invite The Blackbird</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ita&type=local'><img height="175"
+                                                src="/assets/images/game/ita.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Infiltrating The Airship</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=infcraft&type=local'><img height="175"
+                                                src="/assets/images/game/infcraft.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Infinite Craft</span></a>
+                                <a class='link button'
+                                        href='/yalp/ela.html?book=mariohtml5-master/main.html&type=local'><img
+                                                height="175" src="/assets/images/game/infmario.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tetris">Infinite Mario</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=just-one-boss&type=3kh0'><img
+                                                height="175" src="/assets/images/game/one-boss.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Just One Boss</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=jetpack-joyride&type=3kh0'><img
+                                                height="175" src="/assets/images/game/joyride.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="jpjr">Jetpack Joyride</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=jfl&type=local'><img height="175"
+                                                src="/assets/images/game/jfl.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="jfl">JustFall.LOL</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=jacksmith&type=local'><img height="175"
+                                                src="/assets/images/game/jacksmith.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">JackSmith</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=knife-master&type=3kh0'><img
+                                                height="175" src="/assets/images/game/kitchen.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Knife Master</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=kitchen-gun-game&type=3kh0'><img
+                                                height="175" src="/assets/images/game/kitchen-gun.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Kitchen Gun</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=krunker&type=local' data-tag="exclusive"><img height="175"
+                                                src="/assets/images/game/krunker.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="krunker">Krunker</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=kick-the-buddy&type=local'><img
+                                                height="175" src="/assets/images/game/kick-the-buddy.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ktb">Kick The Buddy</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=knife-hit&type=local'><img height="175"
+                                                src="/assets/images/game/knife-hit.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="knife hit">Knife Hit</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=kindergarten&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/kdgog.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Kindergarten</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=kindergarten/2&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/kdg.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Kindergarten 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=level13&type=3kh0'><img height="175"
+                                                src="/assets/images/game/lvl13.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Level 13</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=learn2fly.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/ltf.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ltf">Learn 2 Fly</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=learn2fly2.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/ltf2.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ltf2">Learn 2 Fly 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ltf3&type=3kh0'><img height="175"
+                                                src="/assets/images/game/ltf3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ltf3">Learn 2 Fly 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ltf-idle&type=3kh0'><img height="175"
+                                                src="/assets/images/game/ltf-idle.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ltf-idle">Learn 2 Fly Idle</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=light-it-up&type=local'><img
+                                                height="175" src="/assets/images/game/light-it-up.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="LIU">Light It Up</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=levil-devil&type=local'><img
+                                                height="175" src="/assets/images/game/ld.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Level Devil</span></a>
+                                <a class='link button'
+                                        href='/yalp/ela.html?book=madalin-cars-multiplayer&type=3kh0'><img height="175"
+                                                src="/assets/images/game/md.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Madalin Cars</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=madalin-stunt-cars-2&type=3kh0'><img
+                                                height="175" src="/assets/images/game/mad-2.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Madalin Stunt Cars 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=madalin-stunt-cars-3&type=3kh0'><img
+                                                height="175" src="/assets/images/game/mad-3.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Madalin Stunt Cars 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=mari0&type=local'><img height="175"
+                                                src="/assets/images/game/mari0.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Mari0">Mari0</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=mario-combat&type=local'><img
+                                                height="175" src="/assets/images/game/mario-combat.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="mc">Mario Combat</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=mc-classic&type=local'><img
+                                                height="175" src="/assets/images/game/minecraft-classic.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="mcc">Minecraft Classic</span></a>
+                                <a class='link button' href='/active/index.html?autofill=https://mcon.vercel.app' data-tag="exclusive"><img
+                                                height="175" src="/yalp/src/eaglercraft/X/game/game.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="mcc">Minecraft Java</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=mx3m&type=local'><img height="175"
+                                                src="/assets/images/game/motox3m.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="mx3m">Moto X3M</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=mx3m/2&type=local'><img height="175"
+                                                src="/assets/images/game/motox3m2.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="mx3m2">Moto X3M 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=mx3m/3&type=local'><img height="175"
+                                                src="/assets/images/game/motox3m-3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="mx3m3">Moto X3M 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=mx3m/pool-party&type=local'><img
+                                                height="175" src="/assets/images/game/poolio.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="mx3mpp">Moto X3M: Pool Party</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=mx3m/spooky-land&type=local'><img
+                                                height="175" src="/assets/images/game/motospooky.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="mx3msl">Moto X3M Spooky Land</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=melon-playground&type=local'><img
+                                                height="175" src="/assets/images/game/melon-pg.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="dad n me">Melon Playground</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=murder&type=local'><img height="175"
+                                                src="/assets/images/game/murder.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Murder</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=its-closed&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/msic.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Make Sure It's Closed</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=madden24&type=local'><img height="175"
+                                                src="/assets/images/game/madden24.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Elastic Man">Madden NFL 24</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=MonkeyMart&type=3kh0'><img height="175"
+                                                src="https://cdn.statically.io/GalacticNetwork/3kh0-assets/main/MonkeyMart/bg_loading.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Monkey Mart</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=noob-steve-parkour&type=local'><img
+                                                height="175" src="/assets/images/game/noob-steve-parkour.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="nsp">Noob Steve Parkour</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ninjavsevilcorp&type=3kh0'><img
+                                                height="175" src="/assets/images/game/nvsec.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Ninja vs Evil Corp</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=nsresurgence&type=3kh0'><img
+                                                height="175" src="/assets/images/game/nsr.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">NS Resurgence</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=om-bounce&type=3kh0'><img height="175"
+                                                src="/assets/images/game/om-nom.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Om Nom Bounce</span></a>
+                                <a class='link button'
+                                        href='/yalp/ela.html?book=out-of-ctrl/OutOfCtrl_v1_2&type=3kh0'><img
+                                                height="175" src="/assets/images/game/out-of-ctrl.gif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Out Of Ctrl</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ovo&type=3kh0'><img height="175"
+                                                src="/assets/images/game/ovo.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">OvO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ovo&type=local'><img height="175"
+                                                src="/assets/images/game/OvO2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Angry Birds">OvO 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=only-up&type=local'><img height="175"
+                                                src="/assets/images/game/only-up.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="only up">Only Up!</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=osu&type=local'><img height="175"
+                                                src="/assets/images/game/osu.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="osu">Osu!</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=goofy-ahh-obby&type=local'><img
+                                                height="175" src="/assets/images/game/goofyobby.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Obby roblox (💀)</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=pixel-gun-survival&type=3kh0'><img
+                                                height="175" src="/assets/images/game/pixel-gun.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Pixel Gun Survival</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=portal.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/portaltheflashversion.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Portal: Flash Version</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/pizza&type=local'><img
+                                                height="175" src="/assets/images/game/papaspizzaria.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Pizzaria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/bakeria&type=local'><img
+                                                height="175" src="/assets/images/game/bakeria.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ppb">Papa's Bakeria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/burgeria&type=local'><img
+                                                height="175" src="/assets/images/game/papabg.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ppbg">Papa's Burgeria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/cakeria&type=local'><img
+                                                height="175" src="/assets/images/game/cake.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Cakeria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/cheese&type=local'><img
+                                                height="175" src="/assets/images/game/cheese.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="mx3mw">Papa's Cheeseria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/donuteria&type=local'><img
+                                                height="175" src="/assets/images/game/donuteria.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Donuteria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/freezeria&type=local'><img
+                                                height="175" src="/assets/images/game/freeze.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Freezeria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/pasta&type=local'><img
+                                                height="175" src="/assets/images/game/pasta.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Pastaria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/pancakeria&type=local'><img
+                                                height="175" src="/assets/images/game/pancakeria.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Pancakeria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/scooperia&type=local'><img
+                                                height="175" src="/assets/images/game/papasscoop.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Scooperia</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/sushi&type=local'><img
+                                                height="175" src="/assets/images/game/papasushi.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Sushiria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/taco-mia&type=local'><img
+                                                height="175" src="/assets/images/game/papatm.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Taco Mia</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papas/wingeria&type=local'><img
+                                                height="175" src="/assets/images/game/wings.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pp">Papa's Wingeria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papa-louie&type=local'><img
+                                                height="175" src="/assets/images/game/papa-louie.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pl">Papa Louie</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papa-louie/2&type=local'><img
+                                                height="175" src="/assets/images/game/papa-louie-2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pl2">Papa Louie 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papa-louie/3&type=local'><img
+                                                height="175" src="/assets/images/game/papa-louie-3.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pl3">Papa Louie 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=paper-mc&type=local'><img height="175"
+                                                src="/assets/images/game/paper-mc.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="paper mc">Paper Minecraft</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=pvz&type=local'><img height="175"
+                                                src="/assets/images/game/pvz.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pvz">Plants Vs Zombies</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=pixel-shooter&type=local'><img
+                                                height="175" src="/assets/images/game/pixel-shooter.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ps">Pixel Shooter</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=paper-io-2&type=local'><img
+                                                height="175" src="/assets/images/game/paper-io2.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="paper io 2">Paper.IO 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=parking-fury&type=local'><img
+                                                height="175" src="/assets/images/game/parking-fury.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pf">Parking Fury</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=parking-fury/2&type=local'><img
+                                                height="175" src="/assets/images/game/parking-fury-2.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pf2">Parking Fury 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=parking-fury/3&type=local'><img
+                                                height="175" src="/assets/images/game/parking-fury-3.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pf3">Parking Fury 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=pokemon/emerald&type=local'><img
+                                                height="175" src="/assets/images/game/pokemon-emerald.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pe">Pokemon Emerald</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=pokemon/ruby&type=local'><img
+                                                height="175" src="/assets/images/game/ruby.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pr">Pokemon Ruby</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=pokemon/leafgreen&type=local'><img
+                                                height="175" src="/assets/images/game/pokemon-leaf.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pe">Pokemon LeafGreen</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=pokemon/fire-red&type=local'><img
+                                                height="175" src="/assets/images/game/pokemon-firered.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pe">Pokemon Fire Red</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=pokemon/sapphire&type=local'><img
+                                                height="175" src="/assets/images/game/pokemon-sapphire.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="pe">Pokemon Sapphire</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=precision-client&type=3kh0'><img
+                                                height="175" src="/assets/images/game/percision.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Precision Client
+                                        </span></a>
+                                <a class='link button' href='/yalp/ela.html?book=push-the-square&type=3kh0'><img
+                                                height="175" src="/assets/images/game/push.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Push The Square</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=push-your-luck&type=3kh0'><img
+                                                height="175" src="/assets/images/game/luck.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Push Your Luck</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=popcat-classic&type=3kh0'><img
+                                                height="175" src="/assets/images/game/popcat.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Popcat Classic</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=papyrus-fight&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/Disbelief_Papyrus.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="A Dark Room">Papyrus Disbelief</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=people-playground&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/peopleplayground.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GBA.JS">People Playground</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=quantom-geo&type=local'><img
+                                                height="175" src="/assets/images/game/qg.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="qg">Quantom Geometry</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=rabbit-samurai&type=3kh0'><img
+                                                height="175" src="/assets/images/game/rabbit.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Rabbit Samurai</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=rabbit-samurai2&type=3kh0'><img
+                                                height="175" src="/assets/images/game/rabbit-2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Rabbit Samurai 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ro-blox&type=local' data-tag="exclusive"><img height="175"
+                                                src="/assets/images/game/rblx.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Roblox</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=roblox-2014&type=local'
+                                        data-tag="exclusive"><img height="175" src="/assets/images/game/rblx.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GBA.JS">Roblox; 2014 version</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=raft-wars&type=local'><img height="175"
+                                                src="/assets/images/game/raft-wars.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="rw">Raft Wars</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=raft-wars/2&type=local'><img
+                                                height="175" src="/assets/images/game/raft-wars-2.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="rw2">Raft Wars 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=red-ball-4&type=local'><img
+                                                height="175" src="/assets/images/game/red-ball-4.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="rb4">Red Ball 4</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=red-ball-4/2&type=local'><img
+                                                height="175" src="/assets/images/game/red-ball-4-vol2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="rb4vol2">Red Ball 4 Volume 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=red-ball-4/3&type=local'><img
+                                                height="175" src="/assets/images/game/rb3.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="rb4vol3">Red Ball 4 Volume 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=retro-bowl&type=3kh0'><img height="175"
+                                                src="/assets/images/game/retro-bowl.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="rtbw">Retro Bowl</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=retro-bowl-college&type=local'><img
+                                                height="175" src="/assets/images/game/rb-college.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="rbc">Retro Bowl College</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=run&type=local'><img height="175"
+                                                src="/assets/images/game/run.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="run2">Run</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=run-2&type=local'><img height="175"
+                                                src="/assets/images/game/run-2.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="run2">Run 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=run3/main&type=local'><img height="175"
+                                                src="/assets/images/game/run-3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Run 3">Run 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=runner&type=3kh0'><img height="175"
+                                                src="/assets/images/game/runner.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Run 3 Bootleg</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=rlss&type=local'><img height="175"
+                                                src="/assets/images/game/rocket-league-sideswipe.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="dad n me">Rocket League Sideswipe</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=rooftop-snipers&type=local'><img
+                                                height="175" src="/assets/images/game/rooftop-snipers.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="granny">Rooftop Snipers</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=rooftop-snipers-2&type=local'><img
+                                                height="175" src="/assets/images/game/rooftop-snipers-2.avif"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="granny">Rooftop Snipers 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=rugby&type=local'><img height="175"
+                                                src="/assets/images/game/rugby.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Rugby.IO: Ball Mayhem</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=rocketleague2d&type=local'><img
+                                                height="175" src="/assets/images/game/rl2d.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Rocket League 2D</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=rocketsoccerderby&type=local'><img
+                                                height="175" src="/assets/images/game/rsd.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Rocket Soccer Derby</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=repo&type=local'><img height="175"
+                                                src="/assets/images/game/repo.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="GBA.JS">REPO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=rerun&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/rerun.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">RE:RUN (rerun)</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=stickman-hook&type=local'><img
+                                                height="175" src="/assets/images/game/stickman-hook.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Stickman Hook">Stickman Hook</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=santy-is-home&type=3kh0'><img
+                                                height="175" src="/assets/images/game/santy-is-home.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Santy Is Home</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=slime-rush-td&type=3kh0'><img
+                                                height="175" src="/assets/images/game/slime-rush.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Slime Rush TD</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=slope&type=3kh0'><img height="175"
+                                                src="/assets/images/game/slope.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Slope">Slope</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=slope-2&type=local'><img height="175"
+                                                src="/assets/images/game/slope-2.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Slope 2">Slope 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=slope-3&type=local'><img height="175"
+                                                src="/assets/images/game/slope-3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="slope-3">Slope 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=slope-tunnel&type=local'><img
+                                                height="175" src="/assets/images/game/slope-tunnel.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Slope Tunnel</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=slither&type=local'><img height="175"
+                                                src="/assets/images/game/slither.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Slither">Slither.IO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=sort-the-court&type=3kh0'><img
+                                                height="175" src="/assets/images/game/sort.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Sort The Court</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=save-the-doge&type=local'><img
+                                                height="175" src="/assets/images/game/save-doge.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Save The Doge</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=shell-shockers&type=local'><img
+                                                height="175" src="/assets/images/game/shell-shockers.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Shell">Shell Shockers</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=supermario63.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/sm63.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="SM63">Super Mario 63</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=sm64&type=local'><img height="175"
+                                                src="/assets/images/game/sm64.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="sm64">Super Mario 64</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=super-mario-run&type=local'><img
+                                                height="175" src="/assets/images/game/smrun.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="smrun">Super Mario Run</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=snowball-io&type=local'><img
+                                                height="175" src="/assets/images/game/snowball.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Snowball.IO">Snowball.IO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=smash-karts&type=local'><img
+                                                height="175" src="/assets/images/game/smash-kart.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="SK">Smash Karts</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=snow-rider-3d&type=local'><img
+                                                height="175" src="/assets/images/game/snowrider3d.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="SW3D">Snow Rider 3D</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ssb&type=local'><img height="175"
+                                                src="/assets/images/game/ssb.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="SSB">Super Smash Bros</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ssf&type=local'><img height="175"
+                                                src="/assets/images/game/ssf.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Stickman Hook">Super Smash Flash</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ssf/2&type=local'><img height="175"
+                                                src="/assets/images/game/ssf2.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Stickman Hook">Super Smash Flash 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=superhot&type=3kh0'><img height="175"
+                                                src="/assets/images/game/sh.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Super Hot">SuperHot</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=smc&type=local'><img height="175"
+                                                src="/assets/images/game/super-mario-construct.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width:fit-content;"
+                                                alt="SMC">Super Mario Construct</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=smb-3&type=local'><img height="175"
+                                                src="/assets/images/game/smb-3.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width:fit-content;"
+                                                alt="smb3">Super Mario Bros 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=sdd&type=local'><img height="175"
+                                                src="/assets/images/game/sdd.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Stickman Hook">Super Dark Deception</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=soccer-random&type=3kh0'><img
+                                                height="175" src="/assets/images/game/soccer-random.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="sr">Soccer Random</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=space-company&type=3kh0'><img
+                                                height="175" src="/assets/images/game/space-company.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Space Company</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=stack&type=3kh0'><img height="175"
+                                                src="/assets/images/game/stack.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Stack</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=starve&type=3kh0'><img height="175"
+                                                src="/assets/images/game/starve.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Starve</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=station-141&type=3kh0'><img
+                                                height="175" src="/assets/images/game/station-141.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Station 141</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=stationmeltdown&type=3kh0'><img
+                                                height="175" src="/assets/images/game/meltdown.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Station Meltdown</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=stealingthediamond&type=3kh0'><img
+                                                height="175" src="/assets/images/game/stealingthediamond.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Stealing The Diamond</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=stick-duel-battle&type=3kh0'><img
+                                                height="175" src="/assets/images/game/duel-battle.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Stick Duel Battle</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=stick-archers&type=3kh0'><img
+                                                height="175" src="/assets/images/game/stick-arch.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Stick Archers</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=stick-merge&type=3kh0'><img
+                                                height="175" src="/assets/images/game/stick-merge.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Stick Merge</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=subway-surfers&type=3kh0'><img
+                                                height="175" src="/assets/images/game/subway-surfers.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Subway Surfers</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=subway-surfers-ny&type=3kh0'><img
+                                                height="175" src="/assets/images/game/ssny.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Subway Surfers NY</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=sushi-unroll&type=3kh0'><img
+                                                height="175" src="/assets/images/game/sushi-unroll.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Sushi Unroll</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=strongman-simulator&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/strongman.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Strongman Simulator</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=shoppingcarthero3&type=local'><img
+                                                height="175" src="/assets/images/game/sch3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="roblox">Shopping Cart Hero 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=lastbreath&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/ls.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="A Dark Room">Sans Last Breath</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=stumble-guys&type=local'><img
+                                                height="175" src="/assets/images/game/stumble-guys.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="wyboss">Stumble Guys</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=sonicrevert&type=local'><img
+                                                height="175" src="/assets/images/game/sonic-revert.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="awesome">Sonic Revert</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=superfowlst&type=local'><img
+                                                height="175" src="/assets/images/game/superfowlst.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="awesome">Super Fowlst</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=sdip&type=local'><img height="175"
+                                                src="/assets/images/game/sdip.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="awesome">Seven Days In Purgatory</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=euro-cup&type=local'><img height="175"
+                                                src="/assets/images/game/ssec.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ssec">Soccer Skills: Euro Cup</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=sls&type=local'><img height="175"
+                                                src="/assets/images/game/sls.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Elastic Man">Super Liquid Soccer</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=smashy-road&type=local'><img
+                                                height="175" src="/assets/images/game/smashyroad.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Elastic Man">Smashy Road</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=spiral-roll&type=local'><img
+                                                height="175" src="/assets/images/game/sr.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Spiral Roll</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=santa-tracker&type=local'><img
+                                                height="175" src="/assets/images/game/santa-tracker.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Santa Tracker</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=santas-delivery&type=local'><img
+                                                height="175" src="/assets/images/game/sd.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Santa Delivery</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=speed-stars&type=local'><img
+                                                height="175" src="/assets/images/game/speedstars.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">Speed Stars</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=superfighters&type=local'><img
+                                                height="175" src="/assets/images/game/superfighters.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="SM63">Super Fighters</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=slowroads&type=local'><img
+                                                height="175" src="/assets/images/game/slowroads.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Slowroads</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=space-waves&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/sw.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Space Waves</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tag&type=local'><img height="175"
+                                                src="/assets/images/game/tag.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tt">Tag</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tanuki-sunset&type=local'><img
+                                                height="175" src="/assets/images/game/tanuki-sunset.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ts">Tanuki Sunset</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tank-trouble-2&type=local'><img
+                                                height="175" src="/assets/images/game/tank-trouble.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tt">Tank Trouble</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=terreria&type=local' data-tag="exclusive"><img height="175"
+                                                src="/assets/images/game/ter.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="Terreria">(UNOFFICIAL) Terreria</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tiny-fishing&type=local'><img
+                                                height="175" src="/assets/images/game/tiny-fishing.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tiny fishing">Tiny Fishing</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=time-shooter-3&type=local'><img
+                                                height="175" src="/assets/images/game/ts3.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="ts3">Time Shooter 3</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=tetris&type=local'><img height="175"
+                                                src="/assets/images/game/tetris.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tetris">Tetris</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=theimpossiblequiz.swf&type=swf'><img
+                                                height="175" src="/assets/images/game/tiq.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tiq">The Impossible Quiz</span></a>
+                                <a class='link button'
+                                        href='/yalp/banana.html?book=theimpossiblequiz2.swf&type=swf'><img height="175"
+                                                src="/assets/images/game/tiq2.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tiq 2">The Impossible Quiz 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tiq-book&type=local'><img height="175"
+                                                src="/assets/images/game/impossible-book.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tiq book">TIQ Book</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tiq-xmas&type=local'><img height="175"
+                                                src="/assets/images/game/tiqxmas.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">The Impossible Quizmas</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tomb-of-the-mask&type=local'><img
+                                                height="175" src="/assets/images/game/tomb-of-the-mask.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="totm">Tomb Of The Mask</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tube-jumpers&type=local'><img
+                                                height="175" src="/assets/images/game/tube-jumping.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="TJ">Tube Jumpers</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tunnel-rush&type=local'><img
+                                                height="175" src="/assets/images/game/tnlrsh.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tr">Tunnel Rush</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tunnel-rush/2&type=local'><img
+                                                height="175" src="/assets/images/game/tr2.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tr2">Tunnel Rush 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tacticalassasin2&type=3kh0'><img
+                                                height="175" src="/assets/images/game/tacticalassassin2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Tactical Assasin 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=temple-run-2&type=3kh0'><img
+                                                height="175" src="/assets/images/game/tr2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Temple Run 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=the-final-earth&type=3kh0'><img
+                                                height="175" src="/assets/images/game/the-final-earth.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">The Final Earth</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=the-final-earth-2&type=3kh0'><img
+                                                height="175" src="/assets/images/game/the-final-earth-2.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">The Final Earth 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=the-hotel&type=3kh0'><img height="175"
+                                                src="/assets/images/game/titol.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">The Hotel</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=thisistheonlylevel&type=3kh0'><img
+                                                height="175" src="/assets/images/game/thisistheonlylevel.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">This Is The Only Level</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=there-is-no-game&type=3kh0'><img
+                                                height="175" src="/assets/images/game/ting.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">There Is No Game</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=throw-rocks&type=3kh0'><img
+                                                height="175" src="/assets/images/game/tras.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Throw Rocks At Sh**</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tosstheturtle&type=3kh0'><img
+                                                height="175" src="/assets/images/game/tosstheturtle.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Toss The Turtle</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tv-static&type=3kh0'><img height="175"
+                                                src="/assets/images/game/static.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">TV Static</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=traffic-run&type=local'><img
+                                                height="175" src="/assets/images/game/traffic-run.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width:fit-content;"
+                                                alt="tffc run">Traffic Run</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=territorialio&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/territorial.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="tetris">Territorial.io</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=tabs&type=local' data-tag="exclusive"><img height="175"
+                                                src="/assets/images/game/tabs.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="SMC">TABS (Totally Accurate Battle Simulator)</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=thats-not-my-neighbor&type=local'><img
+                                                height="175" src="/assets/images/game/tnmn.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">That's Not My Neighbor</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=the-last-spartan&type=local'><img
+                                                height="175" src="/assets/images/game/thelastspartan.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">The Last Spartan</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=ultrakill&type=local' data-tag="exclusive"><img height="175"
+                                                src="/assets/images/game/ultrakill.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="1o1 basketball">ULTRAKILL</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=undertale&type=local'
+                                        data-tag="exclusive"><img height="175" src="/assets/images/game/undertale.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="UE">Undertale</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=undertale-enchanted&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/undertale.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="UE">Undertale Enchanted</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=unfair-mario&type=local'><img
+                                                height="175" src="/assets/images/game/unfair.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="um">Unfair Mario</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=vex&type=local'><img height="175"
+                                                src="/assets/images/game/vex.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="vex">Vex</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=vex/2&type=local'><img height="175"
+                                                src="/assets/images/game/vex2.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="vex">Vex 2</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=vex/3&type=local'><img height="175"
+                                                src="/assets/images/game/vex-3.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="vex 3">Vex 3</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=vex/4&type=local'><img height="175"
+                                                src="/assets/images/game/vex-4.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="vex 4">Vex 4</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=vex/5&type=local'><img height="175"
+                                                src="/assets/images/game/vex-5.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="vex 5">Vex 5</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=vex/6&type=local'><img height="175"
+                                                src="/assets/images/game/vex-6.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="vex 6">Vex 6</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=vex/7&type=local'><img height="175"
+                                                src="/assets/images/game/vex-7.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="vex 7">Vex 7</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=volley-random&type=3kh0'><img
+                                                height="175" src="/assets/images/game/volley.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="wyboss">Volley Random</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=wbwwb&type=local'><img height="175"
+                                                src="/assets/images/game/wbwwb.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;width:fit-content;white-space:nowrap;"
+                                                alt="wbwwb">We Become What We Behold</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=whack-your/ex&type=local'><img
+                                                height="175" src="/assets/images/game/whack-your-x.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="wyex">Whack Your Ex</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=whack-your/computer&type=local'><img
+                                                height="175" src="/assets/images/game/whack-your-pc.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="wyc">Whack Your Computer</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=whack-your/boss&type=local'><img
+                                                height="175" src="/assets/images/game/whack-your-boss.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="wyboss">Whack Your Boss</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=webgl-fluid-simulation&type=3kh0'><img
+                                                height="175" src="/assets/images/game/webgl.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="hcr">WebGL Fluid</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=webretro&type=3kh0'><img height="175"
+                                                src="/assets/images/game/webretro.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Web Retro</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=win-the-whitehouse&type=3kh0'><img
+                                                height="175" src="/assets/images/game/whitehouse.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Win The Whitehouse</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=wolf2d&type=3kh0'><img height="175"
+                                                src="/assets/images/game/2d.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Wolfenstien 2D</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=wolf3d&type=3kh0'><img height="175"
+                                                src="/assets/images/game/wolf3d.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Wolfenstien 3D</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=worlds-hardest-game&type=3kh0'><img
+                                                height="175" src="/assets/images/game/hardest.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="hcr">Worlds Hardest Game</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=worlds-hardest-game-2&type=3kh0'><img
+                                                height="175" src="/assets/images/game/hardest2.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width:fit-content;"
+                                                alt="hcr">Worlds Hardest Game 2</span></a>
+                                <a class='link button'
+                                        href='/yalp/ela.html?book=wounded-summer-baby-edition&type=3kh0'><img
+                                                height="175" src="/assets/images/game/wounded.ico"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Wounded Summer</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=wop&type=local'><img height="175"
+                                                src="/assets/images/game/wop.webp"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr" class="broken">WOP (kdot vs drake)</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=web-fishing&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/webfishing.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Web Fishing</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=wrestle-bros&type=local' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/wrestling.jpeg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
+                                                alt="au">Wrestle Bros</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=x-trial-racing&type=3kh0'><img
+                                                height="175" src="/assets/images/game/xtrial.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">X Trial Racing</span></a>
+                                <a class='link button' href='/yalp/banana.html?book=xx142-b2exe&type=local'><img
+                                                height="175" src="/assets/images/game/xx142-b2exe.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="xx142b2exe">xx142-b2exe</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=yohoho&type=local'><img height="175"
+                                                src="/assets/images/game/yohoho.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;"
+                                                alt="yhh.io">YoHoHo.IO</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=yoshifabrication&type=3kh0'><img
+                                                height="175" src="/assets/images/game/yfs.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">Yoshi Fabrication</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=you-are-bezos&type=3kh0'><img
+                                                height="175" src="/assets/images/game/you-are-bezos.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr">You Are Bezos</span></a>
+                                <a class='link button' href='/yalp/ela.html?book=zombs-royale&type=3kh0'><img
+                                                height="175" src="/assets/images/game/zombs.png"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="hcr" class="buggy">Zombs Royale</span></a>
+`;
+
+const parser = new DOMParser();
+const doc = parser.parseFromString(htmlString, "text/html");
+const elements = doc.body.children;
+
+const box = document.querySelector(".box");
+[...elements].forEach(el => box.appendChild(el));
+
+function filterGames() {
+    const input = document.getElementById("searchInput").value.toUpperCase();
+    const games = document.querySelectorAll(".box .link");
+
+    games.forEach(game => {
+        const isExclusive = game.dataset.tag === "exclusive";
+        const matches = game.innerText.toUpperCase().includes(input);
+        const show = (currentMode === "all" && matches) || (currentMode === "exclusive" && isExclusive && matches);
+        game.style.display = show ? "" : "none";
+    });
+}
+
+function showGames() { currentMode = "all"; filterGames(); }
+function showExclusives() { currentMode = "exclusive"; filterGames(); }
+
+document.getElementById("searchInput").addEventListener("input", filterGames);
+filterGames();

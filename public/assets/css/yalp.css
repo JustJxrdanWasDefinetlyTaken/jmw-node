@@ -88,7 +88,7 @@ input:focus {
   border-radius: 5px;
   width: 200px;
   padding: 20px;
-  background-color: var(--navbar);
+  background-color: var(--secondary);
   color: var(--txtcolor);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
   opacity: 1;
@@ -106,4 +106,12 @@ input:focus {
 
 .suggest-container.fade-out {
   opacity: 0;
+}
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
