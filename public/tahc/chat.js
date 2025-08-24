@@ -1,4 +1,4 @@
-// okay okay don't judge i kinda used chatgpt for 60% of the script so yk if you see some suspicious skiddy shit dont blame me i only know 15% javascript 🥀
+// okay okay don't judge i kinda used copilot and chatgpt for 60% of the script so yk if you see some suspicious skiddy shit dont blame me i only know 15% javascript 🥀
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, setDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
