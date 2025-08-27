@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Homepage</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap');
@@ -55,15 +56,16 @@
     }
 
     @keyframes fadeInBottom {
-  from {
-    opacity: 0;
-    transform: translate(-50%, 20px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
+      from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
 
 
     .start-video {
@@ -92,153 +94,157 @@
       transition: filter 0.3s ease;
     }
 
-      .bottom-text {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 12px 24px;
-  border-radius: 16px;
-  font-size: 1.1rem;
-  color: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  animation: fadeInBottom 1s ease-out forwards;
-  opacity: 0;
-  cursor:pointer;
-}
-    .update-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 12px 20px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 12px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  transition: background 0.3s ease;
-}
+    .bottom-text {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 12px 24px;
+      border-radius: 16px;
+      font-size: 1.1rem;
+      color: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeInBottom 1s ease-out forwards;
+      opacity: 0;
+      cursor: pointer;
+    }
 
-.update-btn:hover {
-  background: rgba(0, 0, 0, 0.5);
-}
+    .update-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      transition: background 0.3s ease;
+    }
+
+    .update-btn:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
 
     .credit-btn {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  padding: 12px 20px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 12px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  transition: background 0.3s ease;
-}
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      transition: background 0.3s ease;
+    }
 
-.credit-btn:hover {
-  background: rgba(0, 0, 0, 0.5);
-}
+    .credit-btn:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
 
-.dsc-btn {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 12px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  z-index: 1000;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  transition: background 0.3s ease;
-}
+    .dsc-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      transition: background 0.3s ease;
+    }
 
-.dsc-btn:hover {
-  background: rgba(0, 0, 0, 0.5);
-}
+    .dsc-btn:hover {
+      background: rgba(0, 0, 0, 0.5);
+    }
 
-.dsc-btn i {
-  font-size: 24px;
-}
+    .dsc-btn i {
+      font-size: 24px;
+    }
 
-.update-log {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(5px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
+    .update-log {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
 
-.update-log.show {
-  display: flex;
-}
+    .update-log.show {
+      display: flex;
+    }
 
-.log-content {
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  padding: 30px 40px;
-  border-radius: 20px;
-  color: white;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-  text-align: left;
-  position: relative;
-}
+    .log-content {
+      background: rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      padding: 30px 40px;
+      border-radius: 20px;
+      color: white;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      text-align: left;
+      position: relative;
+    }
 
-.log-content h2 {
-  margin-top: 0;
-}
+    .log-content h2 {
+      margin-top: 0;
+    }
 
-.log-content ul {
-  padding-left: 20px;
-}
+    .log-content ul {
+      padding-left: 20px;
+    }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  font-size: 1.4rem;
-  cursor: pointer;
-}
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 1.4rem;
+      cursor: pointer;
+    }
 
-.dsc {
-  position:absolute;
-  top:10px;
-  right:10px;
-  width:300px;
-}
+    .dsc {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 300px;
+    }
   </style>
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
 </head>
+
 <body>
   <div class="featured" id="featured">
-    <video src="https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/games.mp4" class="start-video" autoplay muted loop>
+    <video src="https://cdn.statically.io/gh/JustJxrdanWasDefinetlyTaken/o/main/eviljordan.mp3" class="start-video" autoplay
+      muted loop>
       The video could not load
     </video>
   </div>
-<div class="dsc">
-<button class="dsc-btn" onclick="window.open ('https://dsc.gg/gnetwork', '_blank');"><i class='bx bxl-discord' style="font-size:30px;"></i> Join our discord for more links!</button>
-</div>
+  <div class="dsc">
+    <button class="dsc-btn" onclick="window.open ('https://dsc.gg/gnetwork', '_blank');"><i class='bx bxl-discord'
+        style="font-size:30px;"></i> Join our discord for more links!</button>
+  </div>
   <div class="center">
     <img src="/assets/images/jmw.png" alt="Jordan's Logo" />
     <h1>Jordan's Math Work V7.0.0</h1>
@@ -246,47 +252,48 @@
 
   <div class="bottom-text" onclick="window.location.href='/legalpage.html'">
     &copy; Galactic · V7.0.0 · 2025
-</div>
-<button class="update-btn" onclick="showUpdateLog()">Update Log</button>
-<button class="credit-btn" onclick="showCreditLog()">Credits</button>
-<div id="updateLog" class="update-log">
-  <div class="log-content" onclick="event.stopPropagation()">
-    <span class="close-btn" onclick="hideUpdateLog()"><i class='bx bx-x'></i> </span>
-    <h2>Update Log</h2>
-    <ul>
-      <li>JORDAN'S MATH WORK V7 RELEASED!</li>
-      <li>50 more games</li>
-      <li>Tabs System</li>
-      <li>NEW PR0XY!! (scramjet, very buggy)</li>
-      <li>Added Media</li>
-      <li>Added VM For apps</li>
-      <li>More support for more websites including google login.</li>
-    </ul>
   </div>
-</div>
-<div id="creditLog" class="update-log">
-  <div class="log-content" onclick="event.stopPropagation()">
-    <span class="close-btn" onclick="hideCreditLog()"><i class='bx bx-x'></i> </span>
-    <h2>Credits</h2>
-    <ul>
-      <li>Bog/Truffled Team, 98corbins (my friends), gn-math, UGS Assets: Exclusive web ports brought to JMW</li>
-      <br>
-      <li>3kh0 assets; Regular Games</li>
-      <br>
-      <li>Slqnt; Even more exclusive web ports!</li>
-      <br>
-      <li>Scramjet team: Scramjet proxy</li>
-      <br>
-      <li>Thatguy_Toji; The site</li>
-      <br>
-      <li><a href="https://bromine.pages.dev" target="_blank" style="color:white;">Bromine Team</a>; Tabs System + Getting scramjet to work</li>
-      <br>
-      <li>Groq AI; Their AI</li>
-      <br>
-      <li>Carbon Owner (slayer): CSS Re-styling</li>
-    </ul>
+  <button class="update-btn" onclick="showUpdateLog()">Update Log</button>
+  <button class="credit-btn" onclick="showCreditLog()">Credits</button>
+  <div id="updateLog" class="update-log">
+    <div class="log-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="hideUpdateLog()"><i class='bx bx-x'></i> </span>
+      <h2>Update Log V7.0.5</h2>
+      <ul>
+        <li>Updated the chat!</li>
+        <li>Added Emojis</li>
+        <li>Added groups and direct messages</li>
+        <li>Added timestamps</li>
+        <li>Made chat logs save (in our database)</li>
+        <li>Fixed AI</li>
+        <li>Next Update will fix most games.</li>
+      </ul>
+    </div>
   </div>
-</div>
+  <div id="creditLog" class="update-log">
+    <div class="log-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="hideCreditLog()"><i class='bx bx-x'></i> </span>
+      <h2>Credits</h2>
+      <ul>
+        <li>Bog/Truffled Team, 98corbins (my friends), gn-math, UGS Assets: Exclusive web ports brought to JMW</li>
+        <br>
+        <li>3kh0 assets; Regular Gᾰmes</li>
+        <br>
+        <li>Slqnt; Even more exclusive web ports!</li>
+        <br>
+        <li>Scramjet team: Scramjet Prσxy Engine</li>
+        <br>
+        <li>Thatguy_Toji; The site</li>
+        <br>
+        <li><a href="https://bromine.pages.dev" target="_blank" style="color:white;">Bromine Team</a>; Tabs System +
+          Getting scramjet to work</li>
+        <br>
+        <li>Groq ἏI; Their ἏI</li>
+        <br>
+        <li>Carbon Owner (slayer): CSS Re-styling</li>
+      </ul>
+    </div>
+  </div>
 </body>
 <script>
   function showUpdateLog() {
@@ -310,4 +317,5 @@
 
   document.getElementById('creditLog').addEventListener('click', hideUpdateLog);
 </script>
+
 </html>
