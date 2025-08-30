@@ -1834,7 +1834,7 @@ const htmlString = `                                <a class='link button' href=
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="pf3">Parking Fury 3</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=pokemon/emerald&type=local'><img
+                                <a class='link button' href='/active/index.html?autofill=https://raw.githack.com/MkGamesdev/MKGBA2.0/master/launcher.html#pokemonemerald'><img
                                                 height="175" src="/assets/images/game/pokemon-emerald.jpg"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
@@ -1846,13 +1846,13 @@ const htmlString = `                                <a class='link button' href=
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="pr">Pokemon Ruby</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=pokemon/leafgreen&type=local'><img
+                                <a class='link button' href='https://cooleoooo662.github.io/GBA-Emulator-Unblocked/launcher.html#pokemongreen'><img
                                                 height="175" src="/assets/images/game/pokemon-leaf.jpg"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="pe">Pokemon LeafGreen</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=pokemon/fire-red&type=local'><img
+                                <a class='link button' href='/active/index.html?autofill=https://cooleoooo662.github.io/GBA-Emulator-Unblocked/launcher.html#pokemonred'><img
                                                 height="175" src="/assets/images/game/pokemon-firered.jpg"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
