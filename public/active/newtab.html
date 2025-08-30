@@ -315,15 +315,17 @@
             setWisp,
             makeURL,
             currentFrame,
+						setProxy,
             getProxied,
         } from "/cat.mjs"
 
 
-        let wisp = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+       let wisp = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
 
         setWisp(wisp)
 
 
+setProxy(localStorage.getItem("proxy") || "scram")
         let search =
             localStorage.getItem("search-engine") ||
             "https://search.brave.com/search?q=%s"

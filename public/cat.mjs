@@ -10,6 +10,7 @@ const connection = new BareMuxConnection("/mux/worker.js");
 
 let wispURL;
 let transportURL = "/epoxy/index.mjs";
+let proxyOption;
 
 export let tabCounter = 0;
 export let currentTab = 0;
@@ -18,25 +19,26 @@ export let currentFrame;
 export const addressInput = document.getElementById("address");
 
 await import("/scram/scramjet.all.js");
-
-const { ScramjetController } = $scramjetLoadController();
+		await import("/vu/uv.bundle.js");
+		await import("/vu/uv.config.js");
+const { ScramjetController } = window.$scramjetLoadController();
 
 const scramjet = new ScramjetController({
-  files: {
-    wasm: "/scram/scramjet.wasm.wasm",
-    all: "/scram/scramjet.all.js",
-    sync: "/scram/scramjet.sync.js",
-  },
-  flags: {
-    rewriterLogs: false,
-    naiiveRewriter: false,
-    scramitize: false,
-  },
-  siteFlags: {
-    "https://www.google.com/(search|sorry).*": {
-      naiiveRewriter: true,
-    },
-  },
+	files: {
+		wasm: "/scram/scramjet.wasm.wasm",
+		all: "/scram/scramjet.all.js",
+		sync: "/scram/scramjet.sync.js",
+	},
+	flags: {
+		rewriterLogs: false,
+		naiiveRewriter: false,
+		scramitize: false,
+	},
+	siteFlags: {
+		"https://www.google.com/(search|sorry).*": {
+			naiiveRewriter: true,
+		},
+	},
 });
 
 scramjet.init();
@@ -53,22 +55,22 @@ const swAllowedHostnames = ["localhost", "127.0.0.1"];
  * @throws Will throw if service workers are unsupported or not HTTPS on disallowed hosts.
  */
 async function registerSW() {
-  if (!navigator.serviceWorker) {
-    if (
-      location.protocol !== "https:" &&
-      !swAllowedHostnames.includes(location.hostname)
-    )
-      throw new Error("Service workers cannot be registered without https.");
+	if (!navigator.serviceWorker) {
+		if (
+			location.protocol !== "https:" &&
+			!swAllowedHostnames.includes(location.hostname)
+		)
+			throw new Error("Service workers cannot be registered without https.");
 
-    throw new Error("Your browser doesn't support service workers.");
-  }
+		throw new Error("Your browser doesn't support service workers.");
+	}
 
-  await navigator.serviceWorker.register(stockSW);
+	await navigator.serviceWorker.register(stockSW);
 }
 
 if (window.self === window.top) {
-  await registerSW();
-  console.log("lethal.js: Service Worker registered");
+	await registerSW();
+	console.log("lethal.js: Service Worker registered");
 }
 
 //////////////////////////////
@@ -81,18 +83,15 @@ if (window.self === window.top) {
  * @param {string} [template="https://search.brave.com/search?q=%s"] - Search URL template.
  * @returns {string} Valid URL string.
  */
-export function makeURL(
-  input,
-  template = "https://search.brave.com/search?q=%s",
-) {
-  try {
-    return new URL(input).toString();
-  } catch (err) { }
+export function makeURL(input, template = "https://search.brave.com/search?q=%s") {
+	try {
+		return new URL(input).toString();
+	} catch (err) {}
 
-  const url = new URL(`http://${input}`);
-  if (url.hostname.includes(".")) return url.toString();
+	const url = new URL(`http://${input}`);
+	if (url.hostname.includes(".")) return url.toString();
 
-  return template.replace("%s", encodeURIComponent(input));
+	return template.replace("%s", encodeURIComponent(input));
 }
 
 /**
@@ -100,10 +99,10 @@ export function makeURL(
  * @returns {Promise<void>}
  */
 async function updateBareMux() {
-  console.log(
-    `lethal.js: Setting BareMux to ${transportURL} and Wisp to ${wispURL}`,
-  );
-  await connection.setTransport(transportURL, [{ wisp: wispURL }]);
+	if (transportURL != null && wispURL != null) {
+		console.log(`lethal.js: Setting BareMux to ${transportURL} and Wisp to ${wispURL}`);
+		await connection.setTransport(transportURL, [{ wisp: wispURL }]);
+	}
 }
 
 /**
@@ -112,9 +111,9 @@ async function updateBareMux() {
  * @returns {Promise<void>}
  */
 export async function setWisp(wisp) {
-  console.log(`lethal.js: Setting Wisp to ${wisp}`);
-  wispURL = wisp;
-  await updateBareMux();
+	console.log(`lethal.js: Setting Wisp to ${wisp}`);
+	wispURL = wisp;
+	await updateBareMux();
 }
 
 /**
@@ -122,7 +121,29 @@ export async function setWisp(wisp) {
  * @returns {string | undefined}
  */
 export function getWisp() {
-  return wispURL;
+	return wispURL;
+}
+
+/**
+ * Sets the proxy backend option and dynamically imports scripts if needed.
+ * @param {string} proxy - Proxy backend name.
+ * @returns {Promise<void>}
+ */
+export async function setProxy(proxy) {
+	console.log(`lethal.js: Setting proxy backend to ${proxy}`);
+	if (proxy === "uv") {
+		await import("/vu/uv.bundle.js");
+		await import("/vu/uv.config.js");
+	}
+	proxyOption = proxy;
+}
+
+/**
+ * Gets the current proxy backend option.
+ * @returns {string | undefined}
+ */
+export function getProxy() {
+	return proxyOption;
 }
 
 /**
@@ -131,8 +152,9 @@ export function getWisp() {
  * @returns {Promise<string>}
  */
 export async function getProxied(input) {
-  const url = makeURL(input);
-  return scramjet.encodeUrl(url);
+	const url = makeURL(input);
+	if (proxyOption === "scram") return scramjet.encodeUrl(url);
+	return window.__uv$config.prefix + window.__uv$config.encodeUrl(url);
 }
 
 /**
@@ -140,7 +162,7 @@ export async function getProxied(input) {
  * @param {HTMLElement} frames - The frames container element.
  */
 export function setFrames(frames) {
-  framesElement = frames;
+	framesElement = frames;
 }
 
 /**
@@ -248,7 +270,7 @@ export class Tab {
  * @returns {Promise<void>}
  */
 export async function newTab() {
-  new Tab();
+	new Tab();
 }
 
 /**
@@ -256,23 +278,23 @@ export async function newTab() {
  * @param {number} tabNumber - Tab number to switch to.
  */
 export function switchTab(tabNumber) {
-  const frames = document.querySelectorAll("iframe");
-  [...frames].forEach((frame) => {
-    frame.classList.toggle("hidden", frame.id !== `frame-${tabNumber}`);
-  });
+	const frames = document.querySelectorAll("iframe");
+	[...frames].forEach((frame) => {
+		frame.classList.toggle("hidden", frame.id !== `frame-${tabNumber}`);
+	});
 
-  currentTab = tabNumber;
-  currentFrame = document.getElementById(`frame-${tabNumber}`);
+	currentTab = tabNumber;
+	currentFrame = document.getElementById(`frame-${tabNumber}`);
 
-  addressInput.value = decodeURIComponent(
-    currentFrame?.contentWindow?.location.href.split("/").pop(),
-  );
+	addressInput.value = decodeURIComponent(
+		currentFrame?.contentWindow?.location.href.split("/").pop()
+	);
 
-  document.dispatchEvent(
-    new CustomEvent("switch-tab", {
-      detail: { tabNumber },
-    }),
-  );
+	document.dispatchEvent(
+		new CustomEvent("switch-tab", {
+			detail: { tabNumber },
+		}),
+	);
 }
 
 /**
@@ -280,25 +302,27 @@ export function switchTab(tabNumber) {
  * @param {number} tabNumber - Tab number to close.
  */
 export function closeTab(tabNumber) {
-  const frames = document.querySelectorAll("iframe");
-  [...frames].forEach((frame) => {
-    if (frame.id === `frame-${tabNumber}`) {
-      frame.remove();
-    }
-  });
+	const frames = document.querySelectorAll("iframe");
+	[...frames].forEach((frame) => {
+		if (frame.id === `frame-${tabNumber}`) {
+			frame.remove();
+		}
+	});
 
-  if (currentTab === tabNumber) {
-    const otherFrames = document.querySelectorAll('iframe[id^="frame-"]');
-    if (otherFrames.length > 0) {
-      switchTab(parseInt(otherFrames[0].id.replace("frame-", "")));
-    } else {
-      newTab();
-    }
-  }
+	if (currentTab === tabNumber) {
+		const otherFrames = document.querySelectorAll('iframe[id^="frame-"]');
+		if (otherFrames.length > 0) {
+			switchTab(parseInt(otherFrames[0].id.replace("frame-", "")));
+		} else {
+			newTab();
+		}
+	}
 
-  document.dispatchEvent(
-    new CustomEvent("close-tab", {
-      detail: { tabNumber },
-    }),
-  );
+	document.dispatchEvent(
+		new CustomEvent("close-tab", {
+			detail: { tabNumber },
+		}),
+	);
 }
+
+window.registerSW = registerSW;

@@ -10,6 +10,7 @@
   <script type="module" async defer>
     import {
       setWisp,
+			setProxy,
       makeURL,
       getProxied,
       setFrames,
@@ -33,20 +34,24 @@
       }, 200);
     }
 
+try {
     const params = new URLSearchParams(window.location.search);
     const autofillUrl = params.get('autofill');
     if (autofillUrl) {
       autofill(autofillUrl);
     }
+		}catch{}
 
 
     //
     // setWisp((location.protocol === "https:" ? "wss://" : "ws://") +
     //  location.host +
     //  "/wisp/")
-    // setWisp("wss://anura.pro/");
+     //setWisp("wss://anura.pro/");
 
-      setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
+setProxy(localStorage.getItem("proxy") || "scram")
+
+     setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
 
 
     // --- EVENTS ---
@@ -91,9 +96,11 @@
       <h3 style="font-size:13px;margin-bottom:6px;">"Cannot GET error or 'Uh Oh!' Screen."</h3>
       <p style="font-size:12px;margin-bottom:6px;">Easy Fix (USE METHOD 1 FIRST):</p>
       <ul style="font-size:12px;list-style:disc;padding-left:20px;text-align:left;">
-        <li>Method 1: Click the link <a style="color:white;" href="/active/index.html?autofill=ifyouseethisitisworkingnow" target="_blank" style="font-size:13px;">Right Here</a> to register the SW or search something random <a style="color:white;" href="/active/index.html" target="_blank" style="font-size:13px;">Right Here</a> at and then come back to the page</li>
+        <li>Method 1: Click the button <button style="color:white" onclick="registerSW()" style="font-size:13px;">Right Here</button> to register the SW</li>
         <p>IF THAT DOESN'T WORK:</p>
         <li>Method 2: Clear your cookies, copy the url over <span onclick="copy();" style="text-decoration: underline;cursor:pointer;color:white;">HERE</span> or go to chrome://settings/content/all?searchSubpage=(jmw link here), then repeat the first method.</li>
+        <p>IF THAT DOESN'T WORK:</p>
+        <li>Method 3: press CTRL-SHIFT-R</li>
       </ul>
       <h4>Join <a style="color:white;" href="//dsc.gg/gnetwork">Our Discord Server</a> If you have any trouble (discord.gg/gSjNsVxX5y)</h4>
     </center>

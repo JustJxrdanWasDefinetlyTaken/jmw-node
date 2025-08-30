@@ -726,6 +726,17 @@
             <br>
             <br>
           </div>
+          <div class="setting-card">
+            <h1>Proxy option</h1>
+            <p class="desc">Changes proxy.</p>
+            <select id="proxySelect">
+              <option disabled value="">Select</option>
+              <option value="scramjet">Scramjet</option>
+              <option value="uv">Ultraviolet</option>
+            </select>
+            <br>
+            <br>
+          </div>
         </div>
       </div>
       <div id="customization" class="setting-section">
@@ -779,6 +790,7 @@
 </body>
 <script>
   const musicSelect = document.getElementById('musicSelect');
+	const proxySelect = document.getElementById("proxySelect")
   const musicUpload = document.getElementById('musicUpload');
   const volumeControl = document.getElementById('volumeControl');
   const playBtn = document.getElementById('playBtn');
@@ -797,6 +809,27 @@
       audio.play().catch(err => console.error('Error playing music:', err));
     }
   }
+
+
+  proxySelect.addEventListener('change', function () {
+		localStorage.setItem("proxy", proxySelect.value)
+  });
+
+  musicUpload.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const base64Data = e.target.result;
+        localStorage.setItem('customMusic', base64Data);
+        musicSelect.value = 'custom';
+        localStorage.setItem('selectedMusic', 'custom');
+        loadMusic(base64Data);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
 
   musicSelect.addEventListener('change', function () {
     const selected = this.value;
