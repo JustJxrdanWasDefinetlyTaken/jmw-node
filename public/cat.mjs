@@ -19,8 +19,8 @@ export let currentFrame;
 export const addressInput = document.getElementById("address");
 
 await import("/scram/scramjet.all.js");
-		await import("/vu/uv.bundle.js");
-		await import("/vu/uv.config.js");
+		await import("/vu/vu.bundle.js");
+		await import("/vu/vu.config.js");
 const { ScramjetController } = window.$scramjetLoadController();
 
 const scramjet = new ScramjetController({
@@ -131,9 +131,9 @@ export function getWisp() {
  */
 export async function setProxy(proxy) {
 	console.log(`lethal.js: Setting proxy backend to ${proxy}`);
-	if (proxy === "uv") {
-		await import("/vu/uv.bundle.js");
-		await import("/vu/uv.config.js");
+	if (proxy === "vu") {
+		await import("/vu/vu.bundle.js");
+		await import("/vu/vu.config.js");
 	}
 	proxyOption = proxy;
 }
