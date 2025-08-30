@@ -1,4 +1,3 @@
-import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import wisp from "wisp-server-node";
@@ -14,7 +13,6 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.static(join(fileURLToPath(import.meta.url), "../public/")));
-app.use("/vu/", express.static(uvPath));
 app.use("/mux/", express.static(baremuxPath));
 app.use("/epoxy/", express.static(epoxyPath));
 
