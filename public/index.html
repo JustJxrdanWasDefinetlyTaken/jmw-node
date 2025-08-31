@@ -729,7 +729,7 @@
           <div class="setting-card">
             <h1>Prσxy option</h1>
             <p class="desc">Changes prσxy.</p>
-            <select id="proxySelect">
+            <select id="pr0xySelect">
               <option disabled value="">Select</option>
               <option value="scramjet">Scramjet</option>
               <option value="vu">Ultraviσlet</option>
@@ -790,7 +790,7 @@
 </body>
 <script>
   const musicSelect = document.getElementById('musicSelect');
-	const proxySelect = document.getElementById("proxySelect")
+	const pr0xySelect = document.getElementById("pr0xySelect")
   const musicUpload = document.getElementById('musicUpload');
   const volumeControl = document.getElementById('volumeControl');
   const playBtn = document.getElementById('playBtn');
@@ -811,8 +811,8 @@
   }
 
 
-  proxySelect.addEventListener('change', function () {
-		localStorage.setItem("proxy", proxySelect.value)
+  pr0xySelect.addEventListener('change', function () {
+		localStorage.setItem("pr0xy", pr0xySelect.value)
   });
 
   musicUpload.addEventListener('change', function () {
