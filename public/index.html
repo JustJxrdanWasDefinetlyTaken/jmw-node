@@ -940,18 +940,5 @@
     }
   });
 </script>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const key = "lastRedirect";
-    const now = Date.now();
-    const day = 24 * 60 * 60 * 1000;
-    const lastRedirect = localStorage.getItem(key);
-
-    if (!lastRedirect || now - Number(lastRedirect) > day) {
-      localStorage.setItem(key, String(now));
-      window.location.replace("/active/index.html?autofill=ifyouseethisitisworking&goback=true");
-    }
-  });
-</script>
 <script src="/assets/scripts/antict.js"></script>
 </html>

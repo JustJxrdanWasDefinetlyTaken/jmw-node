@@ -2,7 +2,7 @@ importScripts(
   "/vu/vu.bundle.js",
 )
 importScripts("/vu/vu.config.js")
-importScripts(__uv$config.sw)
+importScripts("/vu/vu.sw.js")
 importScripts("/scram/scramjet.all.js");
 
 
@@ -14,7 +14,7 @@ if (navigator.userAgent.includes("Firefox")) {
   })
 }
 
-const vu = new uvServiceWorker()
+const vu = new UVServiceWorker()
 const { ScramjetServiceWorker } = $scramjetLoadWorker();
 const scramjet = new ScramjetServiceWorker();
 
@@ -36,4 +36,8 @@ async function handleRequest(event) {
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event))
+})
+
+self.addEventListener("install", (self) => {
+	self.skipWaiting()
 })

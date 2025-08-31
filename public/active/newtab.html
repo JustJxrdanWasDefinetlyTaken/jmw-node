@@ -320,10 +320,11 @@
         } from "/cat.mjs"
 
 
-       let wisp = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
+ /*      let wisp = (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/";
 
-        setWisp(wisp)
+        setWisp(wisp)*/
 
+     setWisp("wss://anura.pro/");
 
 setProxy(localStorage.getItem("pr0xy") || "scram")
         let search =
