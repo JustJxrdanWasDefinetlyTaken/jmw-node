@@ -14,7 +14,7 @@ if (navigator.userAgent.includes("Firefox")) {
   })
 }
 
-const vu = new vuServiceWorker()
+const vu = new uvServiceWorker()
 const { ScramjetServiceWorker } = $scramjetLoadWorker();
 const scramjet = new ScramjetServiceWorker();
 
