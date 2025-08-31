@@ -5,7 +5,7 @@ const htmlString = `                                <a class='link button' href=
                                                 onerror="this.src='/assets/img/no-icon-found.png'" class="image"
                                                 width="175"><span
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
-                                                alt="">[Game Suggestions] .gg/SJA6Hx8gep</span></a>
+                                                alt="">[Gᾰme Suggestions] .gg/SJA6Hx8gep</span></a>
                                 <a class='link button' href='https://dsc.gg/gnetwork' target="_blank"><img
                                                 height="175" src="/assets/images/app/discord.jpg"
                                                 onerror="this.src='/assets/img/no-icon-found.png'" class="image"

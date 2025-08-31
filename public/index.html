@@ -601,7 +601,7 @@
       </li>
       <li data-url="/ezimotsuc/">
         <i class='bx bx-cog'></i>
-        <span>Settings</span>
+        <span>Customization</span>
       </li>
     </ul>
   </div>
@@ -629,8 +629,10 @@
           <div class="setting-card">
             <h1>Ads</h1>
             <p class="desc">Enable or disable ads (on by default).</p>
-            <button id="enableAds" class="btn">Enable Ads</button>
-            <button id="disableAds">Disable Ads</button>
+            <label class="switch">
+              <input type="checkbox" id="adsToggle">
+              <span class="slider"></span>
+            </label>
           </div>
 
           <div class="setting-card">
@@ -668,8 +670,8 @@
             </p>
             <p class="rtabtxt">If you have any issues or suggestions, please feel free to open an issue on the GitHub
               repository.</p>
-            <p><strong>GitHub:</strong> <a href="//github.com/galacticnetwork/jordansmathwork-v7"
-                target="_blank">Repository</a></p>
+            <p><strong>GitHub:</strong> <a href="//github.com/JustJxrdanWasDefinetlyTaken/jmw-node
+                target=" _blank">Repository</a></p>
           </div>
         </div>
       </div>
@@ -717,6 +719,11 @@
             <br>
           </div>
           <div class="setting-card">
+            <h1>Launching in BLOB</h1>
+            <p class="desc">Launches the site in a blob string, making it semi-undetectable to goguardian's auto redirect.</p>
+            <button onclick="launchBlob()" class="btn">Launch in BLOB (semi-undetectable)</button>
+          </div>
+          <div class="setting-card">
             <h1>Anti-Tab Close</h1>
             <p class="desc">Makes your immune to being closed by teachers, useful for goguardian.</p>
             <label class="switch">
@@ -732,7 +739,7 @@
             <select id="pr0xySelect">
               <option disabled value="">Select</option>
               <option value="scramjet">Scramjet</option>
-              <option value="vu">Ultraviσlet</option>
+              <option value="vu">UV</option>
             </select>
             <br>
             <br>
@@ -790,7 +797,7 @@
 </body>
 <script>
   const musicSelect = document.getElementById('musicSelect');
-	const pr0xySelect = document.getElementById("pr0xySelect")
+  const pr0xySelect = document.getElementById("pr0xySelect")
   const musicUpload = document.getElementById('musicUpload');
   const volumeControl = document.getElementById('volumeControl');
   const playBtn = document.getElementById('playBtn');
@@ -812,7 +819,7 @@
 
 
   pr0xySelect.addEventListener('change', function () {
-		localStorage.setItem("pr0xy", pr0xySelect.value)
+    localStorage.setItem("pr0xy", pr0xySelect.value)
   });
 
   musicUpload.addEventListener('change', function () {
@@ -947,4 +954,5 @@
   });
 </script>
 <script src="/assets/scripts/antict.js"></script>
+
 </html>

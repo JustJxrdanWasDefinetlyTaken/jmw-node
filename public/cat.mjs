@@ -125,8 +125,8 @@ export function getWisp() {
 }
 
 /**
- * Sets the proxy backend option and dynamically imports scripts if needed.
- * @param {string} proxy - Proxy backend name.
+ * Sets the pr0xy backend option and dynamically imports scripts if needed.
+ * @param {string} proxy - Pr0xy backend name.
  * @returns {Promise<void>}
  */
 export async function setProxy(proxy) {
