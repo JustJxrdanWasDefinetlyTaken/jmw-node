@@ -34,6 +34,11 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
+
+app.use((req, res, next) => {
+  res.status(404).sendFile(join(fileURLToPath(import.meta.url), "../public/", "404.html"));
+});
+
 const server = createServer();
 
 server.on("request", (req, res) => {
