@@ -1,3 +1,4 @@
+// 50% of this is gpt and claude 😔🥀
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, setDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -25,6 +26,13 @@ let me = {
 
 let current = { type: "public", id: "public", title: "General Chat" };
 let unsubMsgs = null, unsubMyRooms = null, unsubUsers = null;
+
+let lastMessageTime = 0;
+let messageHistory = [];
+let mutedUntil = 0;
+const COOLDOWN_MS = 5000; 
+const MUTE_DURATION_MS = 2 * 60 * 1000; 
+const SPAM_THRESHOLD = 5; 
 
 const swearingBlacklist = [
   "fuck", "shit", "damn", "bitch", "bastard", "dickhead",
@@ -58,8 +66,43 @@ const modalBody = document.getElementById("modalBody");
 const modalCancel = document.getElementById("modalCancel");
 const modalSave = document.getElementById("modalSave");
 
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function sanitizeInput(input, maxLength = 50) {
+  if (typeof input !== 'string') return '';
+  return input.trim().substring(0, maxLength);
+}
+
+function validateId(id) {
+  if (typeof id !== 'string') return false;
+
+  return /^[a-zA-Z0-9_-]+$/.test(id);
+}
+
+function createTextElement(tagName, text, className = null) {
+  const element = document.createElement(tagName);
+  element.textContent = text; 
+  if (className) element.className = className;
+  return element;
+}
+
+function safeSetAttribute(element, attribute, value) {
+
+  if (typeof attribute !== 'string' || typeof value !== 'string') return;
+
+  const safeAttributes = ['id', 'class', 'data-uid', 'data-name', 'data-tag', 'type', 'name', 'value', 'placeholder', 'maxlength'];
+  if (safeAttributes.includes(attribute)) {
+    element.setAttribute(attribute, value);
+  }
+}
+
 function avatarLetter(name) {
-  return (name?.trim()[0] || "?").toUpperCase();
+  const safeName = sanitizeInput(name);
+  return (safeName[0] || "?").toUpperCase();
 }
 
 function randomTag() {
@@ -67,7 +110,9 @@ function randomTag() {
 }
 
 function safeUsername(name, tag) {
-  return `${name}#${tag}`;
+  const safeName = sanitizeInput(name, 20);
+  const safeTag = sanitizeInput(tag, 10);
+  return `${safeName}#${safeTag}`;
 }
 
 function formatTimestamp(timestamp) {
@@ -77,12 +122,103 @@ function formatTimestamp(timestamp) {
 }
 
 function filterSwearing(text) {
- let filtered = text;
- swearingBlacklist.forEach(word => {
-   const regex = new RegExp(`\\b\\w*${word}\\w*\\b`, 'gi');
-   filtered = filtered.replace(regex, (match) => '*'.repeat(match.length));
- });
- return filtered;
+  let filtered = sanitizeInput(text, 119);
+  swearingBlacklist.forEach(word => {
+    const regex = new RegExp(`\\b\\w*${word}\\w*\\b`, 'gi');
+    filtered = filtered.replace(regex, (match) => '*'.repeat(match.length));
+  });
+  return filtered;
+}
+
+function showStatusMessage(message, type = 'info') {
+  const statusDiv = document.createElement('div');
+  statusDiv.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    z-index: 10000;
+    animation: slideIn 0.3s ease-out;
+    max-width: 300px;
+    word-wrap: break-word;
+  `;
+
+  if (type === 'error') {
+    statusDiv.style.background = '#ff4444';
+  } else if (type === 'warning') {
+    statusDiv.style.background = '#ff8800';
+  } else {
+    statusDiv.style.background = '#4CAF50';
+  }
+
+  statusDiv.textContent = sanitizeInput(message, 200);
+  document.body.appendChild(statusDiv);
+
+  setTimeout(() => {
+    statusDiv.style.animation = 'slideOut 0.3s ease-in forwards';
+    setTimeout(() => statusDiv.remove(), 300);
+  }, 3000);
+}
+
+function checkSpamProtection(text) {
+  const now = Date.now();
+
+  if (now < mutedUntil) {
+    const remainingTime = Math.ceil((mutedUntil - now) / 1000);
+    showStatusMessage(`You are muted for ${remainingTime} more seconds`, 'error');
+    return false;
+  }
+
+  const timeSinceLastMessage = now - lastMessageTime;
+  if (timeSinceLastMessage < COOLDOWN_MS) {
+    const remainingCooldown = Math.ceil((COOLDOWN_MS - timeSinceLastMessage) / 1000);
+    showStatusMessage(`Please wait ${remainingCooldown} seconds before sending another message`, 'warning');
+    return false;
+  }
+
+  messageHistory.push({ text: text.toLowerCase().trim(), timestamp: now });
+  if (messageHistory.length > 10) {
+    messageHistory.shift();
+  }
+
+  const recentIdentical = messageHistory.filter(msg => 
+    msg.text === text.toLowerCase().trim() && 
+    (now - msg.timestamp) < 60000 
+  );
+
+  if (recentIdentical.length >= SPAM_THRESHOLD) {
+    mutedUntil = now + MUTE_DURATION_MS;
+    showStatusMessage('You have been muted for 2 minutes due to spam', 'error');
+
+    messageHistory = messageHistory.filter(msg => msg.text !== text.toLowerCase().trim());
+    return false;
+  }
+
+  lastMessageTime = now;
+  return true;
+}
+
+function updateSendButtonState() {
+  const now = Date.now();
+  const isEnabled = messageInput.value.trim() && 
+                   now >= mutedUntil && 
+                   (now - lastMessageTime) >= COOLDOWN_MS;
+
+  sendBtn.disabled = !isEnabled;
+  sendBtn.style.opacity = isEnabled ? '1' : '0.5';
+  sendBtn.style.cursor = isEnabled ? 'pointer' : 'not-allowed';
+
+  if (now < mutedUntil) {
+    const remainingTime = Math.ceil((mutedUntil - now) / 1000);
+    messageInput.placeholder = `Muted for ${remainingTime} seconds...`;
+    messageInput.disabled = true;
+  } else {
+    messageInput.placeholder = "Type a message...";
+    messageInput.disabled = false;
+  }
 }
 
 function addEmojiPicker() {
@@ -106,7 +242,7 @@ function addEmojiPicker() {
 
   emojis.forEach(emoji => {
     const emojiBtn = document.createElement('button');
-    emojiBtn.textContent = emoji;
+    emojiBtn.textContent = emoji; 
     emojiBtn.style.cssText = `
       border: none;
       background: none;
@@ -166,12 +302,13 @@ function addEmojiPicker() {
 
   function updateCharCount() {
     const count = messageInput.value.length;
-    charCounter.textContent = `${count}/119`;
+    charCounter.textContent = `${count}/119`; 
     if (count > 100) {
       charCounter.style.color = count >= 119 ? '#ff4444' : '#ff8800';
     } else {
       charCounter.style.color = 'var(--text-muted)';
     }
+    updateSendButtonState();
   }
 
   messageInput.addEventListener('input', (e) => {
@@ -184,6 +321,8 @@ function addEmojiPicker() {
   updateCharCount();
   window.updateCharCount = updateCharCount;
 
+  setInterval(updateSendButtonState, 1000);
+
   document.addEventListener('click', (e) => {
     if (!picker.contains(e.target) && e.target !== emojiToggle) {
       picker.style.display = 'none';
@@ -191,9 +330,37 @@ function addEmojiPicker() {
   });
 }
 
-function openModal(title, bodyHTML, onSave) {
-  modalTitle.textContent = title;
-  modalBody.innerHTML = bodyHTML;
+function openModal(title, bodyContent, onSave) {
+
+  modalTitle.textContent = sanitizeInput(title, 100);
+
+  modalBody.innerHTML = "";
+
+  if (typeof bodyContent === 'string') {
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = bodyContent; 
+    modalBody.appendChild(tempDiv);
+  } else {
+
+    modalBody.appendChild(bodyContent);
+  }
+
+  modalOverlay.style.display = "flex";
+  const firstInput = modalBody.querySelector("input");
+  if (firstInput) setTimeout(() => firstInput.focus(), 0);
+  modalSave.onclick = async () => {
+    await onSave?.();
+  };
+}
+
+function createSafeModal(title, contentBuilder, onSave) {
+  modalTitle.textContent = sanitizeInput(title, 100);
+  modalBody.innerHTML = ""; 
+
+  const content = contentBuilder();
+  modalBody.appendChild(content);
+
   modalOverlay.style.display = "flex";
   const firstInput = modalBody.querySelector("input");
   if (firstInput) setTimeout(() => firstInput.focus(), 0);
@@ -220,17 +387,25 @@ function roomPathForCurrent() {
 function renderMessage(m) {
   const row = document.createElement("div");
   row.className = "bubble" + (m.uid === me.uid ? " me" : "");
+
   const av = document.createElement("div");
   av.className = "avatar";
-  av.textContent = avatarLetter(m.name);
+  av.textContent = avatarLetter(m.name); 
+
   const content = document.createElement("div");
   content.className = "content";
+
   const nm = document.createElement("div");
   nm.className = "name";
   const timestamp = formatTimestamp(m.timestamp);
-  nm.textContent = `${safeUsername(m.name || "Unknown", m.tag || "0000")} • ${timestamp}`;
+  const safeName = sanitizeInput(m.name || "Unknown", 20);
+  const safeTag = sanitizeInput(m.tag || "0000", 10);
+  nm.textContent = `${safeUsername(safeName, safeTag)} • ${timestamp}`;
+
   const tx = document.createElement("div");
-  tx.textContent = filterSwearing(m.text);
+  const safeText = filterSwearing(sanitizeInput(m.text || "", 119));
+  tx.textContent = safeText; 
+
   content.appendChild(nm);
   content.appendChild(tx);
   row.appendChild(av);
@@ -240,8 +415,12 @@ function renderMessage(m) {
 
 function setActiveRoomButton(id) {
   document.querySelectorAll(".room-btn").forEach(b => b.classList.remove("active"));
-  const btn = document.getElementById(`roombtn_${id}`);
-  if (btn) btn.classList.add("active");
+
+  if (validateId(id)) {
+    const btn = document.getElementById(`roombtn_${id}`);
+    if (btn) btn.classList.add("active");
+  }
+
   if (id === "public") publicBtn.classList.add("active");
 }
 
@@ -261,9 +440,25 @@ onAuthStateChanged(auth, async (user) => {
 signInAnonymously(auth).catch(console.error);
 
 function showUsernameModal(title) {
-  openModal(title, `<div><input id="usernameInput" class="input" placeholder="Your name" maxlength="50"/><div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Maximum 20 characters</div></div>`, async () => {
-    const val = (document.getElementById("usernameInput").value || "").trim();
-    if (!val || val.length > 20) return;
+  createSafeModal(title, () => {
+    const container = document.createElement('div');
+
+    const input = document.createElement('input');
+    input.id = 'usernameInput';
+    input.className = 'input';
+    input.placeholder = 'Your name';
+    input.maxLength = 20; 
+
+    const hint = createTextElement('div', 'Maximum 20 characters');
+    hint.style.cssText = 'font-size: 12px; color: var(--text-muted); margin-top: 5px;';
+
+    container.appendChild(input);
+    container.appendChild(hint);
+    return container;
+  }, async () => {
+    const val = sanitizeInput(document.getElementById("usernameInput").value, 20);
+    if (!val) return;
+
     me.name = val;
     me.tag = randomTag();
     me.avatar = avatarLetter(val);
@@ -281,10 +476,11 @@ changeNameBtn.onclick = () => showUsernameModal("Change Username");
 async function upsertUserProfile() {
   if (!me.uid) return;
   const ref = doc(db, "users", me.uid);
+
   await setDoc(ref, {
     uid: me.uid,
-    name: me.name,
-    tag: me.tag,
+    name: sanitizeInput(me.name, 20),
+    tag: sanitizeInput(me.tag, 10),
     avatar: avatarLetter(me.name),
     status: "online",
     lastSeen: serverTimestamp()
@@ -309,23 +505,40 @@ function startListeners() {
     snap.forEach(d => {
       const u = d.data();
       if (!u.name) return;
-      if (u.uid === me.uid) {
-        u.name = me.name;
-        u.tag = me.tag;
+
+      const userData = {
+        uid: u.uid,
+        name: sanitizeInput(u.name, 20),
+        tag: sanitizeInput(u.tag, 10),
+        status: sanitizeInput(u.status || "offline", 20)
+      };
+
+      if (userData.uid === me.uid) {
+        userData.name = me.name;
+        userData.tag = me.tag;
       }
+
       const row = document.createElement("div");
       row.className = "user-row";
-      row.dataset.uid = u.uid;
-      row.innerHTML = `
-        <div class="avatar">${avatarLetter(u.name)}</div>
-        <div>
-          <div class="user-name">${safeUsername(u.name, u.tag)}${u.uid === me.uid ? " (you)" : ""}</div>
-          <div class="user-meta">${u.status || "offline"}</div>
-        </div>
-      `;
+      safeSetAttribute(row, 'data-uid', userData.uid);
+
+      const avatar = createTextElement('div', avatarLetter(userData.name), 'avatar');
+
+      const userInfo = document.createElement('div');
+      const userName = createTextElement('div', 
+        `${safeUsername(userData.name, userData.tag)}${userData.uid === me.uid ? " (you)" : ""}`, 
+        'user-name'
+      );
+      const userMeta = createTextElement('div', userData.status, 'user-meta');
+
+      userInfo.appendChild(userName);
+      userInfo.appendChild(userMeta);
+      row.appendChild(avatar);
+      row.appendChild(userInfo);
+
       row.onclick = () => {
-        if (u.uid !== me.uid) {
-          createOrOpenDM(u.uid, u.name, u.tag);
+        if (userData.uid !== me.uid) {
+          createOrOpenDM(userData.uid, userData.name, userData.tag);
           usersPanel.classList.remove("open");
         }
       };
@@ -359,8 +572,10 @@ function startListeners() {
       sortedDMs.forEach(r => {
         const btn = document.createElement("button");
         btn.className = "room-btn";
-        btn.id = `roombtn_${r.key}`;
-        btn.textContent = r.label.replace("DM: ", "");
+        if (validateId(r.key)) {
+          btn.id = `roombtn_${r.key}`;
+        }
+        btn.textContent = sanitizeInput(r.label.replace("DM: ", ""), 50); 
         btn.onclick = () => openRoom(r.kind, r.id, r.label);
         dmSection.appendChild(btn);
       });
@@ -372,18 +587,18 @@ function startListeners() {
 
     if (sortedGroups.length > 0) {
       if (sortedDMs.length > 0) {
-        const separator = document.createElement("div");
-        separator.className = "side-title";
+        const separator = createTextElement("div", "Groups", "side-title");
         separator.style.marginTop = "1rem";
-        separator.textContent = "Groups";
         myChats.appendChild(separator);
       }
 
       sortedGroups.forEach(r => {
         const btn = document.createElement("button");
         btn.className = "room-btn";
-        btn.id = `roombtn_${r.key}`;
-        btn.textContent = r.label.replace("Group: ", "");
+        if (validateId(r.key)) {
+          btn.id = `roombtn_${r.key}`;
+        }
+        btn.textContent = sanitizeInput(r.label.replace("Group: ", ""), 50); 
         btn.onclick = () => openRoom(r.kind, r.id, r.label);
         groupSection.appendChild(btn);
       });
@@ -391,11 +606,12 @@ function startListeners() {
     }
 
     if (sortedDMs.length === 0 && sortedGroups.length === 0) {
-      const emptyMsg = document.createElement("div");
-      emptyMsg.style.padding = "1rem";
-      emptyMsg.style.color = "var(--text-muted)";
-      emptyMsg.style.fontSize = "0.9rem";
-      emptyMsg.textContent = "No conversations yet. Start a DM or create a group!";
+      const emptyMsg = createTextElement("div", "No conversations yet. Start a DM or create a group!");
+      emptyMsg.style.cssText = `
+        padding: 1rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      `;
       myChats.appendChild(emptyMsg);
     }
 
@@ -407,8 +623,8 @@ function startListeners() {
     renderRooms.dms = snap.docs.map(d => {
       const r = d.data();
       const otherUid = (r.memberUids || []).find(x => x !== me.uid);
-      const otherName = r.memberNames?.[otherUid] || "Unknown";
-      const otherTag = r.memberTags?.[otherUid] || "0000";
+      const otherName = sanitizeInput(r.memberNames?.[otherUid] || "Unknown", 20);
+      const otherTag = sanitizeInput(r.memberTags?.[otherUid] || "0000", 10);
 
       return {
         kind: "dm",
@@ -425,11 +641,12 @@ function startListeners() {
   const groupUnsub = onSnapshot(groupQuery, (snap) => {
     renderRooms.groups = snap.docs.map(d => {
       const r = d.data();
+      const safeName = sanitizeInput(r.name || "Unnamed", 50);
       return {
         kind: "group",
         id: d.id,
         key: d.id,
-        label: `Group: ${r.name || "Unnamed"}`,
+        label: `Group: ${safeName}`,
         updatedAt: r.updatedAt
       };
     });
@@ -445,12 +662,17 @@ function startListeners() {
 }
 
 function openRoom(kind, id, title) {
-  current = { type: kind, id, title };
-  chatTitle.textContent = title;
+
+  const safeKind = sanitizeInput(kind, 10);
+  const safeId = sanitizeInput(id, 50);
+  const safeTitle = sanitizeInput(title, 100);
+
+  current = { type: safeKind, id: safeId, title: safeTitle };
+  chatTitle.textContent = safeTitle; 
 
   const renameBtn = document.getElementById("renameGroupBtn");
   if (renameBtn) {
-    renameBtn.style.display = kind === "group" ? "inline-block" : "none";
+    renameBtn.style.display = safeKind === "group" ? "inline-block" : "none";
   }
 
   if (unsubMsgs) unsubMsgs();
@@ -469,20 +691,24 @@ function openRoom(kind, id, title) {
     messagesEl.scrollTop = messagesEl.scrollHeight;
   });
 
-  setActiveRoomButton(id);
+  setActiveRoomButton(safeId);
 }
 
 async function sendMessage() {
-  const text = messageInput.value.trim();
-  if (!text || !me.uid || !me.name || text.length > 119) return;
+  const text = sanitizeInput(messageInput.value, 119);
+  if (!text || !me.uid || !me.name) return;
+
+  if (!checkSpamProtection(text)) {
+    return;
+  }
 
   try {
     const [c1, c2, c3] = roomPathForCurrent();
     await addDoc(collection(db, c1, c2, c3), {
       uid: me.uid,
-      name: me.name,
-      tag: me.tag,
-      text,
+      name: sanitizeInput(me.name, 20), 
+      tag: sanitizeInput(me.tag, 10),   
+      text: text, 
       timestamp: serverTimestamp()
     });
 
@@ -500,6 +726,7 @@ async function sendMessage() {
     if (window.updateCharCount) window.updateCharCount();
   } catch (error) {
     console.error("Error sending message:", error);
+    showStatusMessage("Failed to send message. Please try again.", 'error');
   }
 }
 
@@ -517,36 +744,59 @@ toggleUsersBtn.onclick = () => usersPanel.classList.toggle("open");
 startDmBtn.onclick = async () => {
   try {
     const usersSnap = await getDocs(query(collection(db, "users"), orderBy("name")));
-    const options = [];
 
-    usersSnap.forEach(d => {
-      const u = d.data();
-      if (u.uid === me.uid || !u.name) return;
-      options.push(`
-        <label class="list-row">
-          <input type="radio" name="dmTarget" value="${u.uid}" data-name="${u.name}" data-tag="${u.tag}" />
-          <div class="avatar">${avatarLetter(u.name)}</div>
-          <div>${safeUsername(u.name, u.tag)}</div>
-        </label>
-      `);
-    });
+    createSafeModal("Start a Direct Message", () => {
+      const container = document.createElement('div');
 
-    openModal("Start a Direct Message",
-      options.length ?
-        `<div class="list">${options.join("")}</div><div class="hint">Pick exactly one person.</div>` :
-        `<div class="hint">No other users yet.</div>`,
-      async () => {
-        const selected = modalBody.querySelector('input[name="dmTarget"]:checked');
-        if (!selected) return;
+      const listContainer = document.createElement('div');
+      listContainer.className = 'list';
 
-        const targetUid = selected.value;
-        const targetName = selected.dataset.name;
-        const targetTag = selected.dataset.tag;
+      let hasUsers = false;
+      usersSnap.forEach(d => {
+        const u = d.data();
+        if (u.uid === me.uid || !u.name) return;
 
-        await createOrOpenDM(targetUid, targetName, targetTag);
-        closeModal();
+        hasUsers = true;
+        const label = document.createElement('label');
+        label.className = 'list-row';
+
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'dmTarget';
+        radio.value = u.uid;
+        safeSetAttribute(radio, 'data-name', sanitizeInput(u.name, 20));
+        safeSetAttribute(radio, 'data-tag', sanitizeInput(u.tag, 10));
+
+        const avatar = createTextElement('div', avatarLetter(u.name), 'avatar');
+        const userName = createTextElement('div', safeUsername(u.name, u.tag));
+
+        label.appendChild(radio);
+        label.appendChild(avatar);
+        label.appendChild(userName);
+        listContainer.appendChild(label);
+      });
+
+      if (hasUsers) {
+        const hint = createTextElement('div', 'Pick exactly one person.', 'hint');
+        container.appendChild(listContainer);
+        container.appendChild(hint);
+      } else {
+        const noUsers = createTextElement('div', 'No other users yet.', 'hint');
+        container.appendChild(noUsers);
       }
-    );
+
+      return container;
+    }, async () => {
+      const selected = modalBody.querySelector('input[name="dmTarget"]:checked');
+      if (!selected) return;
+
+      const targetUid = selected.value;
+      const targetName = selected.getAttribute('data-name');
+      const targetTag = selected.getAttribute('data-tag');
+
+      await createOrOpenDM(targetUid, targetName, targetTag);
+      closeModal();
+    });
   } catch (error) {
     console.error("Error loading users for DM:", error);
   }
@@ -556,7 +806,12 @@ async function createOrOpenDM(otherUid, otherName, otherTag) {
   if (otherUid === me.uid) return;
 
   try {
-    const pair = [me.uid, otherUid].sort();
+
+    const safeOtherUid = sanitizeInput(otherUid, 50);
+    const safeOtherName = sanitizeInput(otherName, 20);
+    const safeOtherTag = sanitizeInput(otherTag, 10);
+
+    const pair = [me.uid, safeOtherUid].sort();
     const dmId = `dm_${pair[0]}_${pair[1]}`;
     const dmRef = doc(db, "dms", dmId);
 
@@ -565,17 +820,17 @@ async function createOrOpenDM(otherUid, otherName, otherTag) {
       kind: "dm",
       memberUids: pair,
       memberNames: {
-        [me.uid]: me.name,
-        [otherUid]: otherName
+        [me.uid]: sanitizeInput(me.name, 20),
+        [safeOtherUid]: safeOtherName
       },
       memberTags: {
-        [me.uid]: me.tag,
-        [otherUid]: otherTag
+        [me.uid]: sanitizeInput(me.tag, 10),
+        [safeOtherUid]: safeOtherTag
       },
       updatedAt: serverTimestamp()
     }, { merge: true });
 
-    openRoom("dm", dmId, `DM: ${safeUsername(otherName, otherTag)}`);
+    openRoom("dm", dmId, `DM: ${safeUsername(safeOtherName, safeOtherTag)}`);
   } catch (error) {
     console.error("Error creating/opening DM:", error);
   }
@@ -584,48 +839,79 @@ async function createOrOpenDM(otherUid, otherName, otherTag) {
 createGroupBtn.onclick = async () => {
   try {
     const usersSnap = await getDocs(query(collection(db, "users"), orderBy("name")));
-    const checks = [];
 
-    usersSnap.forEach(d => {
-      const u = d.data();
-      if (u.uid === me.uid || !u.name) return;
-      checks.push(`
-        <label class="list-row">
-          <input type="checkbox" name="groupTargets" value="${u.uid}" />
-          <div class="avatar">${avatarLetter(u.name)}</div>
-          <div>${safeUsername(u.name, u.tag)}</div>
-        </label>
-      `);
-    });
+    createSafeModal("Create Group (up to 10)", () => {
+      const container = document.createElement('div');
 
-    openModal("Create Group (up to 10)",
-      `<input id="groupName" class="input" placeholder="Group name" maxlength="50"/>
-       <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Maximum 20 characters</div>
-       <div class="list" style="margin-top:.6rem">
-         ${checks.join("") || '<div class="hint">No other users.</div>'}
-       </div>`,
-      async () => {
-        const name = (document.getElementById("groupName").value || "").trim();
-        if (!name || name.length > 50) return;
+      const nameInput = document.createElement('input');
+      nameInput.id = 'groupName';
+      nameInput.className = 'input';
+      nameInput.placeholder = 'Group name';
+      nameInput.maxLength = 20; 
 
-        const selected = Array.from(modalBody.querySelectorAll('input[name="groupTargets"]:checked'))
-          .map(i => i.value);
-        const members = Array.from(new Set([me.uid, ...selected])).slice(0, 10);
+      const hint = createTextElement('div', 'Maximum 20 characters');
+      hint.style.cssText = 'font-size: 12px; color: var(--text-muted); margin-top: 5px;';
 
-        const groupId = `grp_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+      const listContainer = document.createElement('div');
+      listContainer.className = 'list';
+      listContainer.style.marginTop = '0.6rem';
 
-        await setDoc(doc(db, "groups", groupId), {
-          id: groupId,
-          name,
-          kind: "group",
-          memberUids: members,
-          updatedAt: serverTimestamp()
-        }, { merge: true });
+      let hasUsers = false;
+      usersSnap.forEach(d => {
+        const u = d.data();
+        if (u.uid === me.uid || !u.name) return;
 
-        closeModal();
-        openRoom("group", groupId, `Group: ${name}`);
+        hasUsers = true;
+        const label = document.createElement('label');
+        label.className = 'list-row';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'groupTargets';
+        checkbox.value = u.uid;
+
+        const avatar = createTextElement('div', avatarLetter(u.name), 'avatar');
+        const userName = createTextElement('div', safeUsername(u.name, u.tag));
+
+        label.appendChild(checkbox);
+        label.appendChild(avatar);
+        label.appendChild(userName);
+        listContainer.appendChild(label);
+      });
+
+      container.appendChild(nameInput);
+      container.appendChild(hint);
+
+      if (hasUsers) {
+        container.appendChild(listContainer);
+      } else {
+        const noUsers = createTextElement('div', 'No other users.', 'hint');
+        noUsers.style.marginTop = '0.6rem';
+        container.appendChild(noUsers);
       }
-    );
+
+      return container;
+    }, async () => {
+      const name = sanitizeInput(document.getElementById("groupName").value, 20);
+      if (!name) return;
+
+      const selected = Array.from(modalBody.querySelectorAll('input[name="groupTargets"]:checked'))
+        .map(i => sanitizeInput(i.value, 50));
+      const members = Array.from(new Set([me.uid, ...selected])).slice(0, 10);
+
+      const groupId = `grp_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+
+      await setDoc(doc(db, "groups", groupId), {
+        id: groupId,
+        name: name, 
+        kind: "group",
+        memberUids: members,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+
+      closeModal();
+      openRoom("group", groupId, `Group: ${name}`);
+    });
   } catch (error) {
     console.error("Error creating group:", error);
   }
@@ -636,33 +922,71 @@ renameGroupBtn.onclick = async () => {
 
   try {
     const groupRef = doc(db, "groups", current.id);
-    const currentName = current.title.replace('Group: ', '');
+    const currentName = sanitizeInput(current.title.replace('Group: ', ''), 20);
 
-    openModal("Rename Group",
-      `<input id="newGroupName" class="input" placeholder="New group name" value="${currentName}" maxlength="50"/>
-       <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Maximum 20 characters</div>`,
-      async () => {
-        const newName = (document.getElementById("newGroupName").value || "").trim();
-        if (!newName || newName.length > 20) return;
+    createSafeModal("Rename Group", () => {
+      const container = document.createElement('div');
 
-        await updateDoc(groupRef, {
-          name: newName,
-          updatedAt: serverTimestamp()
-        });
+      const input = document.createElement('input');
+      input.id = 'newGroupName';
+      input.className = 'input';
+      input.placeholder = 'New group name';
+      input.value = currentName; 
+      input.maxLength = 20;
 
-        current.title = `Group: ${newName}`;
-        chatTitle.textContent = current.title;
+      const hint = createTextElement('div', 'Maximum 20 characters');
+      hint.style.cssText = 'font-size: 12px; color: var(--text-muted); margin-top: 5px;';
 
-        const btn = document.getElementById(`roombtn_${current.id}`);
-        if (btn) btn.textContent = current.title;
+      container.appendChild(input);
+      container.appendChild(hint);
+      return container;
+    }, async () => {
+      const newName = sanitizeInput(document.getElementById("newGroupName").value, 20);
+      if (!newName) return;
 
-        closeModal();
-      }
-    );
+      await updateDoc(groupRef, {
+        name: newName,
+        updatedAt: serverTimestamp()
+      });
+
+      current.title = `Group: ${newName}`;
+      chatTitle.textContent = current.title; 
+
+      const btn = document.getElementById(`roombtn_${current.id}`);
+      if (btn) btn.textContent = newName; 
+
+      closeModal();
+    });
   } catch (error) {
     console.error("Error renaming group:", error);
   }
 };
+
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
 
 if (me.name) {
   me.avatar = avatarLetter(me.name);
