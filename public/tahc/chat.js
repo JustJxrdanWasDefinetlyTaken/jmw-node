@@ -1,4 +1,3 @@
-// 50% of this is chatgpt and copilot btw sorry guys ik ik skid skid go ahead man 😔
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, setDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -118,9 +117,12 @@ function addEmojiPicker() {
       border-radius: 4px;
     `;
     emojiBtn.onclick = () => {
-      messageInput.value += emoji;
-      picker.style.display = 'none';
-      messageInput.focus();
+      if (messageInput.value.length < 119) {
+        messageInput.value += emoji;
+        updateCharCount();
+        picker.style.display = 'none';
+        messageInput.focus();
+      }
     };
     picker.appendChild(emojiBtn);
   });
@@ -131,8 +133,8 @@ function addEmojiPicker() {
   emojiToggle.textContent = '😀';
   emojiToggle.style.cssText = `
     position: absolute;
-    right: 30px;
-    top: -40px;
+    right: 20px;
+    bottom: 40px;
     transform: translateY(-50%);
     border: none;
     background: var(--surface);
@@ -145,9 +147,42 @@ function addEmojiPicker() {
     picker.style.display = picker.style.display === 'none' ? 'block' : 'none';
   };
 
+  const charCounter = document.createElement('div');
+  charCounter.id = 'charCounter';
+  charCounter.style.cssText = `
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: var(--text-muted);
+    pointer-events: none;
+  `;
+
   const inputContainer = messageInput.parentElement;
   inputContainer.style.position = 'relative';
   inputContainer.appendChild(emojiToggle);
+  inputContainer.appendChild(charCounter);
+
+  function updateCharCount() {
+    const count = messageInput.value.length;
+    charCounter.textContent = `${count}/119`;
+    if (count > 100) {
+      charCounter.style.color = count >= 119 ? '#ff4444' : '#ff8800';
+    } else {
+      charCounter.style.color = 'var(--text-muted)';
+    }
+  }
+
+  messageInput.addEventListener('input', (e) => {
+    if (e.target.value.length > 119) {
+      e.target.value = e.target.value.substring(0, 119);
+    }
+    updateCharCount();
+  });
+
+  updateCharCount();
+  window.updateCharCount = updateCharCount;
 
   document.addEventListener('click', (e) => {
     if (!picker.contains(e.target) && e.target !== emojiToggle) {
@@ -226,9 +261,9 @@ onAuthStateChanged(auth, async (user) => {
 signInAnonymously(auth).catch(console.error);
 
 function showUsernameModal(title) {
-  openModal(title, `<div><input id="usernameInput" class="input" placeholder="Your name"/></div>`, async () => {
+  openModal(title, `<div><input id="usernameInput" class="input" placeholder="Your name" maxlength="50"/><div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Maximum 20 characters</div></div>`, async () => {
     const val = (document.getElementById("usernameInput").value || "").trim();
-    if (!val) return;
+    if (!val || val.length > 20) return;
     me.name = val;
     me.tag = randomTag();
     me.avatar = avatarLetter(val);
@@ -439,7 +474,7 @@ function openRoom(kind, id, title) {
 
 async function sendMessage() {
   const text = messageInput.value.trim();
-  if (!text || !me.uid || !me.name) return;
+  if (!text || !me.uid || !me.name || text.length > 119) return;
 
   try {
     const [c1, c2, c3] = roomPathForCurrent();
@@ -462,6 +497,7 @@ async function sendMessage() {
     }
 
     messageInput.value = "";
+    if (window.updateCharCount) window.updateCharCount();
   } catch (error) {
     console.error("Error sending message:", error);
   }
@@ -563,13 +599,14 @@ createGroupBtn.onclick = async () => {
     });
 
     openModal("Create Group (up to 10)",
-      `<input id="groupName" class="input" placeholder="Group name"/>
+      `<input id="groupName" class="input" placeholder="Group name" maxlength="50"/>
+       <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Maximum 20 characters</div>
        <div class="list" style="margin-top:.6rem">
          ${checks.join("") || '<div class="hint">No other users.</div>'}
        </div>`,
       async () => {
         const name = (document.getElementById("groupName").value || "").trim();
-        if (!name) return;
+        if (!name || name.length > 50) return;
 
         const selected = Array.from(modalBody.querySelectorAll('input[name="groupTargets"]:checked'))
           .map(i => i.value);
@@ -602,10 +639,11 @@ renameGroupBtn.onclick = async () => {
     const currentName = current.title.replace('Group: ', '');
 
     openModal("Rename Group",
-      `<input id="newGroupName" class="input" placeholder="New group name" value="${currentName}"/>`,
+      `<input id="newGroupName" class="input" placeholder="New group name" value="${currentName}" maxlength="50"/>
+       <div style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Maximum 20 characters</div>`,
       async () => {
         const newName = (document.getElementById("newGroupName").value || "").trim();
-        if (!newName) return;
+        if (!newName || newName.length > 20) return;
 
         await updateDoc(groupRef, {
           name: newName,
