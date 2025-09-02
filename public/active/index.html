@@ -5,6 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JMW | Tabs</title>
+  <script>
+    if (!localStorage.getItem('alertShown')) {
+  alert("This will show only once, this is very buggy (bare clients, if you're using scramjet it will bug out a lot), please be mindful and follow the steps so you dont get stuck.");
+  localStorage.setItem('alertShown', 'true');
+}
+  </script>
   <script async defer src="./js/tabs.js" type="module"></script>
   <link href="/assets/css/tabs.css" rel="stylesheet" />
   <script type="module" async defer>
@@ -100,7 +106,7 @@ setProxy(localStorage.getItem("pr0xy") || "scram")
         <p>IF THAT DOESN'T WORK:</p>
         <li>Method 2: Clear your cookies, copy the url over <span onclick="copy();" style="text-decoration: underline;cursor:pointer;color:white;">HERE</span> or go to chrome://settings/content/all?searchSubpage=(jmw link here), press the trashcan icon next to the link, then repeat the first method.</li>
         <p>IF THAT DOESN'T WORK:</p>
-        <li>Method 3: press CTRL-SHIFT-R</li>
+        <li>Method 3: press CTRL+SHIFT+R [Cache Refresh] or go over <a href="/active/index.html?goback=true">Here</a> and do it.</li>
         <p>IF THAT DOESN'T WORK:</p>
         <li>Method 4: Go over <a href="/active/index.html?autofill=doyouseethisifyoudoitworks" target="blank" style="color:white;">Here (click here)</a>, if it doesn't work go <a href="/active/index.html?autofill=doyouseethisifyoudoitworks" target="blank" style="color:white;">Here (click here)</a> again and search something random.</li>
       </ul>
@@ -122,7 +128,7 @@ setProxy(localStorage.getItem("pr0xy") || "scram")
     <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="historyBack();"><i class='bx bx-chevron-left'></i></a>
     <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="historyForward();"><i class='bx bx-chevron-right'></i></a>
     <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="reload();"><i class="bx bx-refresh"></i></a>
-    <input id="address" type="text" placeholder="Search privately.." class="search" autocomplete="off" />
+    <input id="address" type="text" placeholder="Search privately.." class="search" autocomplete="off" onfocus="this.select()" />
     <a href="#" id="fullscreen-icon" class="fc" onclick="full();"><i class="bx bx-fullscreen"></i></a>
   </form>
   <section id="frames"></section>

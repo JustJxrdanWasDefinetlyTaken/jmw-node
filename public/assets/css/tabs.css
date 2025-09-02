@@ -51,15 +51,15 @@ nav {
 [data-tab-id] {
   display: flex;
   align-items: center;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid var(--border);
   background: none;
   cursor: pointer;
   user-select: none;
   min-width: 120px;
-  max-width: 220px;
+  max-width: 250px;
   white-space: nowrap;
-  border-radius: 3px;
+  border-radius: 9px;
 }
 
 [data-tab-id].active {
@@ -86,10 +86,11 @@ nav {
 
 [data-tab-id] button {
   margin-left: 6px;
+  margin-bottom:3px;
   background: none;
   border: none;
   color: var(--surface);
-  font-size: 18px;
+  font-size: 23px;
   line-height: 1;
   cursor: pointer;
   padding: 0;

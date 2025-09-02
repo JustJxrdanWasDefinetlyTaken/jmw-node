@@ -732,17 +732,6 @@
             <br>
             <br>
           </div>
-          <div class="setting-card">
-            <h1>Prσxy option</h1>
-            <p class="desc">Changes prσxy.</p>
-            <select id="pr0xySelect">
-              <option disabled value="">Select</option>
-              <option value="scram">Scramjet</option>
-              <option value="vu">UV</option>
-            </select>
-            <br>
-            <br>
-          </div>
         </div>
       </div>
       <div id="customization" class="setting-section">
@@ -771,6 +760,17 @@
               <option value="top">Top Navigation</option>
             </select>
           </div>
+                    <div class="setting-card">
+            <h1>Prσxy option</h1>
+            <p class="desc">Changes prσxy.</p>
+            <select id="pr0xySelect">
+              <option disabled value="">Select</option>
+              <option value="vu">UV</option>
+              <option value="scram">Scramjet</option>
+            </select>
+            <br>
+            <br>
+          </div>
         </div>
       </div>
     </div>
@@ -795,149 +795,121 @@
   </script>
 </body>
 <script>
-  const musicSelect = document.getElementById('musicSelect');
-  const pr0xySelect = document.getElementById("pr0xySelect")
-  const musicUpload = document.getElementById('musicUpload');
-  const volumeControl = document.getElementById('volumeControl');
-  const playBtn = document.getElementById('playBtn');
-  const stopBtn = document.getElementById('stopBtn');
+const musicSelect = document.getElementById('musicSelect');
+const pr0xySelect = document.getElementById("pr0xySelect");
+const musicUpload = document.getElementById('musicUpload');
+const volumeControl = document.getElementById('volumeControl');
+const playBtn = document.getElementById('playBtn');
+const stopBtn = document.getElementById('stopBtn');
 
-  let audio = new Audio();
-  audio.loop = true;
-  audio.volume = 0.4;
-  let isStopped = false;
+let audio = new Audio();
+audio.loop = true;
+audio.volume = 0.4;
+let isStopped = false;
 
-  function loadMusic(source) {
-    audio.pause();
-    audio.src = source;
-    audio.currentTime = 0;
-    if (!isStopped) {
-      audio.play().catch(err => console.error('Error playing music:', err));
-    }
+function loadMusic(source) {
+  audio.pause();
+  audio.src = source;
+  audio.currentTime = 0;
+  if (!isStopped) {
+    audio.play().catch(err => console.error('Error playing music:', err));
+  }
+}
+
+pr0xySelect.addEventListener('change', () => {
+  localStorage.setItem("pr0xy", pr0xySelect.value);
+});
+
+musicUpload.addEventListener('change', function () {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const base64Data = e.target.result;
+      localStorage.setItem('customMusic', base64Data);
+      musicSelect.value = 'custom';
+      localStorage.setItem('selectedMusic', 'custom');
+      loadMusic(base64Data);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+musicSelect.addEventListener('change', function () {
+  const selected = this.value;
+  localStorage.setItem('selectedMusic', selected);
+
+  if (selected === 'custom') {
+    musicUpload.style.display = 'block';
+    const customData = localStorage.getItem('customMusic');
+    if (customData) loadMusic(customData);
+    return;
   }
 
+  musicUpload.style.display = 'none';
 
-  pr0xySelect.addEventListener('change', function () {
-    localStorage.setItem("pr0xy", pr0xySelect.value)
-  });
-
-  musicUpload.addEventListener('change', function () {
-    const file = this.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const base64Data = e.target.result;
-        localStorage.setItem('customMusic', base64Data);
-        musicSelect.value = 'custom';
-        localStorage.setItem('selectedMusic', 'custom');
-        loadMusic(base64Data);
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
-
-  musicSelect.addEventListener('change', function () {
-    const selected = this.value;
-    localStorage.setItem('selectedMusic', selected);
-
-    if (selected === 'custom') {
-      musicUpload.style.display = 'block';
-      const customData = localStorage.getItem('customMusic');
-      if (customData) {
-        loadMusic(customData);
-      }
-      return;
-    }
-
-    musicUpload.style.display = 'none';
-
-    if (selected === 'none') {
-      audio.pause();
-      audio.src = '';
-      return;
-    }
-
-    if (selected === 'solidground') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/solidground.mp3');
-    }
-    else if (selected === 'pearto') {
-      loadMusic('/assets/audio/pearto.mp3');
-    }
-    else if (selected === 'truelove') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/true-love.mp3');
-    }
-    else if (selected === 'olympian') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/olympian.mp3');
-    }
-    else if (selected === 'cancun') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/cancun.mp3');
-    }
-    else if (selected === 'cknose') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/cocainenose.mp3');
-    }
-    else if (selected === 'eviljrdn') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/eviljordan.mp3');
-    }
-    else if (selected === 'fomdj') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/FOMDJ.mp3');
-    }
-    else if (selected === '2024') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/2024.mp3');
-    }
-    else if (selected === 'diffday') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/different-day.mp3');
-    }
-    else if (selected === 'backrooms') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/backrooms.mp3');
-    }
-    else if (selected === '24songs') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/24songs.mp3');
-    }
-    else if (selected === 'dgmn') {
-      loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/dgmn.mp3');
-    }
-    else {
-      loadMusic(`/assets/audio/${selected}.mp3`);
-    }
-  });
-
-  musicUpload.addEventListener('change', function () {
-    const file = this.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const base64Data = e.target.result;
-        localStorage.setItem('customMusic', base64Data);
-        musicSelect.value = 'custom';
-        localStorage.setItem('selectedMusic', 'custom');
-        loadMusic(base64Data);
-      };
-      reader.readAsDataURL(file);
-    }
-  });
-
-  volumeControl.addEventListener('input', function () {
-    audio.volume = this.value / 100;
-  });
-
-  playBtn.addEventListener('click', () => {
-    isStopped = false;
-    audio.play();
-  });
-
-  stopBtn.addEventListener('click', () => {
-    isStopped = true;
+  if (selected === 'none') {
     audio.pause();
-  });
+    audio.src = '';
+    return;
+  }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const saved = localStorage.getItem('selectedMusic');
-    if (saved) {
-      musicSelect.value = saved;
-      musicSelect.dispatchEvent(new Event('change'));
-    }
-  });
+  if (selected === 'solidground') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/solidground.mp3');
+  } else if (selected === 'pearto') {
+    loadMusic('/assets/audio/pearto.mp3');
+  } else if (selected === 'truelove') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/true-love.mp3');
+  } else if (selected === 'olympian') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/olympian.mp3');
+  } else if (selected === 'cancun') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/cancun.mp3');
+  } else if (selected === 'cknose') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/cocainenose.mp3');
+  } else if (selected === 'eviljrdn') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/eviljordan.mp3');
+  } else if (selected === 'fomdj') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/FOMDJ.mp3');
+  } else if (selected === '2024') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/2024.mp3');
+  } else if (selected === 'diffday') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/different-day.mp3');
+  } else if (selected === 'backrooms') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/backrooms.mp3');
+  } else if (selected === '24songs') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/24songs.mp3');
+  } else if (selected === 'dgmn') {
+    loadMusic('https://cdn.jsdelivr.net/gh/JustJxrdanWasDefinetlyTaken/o@main/dgmn.mp3');
+  } else {
+    loadMusic(`/assets/audio/${selected}.mp3`);
+  }
+});
+
+volumeControl.addEventListener('input', function () {
+  audio.volume = this.value / 100;
+});
+
+playBtn.addEventListener('click', () => {
+  isStopped = false;
+  audio.play();
+});
+
+stopBtn.addEventListener('click', () => {
+  isStopped = true;
+  audio.pause();
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const savedMusic = localStorage.getItem('selectedMusic');
+  if (savedMusic) {
+    musicSelect.value = savedMusic;
+    musicSelect.dispatchEvent(new Event('change'));
+  }
+  const savedProxy = localStorage.getItem('pr0xy');
+  if (savedProxy) {
+    pr0xySelect.value = savedProxy;
+  }
+});
 </script>
 <script src="/assets/scripts/antict.js"></script>
 </html>

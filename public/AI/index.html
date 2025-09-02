@@ -76,30 +76,40 @@ function selectChat(idx) {
 function renderMessages() {
   chatContainer.innerHTML = '';
   if (currentChatId === null) return;
-  chats[currentChatId].messages.forEach(msg => {
+
+  const messages = chats[currentChatId].messages;
+  const lastIdx = messages.length - 1;
+
+  messages.forEach((msg, idx) => {
     const msgDiv = document.createElement('div');
     msgDiv.className = `chat-entry ${msg.author}`;
     msgDiv.style.marginBottom = '15px';
+
     const label = document.createElement('div');
     label.className = 'chat-label';
     label.textContent = msg.author === 'user' ? 'You:' : 'AI:';
+
     const bubble = document.createElement('div');
     bubble.className = 'chat-bubble';
 
-    if (msg.author === 'ai' && msg.new) {
+    if (msg.author === 'ai' && idx === lastIdx && msg.new) {
       bubble.innerHTML = '';
       msgDiv.appendChild(label);
       msgDiv.appendChild(bubble);
       chatContainer.appendChild(msgDiv);
       typeMessage(bubble, msg.text, () => addAIButtons(msgDiv, msg.text));
     } else {
-      bubble.innerHTML = msg.text.split('\n').map(line => `<p style="margin:12px 0;">${line}</p>`).join('');
+      bubble.innerHTML = msg.text
+        .split('\n')
+        .map(line => `<p style="margin:12px 0;">${line}</p>`)
+        .join('');
       msgDiv.appendChild(label);
       msgDiv.appendChild(bubble);
       if (msg.author === 'ai') addAIButtons(msgDiv, msg.text);
       chatContainer.appendChild(msgDiv);
     }
   });
+
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
@@ -154,25 +164,43 @@ function deleteChat(idx) {
 
 async function sendMessage() {
   if (!userInput.value.trim() || currentChatId === null) return;
+
+  // RATE LIMIT: 70 messages per 4 hours
+  const now = Date.now();
+  const limitWindow = 4 * 60 * 60 * 1000; // 4 hours in ms
+  const maxPrompts = 70;
+
+  let sentTimes = JSON.parse(localStorage.getItem('sentTimes')) || [];
+  // Remove timestamps older than 4 hours
+  sentTimes = sentTimes.filter(t => now - t < limitWindow);
+
+  if (sentTimes.length >= maxPrompts) {
+    alert('Rate limit reached: Maximum 70 prompts per 4 hours.');
+    return;
+  }
+
+  sentTimes.push(now);
+  localStorage.setItem('sentTimes', JSON.stringify(sentTimes));
+
   const text = userInput.value.trim();
   chats[currentChatId].messages.push({ text, author: 'user', new: true });
   userInput.value = '';
   renderMessages();
   localStorage.setItem('chats', JSON.stringify(chats));
+
   try {
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'llama3-70B-8192',
+        model: 'gemma2-9b-it',
         messages: [
-          { role: 'system', content: "You are JMW AI, optimized for handling complex tasks and providing detailed explanations. Avoid mentioning your capabilities; instead, ask 'How can I assist you today?', use emojis, and do not generate code." },
+          { role: 'system', content: "You are JMW AI, optimized for handling complex tasks and providing detailed explanations. Avoid mentioning your capabilities. Do not generate code." },
           { role: 'user', content: text }
         ]
       })
     });
     const data = await res.json();
-    console.log(data);
     const aiMsg = data.choices?.[0]?.message?.content || data.error?.message || 'Error: No response';
     chats[currentChatId].messages.push({ text: aiMsg, author: 'ai', new: true });
     localStorage.setItem('chats', JSON.stringify(chats));

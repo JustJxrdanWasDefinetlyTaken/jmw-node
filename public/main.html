@@ -247,26 +247,24 @@
   </div>
   <div class="center">
     <img src="/assets/images/jmw.png" alt="Jordan's Logo" />
-    <h1>Jordan's Math Work V7.0.0</h1>
+    <h1>Jordan's Math Work V7.0.6</h1>
   </div>
 
   <div class="bottom-text" onclick="window.location.href='/legalpage.html'">
-    &copy; Galactic · V7.0.0 · 2025
+    &copy; Galactic · V7.0.6 · 2025
   </div>
   <button class="update-btn" onclick="showUpdateLog()">Update Log</button>
   <button class="credit-btn" onclick="showCreditLog()">Credits</button>
   <div id="updateLog" class="update-log">
     <div class="log-content" onclick="event.stopPropagation()">
       <span class="close-btn" onclick="hideUpdateLog()"><i class='bx bx-x'></i> </span>
-      <h2>Update Log V7.0.5</h2>
+      <h2>Update Log V7.0.6</h2>
       <ul>
-        <li>Updated the chat!</li>
-        <li>Added Emojis</li>
-        <li>Added groups and direct messages</li>
-        <li>Added timestamps</li>
-        <li>Made chat logs save (in our database)</li>
-        <li>Fixed AI</li>
-        <li>Added UV as an option.</li>
+        <li>Fixed the chat, and added emojis.</li>
+        <li>Fixed the AI version to make it a tad smarter (gemini).</li>
+        <li>Added pr*xy switching, you can now choose UV or scramjet.</li>
+        <li>Updated Browser UI</li>
+        <li>Updated the extras page.</li>
         <li>Next Update will fix most g&mes.</li>
       </ul>
     </div>
@@ -308,6 +306,10 @@
   }
 
   document.getElementById('updateLog').addEventListener('click', hideUpdateLog);
+  window.addEventListener('DOMContentLoaded', () => {
+  showUpdateLog();
+});
+
 </script>
 <script>
   function showCreditLog() {
