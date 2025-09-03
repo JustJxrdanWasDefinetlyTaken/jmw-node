@@ -1,7 +1,7 @@
 > [!IMPORTANT]
 > Please consider giving this respritory a star if you feel like it.
 # 
-<p align="center"><img src="https://github.com/GalacticNetwork/jordansmathwork-v7/blob/main/public/assets/images/jmw.png?raw=true" height="200">
+<p align="center"><img src="https://github.com/JustJxrdanWasDefinetlyTaken/jmw-node/blob/main/public/assets/images/jmw.png?raw=true" height="200">
 </p>
 
 <h1 align="center"><strong>Jordan's Math Work V7</strong></h1>
