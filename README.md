@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center"><strong>Jordan's Math Work V7</strong></h1>
-<p align="center">THe next generation of Unblocked games</p>
+<p align="center">Tee next generation of unblocked games</p>
 <h1 align="center"><a align="center" href="//jordansmath.work">Live demo</a></h1>
 
 ### Features:
@@ -20,6 +20,10 @@
 - **NEW!!** Exclusive Jordan's Math Work Web Ports
 - **NEW!!** Smarter AI (Gemini Groq)
 - **NEW!!** Movies/TV Shows
+
+### To-DO:
+- [ ] fix games
+
 # Deployment
 > JMW can be deployed to any node.js supported service, including surge.sh
 # Credits
