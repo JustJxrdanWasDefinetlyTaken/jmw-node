@@ -417,6 +417,7 @@ function record() {
   </script>
   <script>
 (function(){
+  if(new URLSearchParams(window.location.search).get("type")==="3kh0") return
   if(localStorage.getItem("hideCustomAlert")==="true") return
   var alertBox=document.getElementById("customAlert")
   var closeBtn=document.getElementById("alertClose")
