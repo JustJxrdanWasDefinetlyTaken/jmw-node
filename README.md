@@ -1,5 +1,5 @@
 > [!IMPORTANT]
-> Please consider giving this respritory a star if you feel like it.
+> Please consider giving this respritory a star to support us.
 # 
 <p align="center"><img src="https://github.com/JustJxrdanWasDefinetlyTaken/jmw-node/blob/main/public/assets/images/jmw.png?raw=true" height="200">
 </p>
