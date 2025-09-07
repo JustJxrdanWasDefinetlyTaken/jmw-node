@@ -662,6 +662,19 @@
           </div>
 
           <div class="setting-card">
+            <h1>Translator</h1>
+            <p class="desc">Translates the website to whatever you choose.</p>
+                <div style="background:transparent; border-radius: 4px; width:300px;" id="google_translate_element"></div>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({ pageLanguage: "en", layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL }, "google_translate_element");
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+          </div>
+
+          <div class="setting-card">
             <h1>About</h1>
             <p><strong>Version:</strong> 7.0.0</p>
             <p class="rtabtxt">This is the 7th version of Jordan's Math Work, which is a complete rewrite of the
@@ -740,7 +753,7 @@
             <h1>Themes</h1>
             <p class="desc">Customize the page how you like it.</p>
             <select id="themepicker">
-              <option value="select">Select Theme</option>
+              <option value="select" disabled selected>Select Theme</option>
               <option value="classic">Classic</option>
               <option value="dark">Dark</option>
               <option value="light">Light</option>
@@ -756,7 +769,7 @@
             <h1>Navigation Position</h1>
             <p class="desc">Customize navbar positioning.</p>
             <select id="navbar-select">
-              <option value="side" selected>Side Navigation</option>
+              <option value="side" disabled selected>Side Navigation</option>
               <option value="top">Top Navigation</option>
             </select>
           </div>

@@ -7,16 +7,16 @@
   <title>JMW | Tabs</title>
   <script>
     if (!localStorage.getItem('alertShown')) {
-  alert("This will show only once, this is very buggy (bare clients, if you're using scramjet it will bug out a lot), please be mindful and follow the steps so you dont get stuck.");
-  localStorage.setItem('alertShown', 'true');
-}
+      alert("This will show only once, this is very buggy (bare clients, if you're using scramjet it will bug out a lot), please be mindful and follow the steps so you dont get stuck.");
+      localStorage.setItem('alertShown', 'true');
+    }
   </script>
   <script async defer src="./js/tabs.js" type="module"></script>
   <link href="/assets/css/tabs.css" rel="stylesheet" />
   <script type="module" async defer>
     import {
       setWisp,
-			setProxy,
+      setProxy,
       makeURL,
       getProxied,
       setFrames,
@@ -40,24 +40,24 @@
       }, 200);
     }
 
-try {
-    const params = new URLSearchParams(window.location.search);
-    const autofillUrl = params.get('autofill');
-    if (autofillUrl) {
-      autofill(autofillUrl);
-    }
-		}catch{}
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const autofillUrl = params.get('autofill');
+      if (autofillUrl) {
+        autofill(autofillUrl);
+      }
+    } catch { }
 
 
     //
     // setWisp((location.protocol === "https:" ? "wss://" : "ws://") +
     //  location.host +
     //  "/wisp/")
-     setWisp("wss://anura.pro/");
+    setWisp("wss://anura.pro/");
 
-setProxy(localStorage.getItem("pr0xy") || "scram")
+    setProxy(localStorage.getItem("pr0xy") || "scram")
 
-     setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
+    setWisp((location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/wisp/");
 
 
     // --- EVENTS ---
@@ -90,31 +90,46 @@ setProxy(localStorage.getItem("pr0xy") || "scram")
 </head>
 
 <body theme="classic">
-      <div id="customAlert" style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:300px;overflow-y:auto;background:black;color:var(--txtcolor);padding:30px;box-shadow:0 0 30px rgba(0,0,0,0.6);z-index:999999999999999999999999999;border-radius:16px;">
-  <button id="alertClose" style="position:absolute;top:15px;right:15px;background:transparent;background-color:transparent;border:none;font-size:22px;cursor:pointer;">✕</button>
-  <div id="alertContent" style="overflow-y:auto;max-height:520px;">
-    <center>
-      <br>
-      <br>
-      <h1 style="font-size:16px;margin-bottom:10px;">⚠️ READ BEFORE YOU USE THIS, REMEMBER THIS⚠️</h1>
-      <h2 style="font-size:14px;margin-bottom:8px;">⚠️Warning: This prσxy is very buggy and is enabled by WISP servers (scramjet and UV). PLEASE DO THIS BEFORE ACCESSING THE UNBL0CKER.⚠️</h2>
-      <h2 style="font-size:14px;margin-bottom:8px;">Here are some fixes to errors you might encounter.</h2>
-      <h3 style="font-size:13px;margin-bottom:6px;">"Cannot GET error or 'Uh Oh!' Screen."</h3>
-      <p style="font-size:12px;margin-bottom:6px;">Easy Fix (USE METHOD 1 FIRST):</p>
-      <ul style="font-size:12px;list-style:disc;padding-left:20px;text-align:left;">
-        <li>Method 1: Click the button <button style="color:white" onclick="registerSW()" style="font-size:13px;">Right Here</button> to register the SW</li>
-        <p>IF THAT DOESN'T WORK:</p>
-        <li>Method 2: Clear your cookies, copy the url over <span onclick="copy();" style="text-decoration: underline;cursor:pointer;color:white;">HERE</span> or go to chrome://settings/content/all?searchSubpage=(jmw link here), press the trashcan icon next to the link, then repeat the first method.</li>
-        <p>IF THAT DOESN'T WORK:</p>
-        <li>Method 3: press CTRL+SHIFT+R [Cache Refresh] or go over <a href="/active/index.html?goback=true">Here</a> and do it.</li>
-        <p>IF THAT DOESN'T WORK:</p>
-        <li>Method 4: Go over <a href="/active/index.html?autofill=doyouseethisifyoudoitworks" target="blank" style="color:white;">Here (click here)</a>, if it doesn't work go <a href="/active/index.html?autofill=doyouseethisifyoudoitworks" target="blank" style="color:white;">Here (click here)</a> again and search something random.</li>
-      </ul>
-      <h4>Join <a style="color:white;" href="//dsc.gg/gnetwork">Our Discord Server</a> If you have any trouble (discord.gg/gSjNsVxX5y)</h4>
-    </center>
+  <div id="customAlert"
+    style="display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:900px;height:300px;overflow-y:auto;background:black;color:var(--txtcolor);padding:30px;box-shadow:0 0 30px rgba(0,0,0,0.6);z-index:999999999999999999999999999;border-radius:16px;">
+    <button id="alertClose"
+      style="position:absolute;top:15px;right:15px;background:transparent;background-color:transparent;border:none;font-size:22px;cursor:pointer;">✕</button>
+    <div id="alertContent" style="overflow-y:auto;max-height:520px;">
+      <center>
+        <br>
+        <br>
+        <h1 style="font-size:16px;margin-bottom:10px;">⚠️ READ BEFORE YOU USE THIS, REMEMBER THIS⚠️</h1>
+        <h2 style="font-size:14px;margin-bottom:8px;">⚠️Warning: This prσxy is very buggy and is enabled by WISP servers
+          (scramjet and ultra-viσlet). PLEASE DO THIS BEFORE ACCESSING THE UNBL0CKER.⚠️</h2>
+        <h2 style="font-size:14px;margin-bottom:8px;">Here are some fixes to errors you might encounter.</h2>
+        <h3 style="font-size:13px;margin-bottom:6px;">"Cannot GET error, there are no bare clients error or 'Uh Oh!'
+          Screen."</h3>
+        <p style="font-size:12px;margin-bottom:6px;">Easy Fix (USE METHOD 1 FIRST):</p>
+        <ul style="font-size:12px;list-style:disc;padding-left:20px;text-align:left;">
+          <li>Method 1 (no bare clients & uh oh & cannot get error screen): Click the button <button style="color:white"
+              onclick="registerSW()" style="font-size:13px;">Right Here</button> to register the SW</li>
+          <p>IF THAT DOESN'T WORK:</p>
+          <li>Method 2: Clear your cookies, copy the url over <span onclick="copy();"
+              style="text-decoration: underline;cursor:pointer;color:white;">HERE</span> or go to
+            chrome://settings/content/all?searchSubpage=(jmw link here), press the trashcan icon next to the link, then
+            repeat the first method.</li>
+          <p>IF THAT DOESN'T WORK:</p>
+          <li>Method 3 (no bare clients & uh oh & cannot get error screen): press CTRL+SHIFT+R [Cache Refresh] or go
+            over <a href="/active/index.html?goback=true">Here</a> and do it.</li>
+          <p>IF THAT DOESN'T WORK:</p>
+          <li>Method 4 (no bare clients & uh oh & cannot get error screen): Go over <a
+              href="/active/index.html?autofill=doyouseethisifyoudoitworks" target="blank" style="color:white;">Here
+              (click here)</a>, if it doesn't work go <a href="/active/index.html?autofill=doyouseethisifyoudoitworks"
+              target="blank" style="color:white;">Here (click here)</a> again and search something random.</li>
+        </ul>
+        <h4>Join <a style="color:white;" href="//dsc.gg/gnetwork">Our Discord Server</a> If you have any trouble
+          (discord.gg/gSjNsVxX5y)</h4>
+      </center>
+    </div>
+    <button id="alertHide"
+      style="display:block;margin:20px auto 0 auto;padding:10px 20px;border:none;background:#333;color:#fff;border-radius:10px;cursor:pointer;">Do
+      not show again</button>
   </div>
-  <button id="alertHide" style="display:block;margin:20px auto 0 auto;padding:10px 20px;border:none;background:#333;color:#fff;border-radius:10px;cursor:pointer;">Do not show again</button>
-</div>
 
   <nav>
     <div id="tabs"></div>
@@ -126,64 +141,66 @@ setProxy(localStorage.getItem("pr0xy") || "scram")
 
   <form id="form" align="center">
     <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="historyBack();"><i class='bx bx-chevron-left'></i></a>
-    <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="historyForward();"><i class='bx bx-chevron-right'></i></a>
+    <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="historyForward();"><i
+        class='bx bx-chevron-right'></i></a>
     <a href="#" id="fullscreen-icon" class="fc nav-btn" onclick="reload();"><i class="bx bx-refresh"></i></a>
-    <input id="address" type="text" placeholder="Search privately.." class="search" autocomplete="off" onfocus="this.select()" />
+    <input id="address" type="text" placeholder="Search privately.." class="search" autocomplete="off"
+      onfocus="this.select()" />
     <a href="#" id="fullscreen-icon" class="fc" onclick="full();"><i class="bx bx-fullscreen"></i></a>
   </form>
   <section id="frames"></section>
   <script async defer>
-function full() {
-  const activeFrame = document.querySelector('iframe[id^="frame-"]:not(.hidden)');
-  if (!activeFrame) return;
-  if (!document.fullscreenElement) {
-    activeFrame.requestFullscreen().catch(err => {
-      alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
-    });
-  } else {
-    document.exitFullscreen();
-  }
-}
+    function full() {
+      const activeFrame = document.querySelector('iframe[id^="frame-"]:not(.hidden)');
+      if (!activeFrame) return;
+      if (!document.fullscreenElement) {
+        activeFrame.requestFullscreen().catch(err => {
+          alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
   </script>
 </body>
 <script src="/assets/scripts/index.js"></script>
 <script>
-function reload() {
-  var iframe = document.querySelector("iframe");
-  iframe.contentWindow.location.reload();
-}
-function historyBack() {
-  var iframe = document.querySelector("iframe");
-  iframe.contentWindow.history.back();
-}
-function historyForward() {
-  var iframe = document.querySelector("iframe");
-  iframe.contentWindow.history.forward();
-}
+  function reload() {
+    var iframe = document.querySelector("iframe");
+    iframe.contentWindow.location.reload();
+  }
+  function historyBack() {
+    var iframe = document.querySelector("iframe");
+    iframe.contentWindow.history.back();
+  }
+  function historyForward() {
+    var iframe = document.querySelector("iframe");
+    iframe.contentWindow.history.forward();
+  }
 </script>
-  <script>
-(function(){
-  if(localStorage.getItem("hideCustomAlert")==="true") return
-  var alertBox=document.getElementById("customAlert")
-  var closeBtn=document.getElementById("alertClose")
-  var hideBtn=document.getElementById("alertHide")
-  alertBox.style.display="block"
-  closeBtn.addEventListener("click",function(){alertBox.style.display="none"})
-  hideBtn.addEventListener("click",function(){
-    localStorage.setItem("hideCustomAlert","true")
-    alertBox.style.display="none"
-  })
-})();
+<script>
+  (function () {
+    if (localStorage.getItem("hideCustomAlert") === "true") return
+    var alertBox = document.getElementById("customAlert")
+    var closeBtn = document.getElementById("alertClose")
+    var hideBtn = document.getElementById("alertHide")
+    alertBox.style.display = "block"
+    closeBtn.addEventListener("click", function () { alertBox.style.display = "none" })
+    hideBtn.addEventListener("click", function () {
+      localStorage.setItem("hideCustomAlert", "true")
+      alertBox.style.display = "none"
+    })
+  })();
 </script>
 
 <script>
-function copy() {
-  const url = window.location.origin;
-  const text = "chrome://settings/content/all?searchSubpage=" + url;
-  navigator.clipboard.writeText(text).then(() => {
-    alert(text + " is now in your clipboard. Please paste the URL in the search bar in a new tab.");
-  });
-}
+  function copy() {
+    const url = window.location.origin;
+    const text = "chrome://settings/content/all?searchSubpage=" + url;
+    navigator.clipboard.writeText(text).then(() => {
+      alert(text + " is now in your clipboard. Please paste the URL in the search bar in a new tab.");
+    });
+  }
 </script>
 <script>
   const paramss = new URLSearchParams(window.location.search);
@@ -195,6 +212,19 @@ function copy() {
 </script>
 <script>
 if (paramss.has("autofill")) {
+    const messages = [
+        "Wait up twin ❤‍🩹",
+        "Frogie's Arcade got nothing on this 🥀",
+        "Szvy (Elliot Eugene Schanock), is a diddyblud and has {REDACTED} of his ex. 🪫",
+        "Fuckass goguardian 💔",
+        "​🇸​​🇼​​🇦​​🇲​​🇵​ ​🇮​​🇿​​🇿​​🇴​",
+        "'Ay Carti, I need that Back to the Future Carti I need that full alien Carti I need that beep, beep, beep, beep Extra terrestrial Carti, you know Hmm, just like that, Carti, you know Hmm, just like that, Cart' - Kendrick Lamar",
+        "Does obama have dih after all?",
+        "ＢＡＲＢＥＲＳＨＯＰ ＨＡＩＲＣＵＴ ＴＨＡＴ ＣＯＳＴＳ Ａ ＱＵＡＲＴＥＲ",
+        "Classroom6x < Jordan's Math Work",
+        "Quasar > Jordan's Math Work > Velera > Frogie's arcade > Space > Truffled > Szvy (Elliot Eugene Schanock) central"
+    ];
+
     const overlay = document.createElement("div");
     Object.assign(overlay.style, {
         position: "fixed",
@@ -205,17 +235,98 @@ if (paramss.has("autofill")) {
         background: "rgba(0,0,0,0.7)",
         color: "#fff",
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         fontSize: "24px",
-        zIndex: "99999999999999999"
+        zIndex: "99999999999999999",
+        opacity: 0,
+        transition: "opacity 0.5s ease-in-out"
     });
-    overlay.textContent = "Loading... please wait";
+    
+    const messageContainer = document.createElement("div");
+    Object.assign(messageContainer.style, {
+        marginBottom: "30px",
+        opacity: 0,
+        transform: "translateY(20px)",
+        transition: "opacity 0.8s ease-in-out 0.3s, transform 0.8s ease-in-out 0.3s",
+        background: "transparent"
+    });
+    const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+    messageContainer.textContent = randomMessage;
+    
+    const dotsContainer = document.createElement("div");
+    Object.assign(dotsContainer.style, {
+        display: "flex",
+        gap: "8px",
+        alignItems: "center",
+        opacity: 0,
+        transform: "translateY(20px)",
+        transition: "opacity 0.8s ease-in-out 0.6s, transform 0.8s ease-in-out 0.6s"
+    });
+    
+    for (let i = 0; i < 3; i++) {
+        const dot = document.createElement("div");
+        Object.assign(dot.style, {
+            width: "12px",
+            height: "12px",
+            backgroundColor: "var(--txtcolor)",
+            borderRadius: "50%",
+            animation: `loadingDot 1.4s ease-in-out infinite both`,
+            animationDelay: `${i * 0.16}s`
+        });
+        dotsContainer.appendChild(dot);
+    }
+
+    const style = document.createElement("style");
+    style.textContent = `
+        @keyframes loadingDot {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+    overlay.appendChild(messageContainer);
+    overlay.appendChild(dotsContainer);
     document.body.appendChild(overlay);
 
+    requestAnimationFrame(() => {
+        overlay.style.opacity = 1;
+        
+        setTimeout(() => {
+            messageContainer.style.opacity = 1;
+            messageContainer.style.transform = "translateY(0)";
+        }, 100);
+        
+        setTimeout(() => {
+            dotsContainer.style.opacity = 1;
+            dotsContainer.style.transform = "translateY(0)";
+        }, 400);
+    });
+
     setTimeout(() => {
-        overlay.remove();
-    }, 7000);
+        overlay.style.animation = "fadeOut 0.5s ease-in-out forwards";
+        setTimeout(() => {
+            overlay.remove();
+            style.remove();
+        }, 500);
+    }, 5500);
 }
 </script>
+
 </html>

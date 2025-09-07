@@ -35,19 +35,19 @@ const htmlString = `                                <a class='link button' href=
                                                 class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="2048">8 Ball Classic</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=1v1-lol/oldest&type=local'><img
+                                <a class='link button' href='/active/index.html?autofill=https://raw.githack.com/gameazzetz/assets/refs/heads/main/1v1lolold.html'><img
                                                 height="175" src="/assets/images/game/1v1lolold.jpeg"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="1v1.lol">1v1.lol Oldest Version</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=1v1-lol/old&type=local'><img
+                                <a class='link button' href='/active/index.html?autofill=https://learn-with.jskjsv6.workers.dev/1v1-lol-online/1v1-lol-online.github.io/main/file/index.html'><img
                                                 height="175" src="/assets/images/game/1v1-lol.jpg"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="1v1.lol">1v1.lol Older Version</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=1v1-lol/new&type=local'><img
+                                <a class='link button' href='/active/index.html?autofill=https://1v1.lol'><img
                                                 height="175" src="/assets/images/game/1v1lol.png"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
@@ -138,7 +138,7 @@ const htmlString = `                                <a class='link button' href=
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="awesome">Awesome Tanks</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=adventure&type=local'><img height="175"
+                                <a class='link button' href='/active/index.html?autofill=https://than1089.github.io/adventure-capitalist'><img height="175"
                                                 src="/assets/images/game/adventure.png"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"

@@ -1,4 +1,3 @@
-// 50% of this is gpt and claude 😔🥀
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, doc, setDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
@@ -30,8 +29,8 @@ let unsubMsgs = null, unsubMyRooms = null, unsubUsers = null;
 let lastMessageTime = 0;
 let messageHistory = [];
 let mutedUntil = 0;
-const COOLDOWN_MS = 5000; 
-const MUTE_DURATION_MS = 2 * 60 * 1000; 
+const COOLDOWN_MS = 3000; 
+const MUTE_DURATION_MS = 10 * 60 * 1000; 
 const SPAM_THRESHOLD = 5; 
 
 const swearingBlacklist = [
@@ -79,7 +78,6 @@ function sanitizeInput(input, maxLength = 50) {
 
 function validateId(id) {
   if (typeof id !== 'string') return false;
-
   return /^[a-zA-Z0-9_-]+$/.test(id);
 }
 
@@ -91,12 +89,11 @@ function createTextElement(tagName, text, className = null) {
 }
 
 function safeSetAttribute(element, attribute, value) {
-
   if (typeof attribute !== 'string' || typeof value !== 'string') return;
-
   const safeAttributes = ['id', 'class', 'data-uid', 'data-name', 'data-tag', 'type', 'name', 'value', 'placeholder', 'maxlength'];
   if (safeAttributes.includes(attribute)) {
-    element.setAttribute(attribute, value);
+    const sanitizedValue = value.replace(/[<>"']/g, '');
+    element.setAttribute(attribute, sanitizedValue);
   }
 }
 
@@ -118,7 +115,24 @@ function safeUsername(name, tag) {
 function formatTimestamp(timestamp) {
   if (!timestamp) return "";
   const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-  return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const messageDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  
+  const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  
+  if (messageDate.getTime() === today.getTime()) {
+    return timeStr;
+  } else if (messageDate.getTime() === yesterday.getTime()) {
+    return `Yesterday, ${timeStr}`;
+  } else {
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear().toString().slice(-2);
+    return `${month}/${day}/${year}, ${timeStr}`;
+  }
 }
 
 function filterSwearing(text) {
@@ -192,7 +206,6 @@ function checkSpamProtection(text) {
   if (recentIdentical.length >= SPAM_THRESHOLD) {
     mutedUntil = now + MUTE_DURATION_MS;
     showStatusMessage('You have been muted for 2 minutes due to spam', 'error');
-
     messageHistory = messageHistory.filter(msg => msg.text !== text.toLowerCase().trim());
     return false;
   }
@@ -236,7 +249,7 @@ function addEmojiPicker() {
     max-height: 200px;
     overflow-y: auto;
     display: none;
-    z-index: 1000;
+    z-index: 9999999999999999;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   `;
 
@@ -251,6 +264,7 @@ function addEmojiPicker() {
       cursor: pointer;
       padding: 4px;
       border-radius: 4px;
+      z-index:99999999999999999999999;
     `;
     emojiBtn.onclick = () => {
       if (messageInput.value.length < 119) {
@@ -278,6 +292,7 @@ function addEmojiPicker() {
     cursor: pointer;
     padding: 5px;
     border-radius: 4px;
+    z-index:9999999;
   `;
   emojiToggle.onclick = () => {
     picker.style.display = picker.style.display === 'none' ? 'block' : 'none';
@@ -288,11 +303,13 @@ function addEmojiPicker() {
   charCounter.style.cssText = `
     position: absolute;
     right: 10px;
-    top: 50%;
+    bottom: 450px;
     transform: translateY(-50%);
     font-size: 12px;
     color: var(--text-muted);
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
   `;
 
   const inputContainer = messageInput.parentElement;
@@ -302,12 +319,20 @@ function addEmojiPicker() {
 
   function updateCharCount() {
     const count = messageInput.value.length;
-    charCounter.textContent = `${count}/119`; 
-    if (count > 100) {
-      charCounter.style.color = count >= 119 ? '#ff4444' : '#ff8800';
+    charCounter.textContent = `${count}/119`;
+    
+    if (count >= 90) {
+      charCounter.style.opacity = '1';
+      
+      if (count > 100) {
+        charCounter.style.color = count >= 119 ? '#ff4444' : '#ff8800';
+      } else {
+        charCounter.style.color = 'var(--text-muted)';
+      }
     } else {
-      charCounter.style.color = 'var(--text-muted)';
+      charCounter.style.opacity = '0';
     }
+    
     updateSendButtonState();
   }
 
@@ -316,6 +341,20 @@ function addEmojiPicker() {
       e.target.value = e.target.value.substring(0, 119);
     }
     updateCharCount();
+  });
+
+  messageInput.addEventListener('focus', () => {
+    const count = messageInput.value.length;
+    if (count >= 90) {
+      charCounter.style.opacity = '1';
+    }
+  });
+
+  messageInput.addEventListener('blur', () => {
+    const count = messageInput.value.length;
+    if (count < 90) {
+      charCounter.style.opacity = '0';
+    }
   });
 
   updateCharCount();
@@ -328,30 +367,6 @@ function addEmojiPicker() {
       picker.style.display = 'none';
     }
   });
-}
-
-function openModal(title, bodyContent, onSave) {
-
-  modalTitle.textContent = sanitizeInput(title, 100);
-
-  modalBody.innerHTML = "";
-
-  if (typeof bodyContent === 'string') {
-
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = bodyContent; 
-    modalBody.appendChild(tempDiv);
-  } else {
-
-    modalBody.appendChild(bodyContent);
-  }
-
-  modalOverlay.style.display = "flex";
-  const firstInput = modalBody.querySelector("input");
-  if (firstInput) setTimeout(() => firstInput.focus(), 0);
-  modalSave.onclick = async () => {
-    await onSave?.();
-  };
 }
 
 function createSafeModal(title, contentBuilder, onSave) {
@@ -662,7 +677,6 @@ function startListeners() {
 }
 
 function openRoom(kind, id, title) {
-
   const safeKind = sanitizeInput(kind, 10);
   const safeId = sanitizeInput(id, 50);
   const safeTitle = sanitizeInput(title, 100);
@@ -806,7 +820,6 @@ async function createOrOpenDM(otherUid, otherName, otherTag) {
   if (otherUid === me.uid) return;
 
   try {
-
     const safeOtherUid = sanitizeInput(otherUid, 50);
     const safeOtherName = sanitizeInput(otherName, 20);
     const safeOtherTag = sanitizeInput(otherTag, 10);
