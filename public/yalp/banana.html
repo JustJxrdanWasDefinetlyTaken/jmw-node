@@ -1,267 +1,198 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>New Tab</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="/newtab.png" />
-    <link rel="shortcut icon" href="/newtab.png" />
+  <link rel="shortcut icon" href="/newtab.png" />
   <link rel="stylesheet" type="text/css" href="/assets/css/main.css" />
-  <link rel="manifest" href="/manifest.json"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <style>
-    .iframe {
-      float: center;
-              width: 100%; 
-            height: 100%;
-            text-align: center;
-          }
-          .fullscreen {
-            font-size: 20;
-            border-radius: 8px;
-            border: none;
-            color: var(--txtcolor);
-            font-size: 30px;
-            justify-content: space-between;
-          }
-          .reload {
-            font-size: 20;
-            border-radius: 8px;
-            border: none;
-            color: var(--txtcolor);
-            font-size: 30px;
-            justify-content: space-between;
-          }
-    .reload:hover {
-      transform: rotate(-360deg);
+    body {
+      background-color: var(--bgcolor);
+      color: var(--txtcolor);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow: hidden
     }
-          body {
-            background-color: var(--bgcolor);
-            color: var(--txtcolor);
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-          }
 
+    #game-container {
+      position: relative;
+      height: 95vh;
+      width: 100vw;
+      border-radius: 20px;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center
+    }
 
+    #gameFramey {
+      width: 100%;
+      height: 95vh;
+      border: none;
+      border-radius: 5px;
+      display: none
+    }
 
-          #game-container {
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 95vh;
-          }
+    #iframe {
+      float: center;
+      width: 100%;
+      height: 100%;
+      text-align: center
+    }
 
-          #game-container iframe {
-            border: none;
-            float: center;
-            width: 100%;
-            height: 100%;
-            height: 95vh;
-            width: 100vw;
-            text-align: center;
-            border-radius: 5px;
-          }
+    .fullscreen,
+    .reload {
+      border-radius: 8px;
+      border: none;
+      color: var(--txtcolor);
+      justify-content: space-between;
+      font-size: 30px
+    }
 
-          #server-buttons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
+    .reload:hover {
+      transform: rotate(-360deg)
+    }
 
-          #server-buttons a {
-            display: block;
-            position: relative;
-            top: 0;
-            margin: 0 10px;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 1.2rem;
-            text-decoration: none;
-            color: #EFEFEF;
-            background-color: #DD4A68;
-            transition: background-color 0.3s ease;
-          }
+    #cdnSelectContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 18px
+    }
 
-          #server-buttons a:hover {
-            background-color: #FF6B88;
-          }
+    #cdnSelect,
+    #cdnLoadBtn {
+      margin-top: 10px;
+      font-size: 16px;
+      padding: 8px 16px;
+      border-radius: 6px
+    }
 
-          #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #1f1f1f;
-            z-index: 9999;
-            user-select: none;
-          }
+    #cdnLoadBtn {
+      cursor: pointer;
+      background-color: var(--secondary);
+      border: none;
+      color: var(--txtcolor);
+      transition: background-color 0.3s ease
+    }
 
-          #loader.hide {
-            animation: fadeOut 1s;
-            animation-fill-mode: forwards;
-          }
+    #cdnLoadBtn:hover {
+      background-color: var(--glow)
+    }
 
-          @keyframes fadeOut {
-            0% {
-              opacity: 1;
-            }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 94.9%;
+      left: 0;
+      right: 0;
+      width: 80%;
+      height: 50px;
+      margin: 0 auto;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      border-radius: 20px;
+      padding: 0 15px
+    }
 
-            100% {
-              opacity: 0;
-            }
-          }
+    .navbar:hover {
+      transform: translateY(-30px)
+    }
 
-          #loader h1 {
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-            font-size: 7vw;
-            font-weight: 700;
-            text-align: center;
-          }
+    .navbar .icon {
+      display: flex;
+      align-items: center
+    }
 
-          #loader h1 span {
-            color: #ff0006;
-          }
+    .navbar .icon img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px
+    }
 
-          #loader p {
-            position: absolute;
-            top: 53%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-            font-size: 1.2vw;
-            font-weight: 500;
-            text-align: center;
-          }
+    .navbar .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
 
-          #loader .loader {
-            position: absolute;
-            top: 63%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 6vw;
-            height: 6vw;
-            border-radius: 50%;
-            border: 10px solid #fff;
-            border-top-color: #941417;
-            animation: loader 1s linear infinite;
-          }
+    .navbar .buttons .btn {
+      width: 40px;
+      height: 40px;
+      background-color: rgba(0, 0, 0, 0.4);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      color: white;
+      border: none;
+      font-size: 22px
+    }
 
-          @keyframes loader {
-            0% {
-              transform: translate(-50%, -50%) rotate(0deg);
-            }
+    .navbar .buttons .btn:hover {
+      background-color: rgba(0, 0, 0, 0.2)
+    }
 
-            100% {
-              transform: translate(-50%, -50%) rotate(360deg);
-            }
-          }
+    @media screen and (max-width:768px) {
+      .navbar .icon img {
+        width: 30px;
+        height: 30px
+      }
 
-          .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 94.9%;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
-  height: 50px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-  z-index: 1000;
-  border-radius: 20px;
-  padding: 0 15px;
-}
+      .navbar .buttons .btn {
+        width: 30px;
+        height: 30px;
+        font-size: 18px
+      }
+    }
 
-.navbar:hover {
-  transform: translateY(-30px);
-}
-
-.navbar .icon {
-  display: flex;
-  align-items: center;
-}
-
-.navbar .icon img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.navbar .buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.navbar .buttons .btn {
-  width: 40px;
-  height: 40px;
-  background-color: rgba(0, 0, 0, 0.4);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  color: white;
-  border: none;
-  font-size: 22px;
-}
-
-.navbar .buttons .btn:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-@media screen and (max-width: 768px) {
-  .navbar .icon img {
-    width: 30px;
-    height: 30px;
-  }
-
-  .navbar .buttons .btn {
-    width: 30px;
-    height: 30px;
-    font-size: 18px;
-  }
-}
-#chatContainer {
+    #chatContainer {
       position: fixed;
       top: 10px;
       left: 10px;
-      width: 50%;
-      height: 91%;
+      width: 80vw;
+      height: 95vh;
       border: 1px solid var(--txtcolor, #000);
       z-index: 1000;
       display: none;
       background: white;
-      box-sizing: border-box;
+      box-sizing: border-box
     }
+
     #chatIframe {
       width: 100%;
       height: 100%;
       border: none;
-      display: block;
+      display: block
     }
+
     #chatCloseButton {
       position: absolute;
       top: 5px;
@@ -277,132 +208,124 @@
       font-size: 16px;
       line-height: 20px;
       padding: 0;
-      user-select: none;
+      user-select: none
     }
-        </style>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQ8CVXYBF9"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  </style>
+</head>
 
-    gtag('config', 'G-TQ8CVXYBF9');
-  </script>
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-      </head>
-
-      <body theme="classic">
-        <div id="page-container">
-          <div class="content">
-        <script type="text/javascript">
-          function googleTranslateElementInit() {
-            new google.translate.TranslateElement({ pageLanguage: "en", layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL }, "google_translate_element");
-          }
-        </script>
-
-        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-        <center>
-          <br>
-          <div id="fileInfo"></div>
-        </center>
-        <br>
-        <div id="game-container" style="border-radius: 20px; background: transparent; height: 600px;">
-          <div class="iframe">
-            <iframe
-              class="abc" id="gameFramey"></iframe>
-            <br>
+<body theme="classic">
+  <div id="page-container">
+    <div class="content">
+      <div id="game-container">
+        <iframe class="abc" id="gameFramey"></iframe>
+        <div id="cdnSelectContainer">
+          <label for="cdnSelect" style="color:white;">Choose your CDN type</label>
+          <select id="cdnSelect">
+            <option value="https://raw.rawgit.net/BinBashBanana/gfiles/master/gfiles/flash/index.html">RawGit
+              (lightspeed)</option>
+            <option value="https://raw.githack.com/BinBashBanana/gfiles/master/gfiles/flash/index.html">Githack
+              (LAUSD)</option>
+          </select>
+          <button id="cdnLoadBtn">Load Game</button>
+        </div>
+        <div class="navbar">
+          <div class="icon"><a href="/yalp/"><img src="/assets/images/jmw.png" alt="Icon"></a></div>
+          <div class="buttons">
+            <a href="/yalp/" class="btn"><i class="bx bx-arrow-back"></i></a>
+            <button onclick="reload()" class="btn"><i class="bx bx-refresh"></i></button>
+            <button onclick="toggleFullscreen()" class="btn"><i class="bx bx-fullscreen"></i></button>
+            <button onclick="record()" class="btn"><i class="bx bx-camera"></i></button>
+            <button id="chatToggleButton" class="btn"><i class="bx bx-chat"></i></button>
           </div>
-<br>
-<div class="navbar">
-  <div class="icon">
-    <a href="/yalp/"><img src="/assets/images/jmw.png" alt="Icon"></a>
-  </div>
-  <div class="buttons">
-    <a href="/yalp/" class="btn"><i class='bx bx-arrow-back'></i></a>
-    <button onclick="reload()" class="btn"><i class='bx bx-refresh'></i></button>
-    <button onclick="toggleFullscreen()" class="btn"><i class='bx bx-fullscreen'></i></button>
-    <button onclick="record()" class="btn"><i class='bx bx-camera'></i></button>
-    <button id="chatToggleButton"class="btn"><i class='bx bx-chat'></i></button>
-  </div>
-</div>
         </div>
-        </div>
-      </div> 
-        <div id="chatContainer">
+      </div>
+    </div>
+  </div>
+  <div id="chatContainer">
     <button id="chatCloseButton">×</button>
     <iframe id="chatIframe" src="/tahc/"></iframe>
   </div>
-      <script>
-    function chatFunction() {
-      const toggleButton = document.getElementById('chatToggleButton')
-      const chatContainer = document.getElementById('chatContainer')
-      const closeButton = document.getElementById('chatCloseButton')
-      toggleButton.addEventListener('click', () => {
-        if (chatContainer.style.display === 'none' || chatContainer.style.display === '') chatContainer.style.display = 'block'
-        else chatContainer.style.display = 'none'
-      })
-      closeButton.addEventListener('click', () => {
-        chatContainer.style.display = 'none'
-      })
-    }
-    window.addEventListener('DOMContentLoaded', chatFunction)
-        </script>
-      <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const file = urlParams.get('book');
-        const type = urlParams.get('type')
-        if (type == "swf") {
-          document.getElementById('gameFramey').src = 'https://binbashbanana.github.io/gfiles/gfiles/flash/?swf=' + file
-        }
-        else {
-          document.getElementById('gameFramey').src = "https://raw.rawgit.net/galacticnetwork/gfiles/master/gfiles/html5/" + file + '/index.html'
-        }
-      </script>
-      <script>
-        function record() {
-  var myWindow1 = window.open(
-    "/record.html",
-    "myWindow1",
-    "scrollbars=1,height=" + screen.availHeight + ",width=" + screen.availWidth
-  );
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const file = urlParams.get('book');
+const type = urlParams.get('type');
+const cdnSelectContainer = document.getElementById('cdnSelectContainer');
+const cdnSelect = document.getElementById('cdnSelect');
+const cdnLoadBtn = document.getElementById('cdnLoadBtn');
+const gameFramey = document.getElementById('gameFramey');
+
+// Show CDN switcher if a file is provided
+if (file) {
+    cdnSelectContainer.style.display = 'flex';
+    gameFramey.style.display = 'none';
 }
 
-      </script>
-        <script>
-          function toggleFullscreen() {
-            let elem = document.querySelector('.abc');
+cdnLoadBtn.addEventListener('click', () => {
+    if (!file) {
+        alert("No file specified.");
+        return;
+    }
 
-            if (!document.fullscreenElement) {
-              elem.requestFullscreen().catch((err) => {
-                alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
-              });
-            } else {
-              document.exitFullscreen();
-            }
-          }
-          function toggleFullscreen() {
-            let elem = document.querySelector('.abc');
+    let src = "";
 
-            if (!document.fullscreenElement) {
-              elem.requestFullscreen().catch((err) => {
-                alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
-              });
-            } else {
-              document.exitFullscreen();
-            }
-          }
-        </script>
-        <script>
-          function reload() {
-            var web = document.getElementById("gameFramey");
-            web.contentWindow.location.reload();
-          }
-        </script>
-      </body>
-  <script src="/assets/scripts/s1.js"></script>
-  <script src="/assets/scripts/s2.js"></script>
-        <script src="/assets/scripts/index.js"></script>
-        <script src="/assets/scripts/panic.js"></script>
-        <script src="/assets/scripts/2auto.js"></script>
-      </html>
+    if (type === "swf") {
+        // SWF files use selected CDN with ?swf=
+        const cdn = cdnSelect.value;
+        src = cdn + "?swf=" + file;
+    } else {
+        // HTML5 files: just append the file name to selected CDN
+        const cdn = cdnSelect.value;
+        src = cdn + file;
+    }
+
+    gameFramey.src = src;
+    cdnSelectContainer.style.display = 'none';
+    gameFramey.style.display = 'block';
+});
+
+// Fullscreen toggle
+function toggleFullscreen() {
+    let elem = document.querySelector('.abc');
+    if (!document.fullscreenElement) {
+        elem.requestFullscreen().catch(err => {
+            alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
+        });
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+// Reload iframe
+function reload() {
+    document.getElementById("gameFramey").contentWindow.location.reload();
+}
+
+// Open record window
+function record() {
+    window.open("/record.html", "myWindow1", "scrollbars=1,height=" + screen.availHeight + ",width=" + screen.availWidth);
+}
+
+// Copy Chrome content settings URL
+function copy() {
+    const url = window.location.origin;
+    const text = "chrome://settings/content/all?searchSubpage=" + url;
+    navigator.clipboard.writeText(text).then(() => {
+        alert(text + " is now in your clipboard. Please paste the URL in the search bar in a new tab.");
+    });
+}
+
+// Chat toggle
+const toggleButton = document.getElementById('chatToggleButton');
+const chatContainer = document.getElementById('chatContainer');
+const closeButton = document.getElementById('chatCloseButton');
+
+toggleButton.addEventListener('click', () => {
+    chatContainer.style.display = (chatContainer.style.display === '' || chatContainer.style.display === 'none') ? 'block' : 'none';
+});
+
+closeButton.addEventListener('click', () => { chatContainer.style.display = 'none'; });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jordan's Math Work - Class Leaderboard</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <style>
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: var(--bgcolor);
+  color: var(--txtcolor);
+  margin: 0;
+  padding: 0;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.lb-cntr {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75vh;
+  background: var(--surface);
+  border: 0.2vh solid var(--border);
+  border-radius: 1vh;
+  padding: 2vh;
+  width: 50vw;
+  height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0 0 1.5vh var(--glow);
+}
+
+.lb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+  border: 0.2vh solid var(--border);
+  border-radius: 1vh;
+  padding: 1vh 1.5vh;
+  width: 100%;
+  color: var(--txtcolor);
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease;
+  font-size: 2vh;
+}
+
+.lb:hover {
+  transform: scale(1.02);
+  background: var(--surface-hover);
+}
+
+.lb .rank {
+  width: 5vh;
+  text-align: center;
+  font-weight: 700;
+  color: var(--txtcolor);
+}
+
+.lb .user {
+  flex: 1;
+  text-align: left;
+  color: var(--primary);
+}
+
+.lb .score {
+  flex: 0;
+  min-width: 7vh;
+  text-align: center;
+  color: var(--txtcolor);
+}
+
+.lb .game {
+  flex: 1;
+  text-align: right;
+  color: var(--txtcolor);
+}
+
+.lb:first-child .rank {
+  color: gold;
+  text-shadow: 0 0 1vh gold, 0 0 2vh var(--glow);
+}
+
+.lb:first-child {
+  border: 0.2vh solid gold;
+  box-shadow: 0 0 1.5vh gold;
+}
+
+.lb:nth-child(2) .rank {
+  color: silver;
+}
+
+.lb:nth-child(3) .rank {
+  color: #cd7f32;
+}
+
+.lb .rank i {
+  font-size: 1.2em;
+  vertical-align: middle;
+  color: gold;
+  margin-left: 0.5vh;
+}
+  </style>
+</head>
+
+<body theme="classic">
+  <div class="center">
+    <div class="lb-cntr" id="leaderboard">
+      <h2 style="text-align: center; margin: 0 0 1vh 0;">leaderboard</h2>
+
+      <p style="text-align: center; margin: 0 0 1vh 0; font-size: 2vh; color: var(--txtcolor);">only the top 10 people will be featured
+        <br>
+        <br>
+        <a href="" style="color:var(--txtcolor);text-decoration:none; text-align: center; font-size:2vh;margin-top:3vh;">want to be <span style="font-weight:bolder;">first on the leaderboard</span>? click here!</a>
+      </p>
+    </div>
+  </div>
+</body>
+<script src="/assets/scripts/index.js"></script>
+<script>
+  fetch('lb.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById('leaderboard');
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'lb';
+        div.innerHTML = `
+            <p class="rank">${item.rank}${item.rank === 1 ? '<i class="bx bxs-crown"></i>' : ''}</p>
+            <p class="user">${item.user}</p>
+            <p class="score">${item.score}</p>
+            <p class="game">${item.game}</p>
+          `;
+        container.appendChild(div);
+      });
+    });
+</script>
+
+</html>

@@ -237,7 +237,7 @@ const htmlString = `                                <a class='link button' href=
                                                 width="175"><span
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="roblox">Ace Attorney</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=andys-apple-farm&type=local'><img
+                                <a class='link button' href='/active/index.html?autofill=https://raw.githack.com/genizy/web-port/refs/heads/main/andys-apple-farm/index.html'><img
                                                 height="175" src="/assets/images/game/aaf.webp"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
@@ -526,12 +526,12 @@ const htmlString = `                                <a class='link button' href=
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="1o1 basketball">Block Blast</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=balatro&type=local' data-tag="exclusive"><img
-                                                height="175" src="/assets/images/game/balatro.webp"
+                                <a class='link button' href='/active/index.html?autofill=https://raw.githack.com/genizy/web-port/refs/heads/main/baldi-plus/index.html' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/bp.jpeg"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap;width: fit-content;"
-                                                alt="au">Balatro</span></a>
+                                                alt="au">Baldi Plus</span></a>
                                 <a class='link button' href='/yalp/ela.html?book=crazycattle3d&type=local'><img
                                                 height="175" src="/assets/images/game/cc3d.jpg"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
@@ -826,7 +826,7 @@ const htmlString = `                                <a class='link button' href=
                                                 width="175"><span
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="roblox">Drive Mad</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=deltarune&type=local' data-tag="exclusive"><img
+                                <a class='link button' href='/active/index.html?autofill=https://deltarune.fun' data-tag="exclusive"><img
                                                 height="175" src="/assets/images/game/deltarune.jpg"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
@@ -1478,6 +1478,12 @@ const htmlString = `                                <a class='link button' href=
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="gs">Kindergarten 2</span></a>
+                                <a class='link button' href='/active/index.html?autofill=https://html-classic.itch.zone/html/14903292/Kindergarten3Port/index.html' data-tag="exclusive"><img
+                                                height="175" src="/assets/images/game/kdg.jpg"
+                                                onerror="this.src='/assets/images/no-icon-found.png'" class="image"
+                                                width="175"><span class="span"
+                                                style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
+                                                alt="gs">Kindergarten 2</span></a>
                                 <a class='link button' href='/yalp/ela.html?book=level13&type=3kh0'><img height="175"
                                                 src="/assets/images/game/lvl13.png"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
@@ -1925,7 +1931,7 @@ const htmlString = `                                <a class='link button' href=
                                                 width="175"><span
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
                                                 alt="roblox">Roblox</span></a>
-                                <a class='link button' href='/yalp/ela.html?book=roblox-2014&type=local'
+                                <a class='link button' href='/active/index.html?autofill=voluble-fairy-ba4138.netlify.app/roblox/'
                                         data-tag="exclusive"><img height="175" src="/assets/images/game/rblx.png"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
@@ -2392,7 +2398,7 @@ const htmlString = `                                <a class='link button' href=
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"
                                                 width="175"><span class="span"
                                                 style="padding:15px;margin:auto;display:block;width:170px;height:25px;line-height:25px;overflow:hidden;text-align:center;white-space:nowrap"
-                                                alt="Terreria">(UNOFFICIAL) Terreria</span></a>
+                                                alt="Terreria">(SCRATCH) Terraria</span></a>
                                 <a class='link button' href='/yalp/ela.html?book=tiny-fishing&type=local'><img
                                                 height="175" src="/assets/images/game/tiny-fishing.jpeg"
                                                 onerror="this.src='/assets/images/no-icon-found.png'" class="image"

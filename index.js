@@ -7,6 +7,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import fetch from "node-fetch";
 import dotenv from "dotenv";
+import sanitizeHtml from "sanitize-html";
 
 dotenv.config();
 
@@ -19,21 +20,27 @@ app.use("/epoxy/", express.static(epoxyPath));
 app.post("/api/chat", async (req, res) => {
   try {
     const { model, messages, temperature = 0.8, max_tokens = 1024 } = req.body;
+
+    const cleanMessages = messages.map(m => ({
+      role: sanitizeHtml(m.role, { allowedTags: [], allowedAttributes: {} }),
+      content: sanitizeHtml(m.content, { allowedTags: [], allowedAttributes: {} })
+    }));
+
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${process.env.GROQ_API_KEY}`,
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ model, messages, temperature, max_tokens })
+      body: JSON.stringify({ model, messages: cleanMessages, temperature, max_tokens })
     });
+
     const data = await response.json();
     res.status(response.status).json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.use((req, res, next) => {
   res.status(404).sendFile(join(fileURLToPath(import.meta.url), "../public/", "404.html"));
