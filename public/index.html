@@ -931,5 +931,18 @@ window.addEventListener('DOMContentLoaded', () => {
     gtag('js', new Date())
     gtag('config', 'G-TQ8CVXYBF9')
   </script>
+  <script>
+if (window.location.search) {
+  window.history.replaceState({}, "", window.location.pathname);
+}
+if (!window.location.search) {
+  const lastRedirect = localStorage.getItem("lastRedirect");
+  const now = Date.now();
+  if (!lastRedirect || now - lastRedirect >= 24 * 60 * 60 * 1000) {
+    localStorage.setItem("lastRedirect", now);
+    window.location.replace("/active/index.html?autofill=lookatthisistworkguys&goback=true");
+  }
+}
+</script>
 <script src="/assets/scripts/antict.js"></script>
 </html>
