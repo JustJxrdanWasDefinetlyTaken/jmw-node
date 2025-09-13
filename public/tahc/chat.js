@@ -65,6 +65,50 @@ const modalBody = document.getElementById("modalBody");
 const modalCancel = document.getElementById("modalCancel");
 const modalSave = document.getElementById("modalSave");
 
+async function requestNotificationPermission() {
+  if ('Notification' in window && Notification.permission === 'default') {
+    await Notification.requestPermission();
+  }
+}
+
+function showMessageNotification(messageData, roomType) {
+  if (messageData.uid === me.uid) return;
+  if (roomType === 'public') return;
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  
+  let title, body;
+  const senderName = sanitizeInput(messageData.name || "Unknown", 20);
+  const senderTag = sanitizeInput(messageData.tag || "0000", 10);
+  const messageText = sanitizeInput(messageData.text || "", 50);
+  const userName = sanitizeInput(me.name || "User", 20);
+  const fullSenderName = safeUsername(senderName, senderTag);
+  
+  if (roomType === 'dm') {
+    title = `New Direct Message`;
+    body = `Hey ${userName}! ${fullSenderName} has just DM'ed you:\n'${messageText}'`;
+  } else if (roomType === 'group') {
+    title = `New Group Message`;
+    body = `Hey ${userName}! ${fullSenderName} has sent a group message:\n'${messageText}'`;
+  }
+  
+  if (title && body) {
+    const notification = new Notification(title, {
+      body: body,
+      tag: `message-${roomType}-${messageData.uid}`,
+      requireInteraction: false
+    });
+    
+    notification.onclick = () => {
+      window.focus();
+      notification.close();
+    };
+    
+    setTimeout(() => {
+      notification.close();
+    }, 5000);
+  }
+}
+
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
@@ -449,6 +493,7 @@ onAuthStateChanged(auth, async (user) => {
     await upsertUserProfile();
     startListeners();
     addEmojiPicker();
+    requestNotificationPermission();
   }
 });
 
@@ -483,6 +528,7 @@ function showUsernameModal(title) {
     closeModal();
     startListeners();
     addEmojiPicker();
+    requestNotificationPermission();
   });
 }
 
@@ -700,6 +746,7 @@ function openRoom(kind, id, title) {
       if (change.type === "added") {
         const m = change.doc.data();
         messagesEl.appendChild(renderMessage(m));
+        showMessageNotification(m, current.type);
       }
     });
     messagesEl.scrollTop = messagesEl.scrollHeight;

@@ -27,6 +27,7 @@
         <p>Try:</p>
         <ul>
         <li>Checking your internet connection</li>
+        <li>Press the url bar on the jmw tab search and press enter</li>
         <li>Verifying you entered the correct address</li>
         <li>Clearing the site data</li>
         <li>Contacting <b id="uvHostname"></b>'s administrator</li>
