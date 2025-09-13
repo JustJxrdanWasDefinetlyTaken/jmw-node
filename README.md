@@ -25,7 +25,7 @@
 - [ ] Fix games
 - [X] Intergrate Scramjet and Ultraviolet into search
 - [X] Add CDN Chooser
-- [X] Fix UV getting detected by goguardian
+- [X] Fix jmw getting detected by goguardian
 
 # Deployment
 > JMW can be deployed to any node.js supported service, including surge.sh
